@@ -1,15 +1,12 @@
-import ApexChart from "~/components/data-visualization/barChart";
+import { ClientOnly } from "remix-utils/client-only";
+import ChartComponent from "~/components/data-visualization/barChart.client";
+import ChartOne from "~/components/data-visualization/barChart.client";
+import ChartWrapper from "~/components/data-visualization/chartWrapper";
 
-export default function ChartPage() {
-  const data = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-    series: [12, 19, 3, 5, 2, 3],
-  };
-
+export default function ChartExample() {
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-2xl font-bold mb-4">Data Visualization</h1>
-      <ApexChart />
-    </div>
+    <ChartWrapper>
+      <ChartComponent />
+    </ChartWrapper>
   );
 }

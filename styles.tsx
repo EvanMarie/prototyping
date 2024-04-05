@@ -118,3 +118,15 @@ export const StopIcon = FaStopCircle;
 export const HideIcon = FaEyeSlash;
 export const CodeIcon = FaCode;
 export const RefreshIcon = LuRefreshCw;
+
+export const colors = {
+  100: "#F2E3D5",
+  200: "#D0B4A7",
+  300: "#cf8e65",
+  400: "#8B6C59",
+  500: "#A16564",
+  600: "#8c3837",
+  700: "#623637",
+  800: "#4d0f0f",
+  900: "#1a0707",
+};

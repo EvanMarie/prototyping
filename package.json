@@ -11,7 +11,6 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@material-tailwind/react": "^2.1.9",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
@@ -22,7 +21,8 @@
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
-    "remix-flat-routes": "^0.6.4"
+    "remix-flat-routes": "^0.6.4",
+    "remix-utils": "^7.5.0"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.5.2",
