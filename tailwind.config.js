@@ -2886,8 +2886,8 @@ export default {
           backgroundImage:
             "linear-gradient(to right, #D0E2F2, #D9B5AD, #e4edf5,  #D9B5AD, #D0E2F2);",
         },
-        ".butterflyFont": {
-          fontFamily: "'Butterfly Kids', cursive",
+        ".kufam-font": {
+          fontFamily: '"Kufam", sans-serif',
         },
       });
     }),
@@ -2967,25 +2967,26 @@ export default {
           borderRadius: "none",
         },
         a: {
-          color: theme("colors.col.600"),
-          textShadow: theme("textShadow.lightTextShadow"),
-          textStrokeColor: theme("colors.col.900"),
-          textStrokeWidth: "0.2vh",
-          textDecoration: "none",
-          fontSize: theme("fontSize.md"),
-          fontWeight: 600,
-          transition: "all 400ms ease-in-out",
-          "-webkit-text-stroke-width": "0.06vh",
-          "-webkit-text-stroke-color": theme(`colors.col.900`, "currentColor"), // Use the border color for stroke color on hover
-          "&:hover": {
-            color: theme("colors.col.500"),
-            textDecoration: "none",
-            textShadow: theme("textShadow.textGlow"),
-          },
-          // You can add more pseudo-classes like focus or active with similar syntax
-          "&:focus": {
-            outline: "none",
-          },
+          fontSize: "inherit",
+          //   color: theme("colors.col.600"),
+          //   textShadow: theme("textShadow.lightTextShadow"),
+          //   textStrokeColor: theme("colors.col.900"),
+          //   textStrokeWidth: "0.2vh",
+          //   textDecoration: "none",
+          //   fontSize: theme("fontSize.md"),
+          //   fontWeight: 600,
+          //   transition: "all 400ms ease-in-out",
+          //   "-webkit-text-stroke-width": "0.06vh",
+          //   "-webkit-text-stroke-color": theme(`colors.col.900`, "currentColor"), // Use the border color for stroke color on hover
+          //   "&:hover": {
+          //     color: theme("colors.col.500"),
+          //     textDecoration: "none",
+          //     textShadow: theme("textShadow.textGlow"),
+          //   },
+          //   // You can add more pseudo-classes like focus or active with similar syntax
+          //   "&:focus": {
+          //     outline: "none",
+          //   },
         },
         p: {
           margin: 0,
