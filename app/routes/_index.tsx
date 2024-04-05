@@ -51,13 +51,12 @@ export default function Index() {
       <Transition className="w-full h-full justify-center items-center">
         <VStackFull className="text-center xxl:w-[60vw]" gap="gap-[6vh]">
           <Text className="font-cursive boldTextGlow text-col-900 text-stroke-8-900 text-[5vh] md:text-[8vh] lg:text-[10vh] text-center animate-slideInRight">
-            Data Visualization
+            Figma & Adobe Illustrator
           </Text>
-          <Text className="font-cursive boldTextGlow text-col-900 text-stroke-8-900 text-[5vh] md:text-[8vh] lg:text-[10vh] text-center animate-slideInLeft">
-            in Remix
-          </Text>
+
           <Wrap className="animate-slideInUp50vh gap-[3vh] duration-2200 justify-center">
-            <NavButton text="Design Presets" to="/design" />{" "}
+            <NavButton text="Design Presets" to="/design" />
+            <NavButton text="Consciousness AI" to="/consciousness-ai" />
           </Wrap>
         </VStackFull>
       </Transition>
