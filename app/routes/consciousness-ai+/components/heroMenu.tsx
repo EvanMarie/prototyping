@@ -13,7 +13,7 @@ export default function ConsciousnessHeroMenu() {
       </Flex>
       <HStack className="h-full items-center hidden md:flex justify-evenly flex-shrink-0 ">
         <NavLink to="/" className={linkStyle}>
-          Link 1
+          Our Models
         </NavLink>
         <NavLink to="/" className={linkStyle}>
           Link 2

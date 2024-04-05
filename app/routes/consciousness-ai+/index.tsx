@@ -8,16 +8,21 @@ import ConsciousnessHeroMenu from "./components/heroMenu";
 import Image from "~/components/buildingBlocks/image";
 import Box from "~/components/buildingBlocks/box";
 import Text from "~/components/buildingBlocks/text";
+import VStack from "~/components/buildingBlocks/vStack";
+import GlowCursor from "./components/glowCursor";
 
 export default function ConscioussnessIndex() {
   return (
     <TransitionFull className="p-[1vh] xl:p-[2vh] xxl:p-[2.5vh]">
+      <GlowCursor />
       <ConsciousnessHeroMenu />
-      <Box>
-        <Text className="text-zinc-100 kufam-font text-[3vh] absolute left-[30vh] top-[30vh]">
-          What can you do with AI?
-        </Text>
-      </Box>
+      <VStack
+        align="items-start"
+        className="text-zinc-100 kufam-font text-[3vh] absolute left-1/4 top-[30vh]"
+      >
+        <Text>What can you</Text>
+        <Text>do with AI?</Text>
+      </VStack>
       <Box className="h-[60vh] w-[60vh] absolute top-[20vh] opacity-50">
         <Image src="/images/consciousnessFrontImage.png" alt="consciousness" />
       </Box>
