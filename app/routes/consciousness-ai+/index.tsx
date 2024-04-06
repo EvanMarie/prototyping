@@ -98,14 +98,16 @@ export default function ConscioussnessIndex() {
               animation="fadeIn"
               className="w-full"
               runOnce={true}
+              triggerPercent={0.3}
             >
-              <FlexFull className="h-screen py-[2vh] px-[1vh] sm:px-[2vh]">
-                <CenterFull className="h-full  shadowBroadLooser border-970-md bg-zinc-900 bg-gradient-to-br from-purple-700/70 via-indigo-700/70 to-teal-700/70">
+              <FlexFull className="h-screen py-[2vh] px-[1vh] sm:px-[2vh] justify-center">
+                <CenterFull className="h-full md:w-95% lg:w-85% shadowBroadLooser border-970-md bg-zinc-900 bg-gradient-to-br from-purple-700/70 via-indigo-700/70 to-teal-700/70">
                   Section Two Page One
                 </CenterFull>
               </FlexFull>
             </AnimatedComponent>
           </StickyLabeledSection>
+
           {/* ************************* ETHICS ************************* */}
           <StickyLabeledSection
             labelText="Ethics"
@@ -116,6 +118,7 @@ export default function ConscioussnessIndex() {
             <FlexFull className="h-screen ">Section One - Page One</FlexFull>
             <FlexFull className="h-screen">Section One - Page Two</FlexFull>
           </StickyLabeledSection>
+
           {/* ************************* CONTACT ************************* */}
           <StickyLabeledSection
             labelText="Contact"
