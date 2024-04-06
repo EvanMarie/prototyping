@@ -4,19 +4,30 @@ import { IParallax } from "@react-spring/parallax";
 import LayoutContainer from "~/components/buildingBlocks/layoutContainer";
 
 import Ticker from "../consciousness-ai+/components/ticker";
+import Flex from "~/components/buildingBlocks/flex";
+import Center from "~/components/buildingBlocks/center";
+import Text from "~/components/buildingBlocks/text";
+
+const itemNumbers = Array.from({ length: 100 }, (_, i) => i + 1);
 
 export default function Test() {
-  const parallax = useRef<IParallax>(null);
+  function TickerItem({ itemNumber }: { itemNumber: number }) {
+    return (
+      <Center>
+        <Text>Item: {String(itemNumber)}</Text>
+      </Center>
+    );
+  }
   return (
     <TransitionFull className="relative">
       <LayoutContainer className="relative overflow-y-auto">
-        <div>
-          <Ticker speed={30}>
-            <span>Item 1</span>
-            <span>Item 2</span>
-            <span>Item 3</span>
+        <Flex className="w-[40vh] bg-col-550 p-[2vh] h-fit">
+          <Ticker>
+            {itemNumbers.map((itemNumber) => (
+              <TickerItem key={itemNumber} itemNumber={itemNumber} />
+            ))}
           </Ticker>
-        </div>
+        </Flex>
       </LayoutContainer>
     </TransitionFull>
   );

@@ -35,28 +35,18 @@ export default function GlowCursor() {
       ref={cursorRef}
       style={{
         position: "fixed",
-        zIndex: 50,
+        zIndex: 30,
         pointerEvents: "none",
-        width: "60vh",
-        height: "60vh",
+        width: "70vh",
+        height: "70vh",
         borderRadius: "50%",
         background:
-          "radial-gradient(circle, rgba(110, 37, 153, 0.8) 0%, rgba(90, 38, 120, 0.6) 25%, rgba(73, 0, 115, 0.4) 50%, rgba(255, 255, 255, 0) 80%)",
+          "radial-gradient(circle, rgba(140, 19, 240, 0.8) 0%, rgba(140, 19, 240, 0.6) 25%, rgba(140, 19, 240, 0) 50%, rgba(140, 19, 240, 0) 80%, transparent 100%)",
         opacity: 0.3,
         transform: "translate(-50%, -50%)",
         transition: "opacity 0.3s ease-in-out",
+        backdropFilter: "blur(10px)",
       }}
     ></div>
   );
 }
-
-// position: "fixed",
-//     zIndex: 50,
-//     pointerEvents: "none",
-//     width: "60vh",
-//     height: "60vh",
-//     borderRadius: "50%",
-//     background:
-//       "radial-gradient(circle, rgba(51, 11, 74, 0.8) 0%, rgba(95, 35, 130, 0.6) 0%, rgba(73, 0, 115, 0.2) 50%, rgba(0, 0, 0, 0) 80%)",
-//     opacity: 0.3,
-//     transform: "translate(-50%, -50%)",

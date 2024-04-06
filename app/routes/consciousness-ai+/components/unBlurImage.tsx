@@ -16,10 +16,10 @@ export default function UnblurImage({
   rows = 7,
   columns = 7,
   blurAmount = 75,
-  transitionDuration = 0.4,
+  transitionDuration = 0.5,
   dimensions = "w-[50vh] h-[50vh]",
   initialOpacity = 0.3,
-  overlayColor = "black", // default overlay color
+  overlayColor = "black",
 }: UnblurImageProps) {
   const [unblurredSections, setUnblurredSections] = useState<boolean[][]>(
     Array(rows)

@@ -11,7 +11,7 @@ interface TickerProps {
 
 const Ticker: React.FC<TickerProps> = ({
   children,
-  speed = 50,
+  speed = 13,
   gap = "gap-[2vh]",
   width = "w-full",
   height = "h-[5vh]",
@@ -22,7 +22,7 @@ const Ticker: React.FC<TickerProps> = ({
   useEffect(() => {
     const ticker = tickerRef.current;
     if (ticker) {
-      const tickerWidth = ticker.offsetWidth;
+      const tickerWidth = ticker.scrollWidth;
       const parentWidth = ticker.parentElement?.offsetWidth || 0;
 
       const animation: AnimationControls = controls;
@@ -38,11 +38,13 @@ const Ticker: React.FC<TickerProps> = ({
   }, [controls, speed]);
 
   return (
-    <div className={`overflow-hidden whitespace-nowrap ${height} ${width}`}>
+    <div
+      className={`overflow-hidden whitespace-nowrap ${height} ${width} insetShadowXl border-970-md`}
+    >
       <motion.div
         ref={tickerRef}
         animate={controls}
-        className={`flex ${gap} ${width} ${height}`}
+        className={`inline-flex ${gap} ${width} ${height} items-center`}
       >
         {children}
       </motion.div>
