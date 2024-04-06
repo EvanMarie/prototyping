@@ -13,9 +13,11 @@ export default function StickyLabeledSection({
   topPadding = "pt-[5vh]",
   menuSectionWidth = "w-[8vw]",
   contentSectionWidth = "w-[92vw]",
-  menuSectionClassName = "bg-zinc-100/40",
+  menuSectionClassName,
   menuLabelJustify = "justify-end",
   labelRotation = "-rotate-90",
+  contentSectionClassName,
+  id,
 }: {
   children: React.ReactNode;
   menuGap?: string;
@@ -29,9 +31,11 @@ export default function StickyLabeledSection({
   menuSectionClassName?: string;
   menuLabelJustify?: string;
   labelRotation?: string;
+  id?: string;
+  contentSectionClassName?: string;
 }) {
   return (
-    <HStackFull gap={menuGap} className={`relative ${sectionPadding}`}>
+    <HStackFull gap={menuGap} className={`relative ${sectionPadding}`} id={id}>
       <Flex
         className={`${menuSectionWidth} ${menuSectionClassName} ${menuLabelJustify} ${topPadding}`}
       >
@@ -42,7 +46,10 @@ export default function StickyLabeledSection({
           {labelText}
         </Box>
       </Flex>
-      <VStackFull className={`h-fit ${contentSectionWidth}`} gap="gap-[0px]">
+      <VStackFull
+        className={`h-fit ${contentSectionWidth} ${contentSectionClassName}`}
+        gap="gap-[0px]"
+      >
         {children}
       </VStackFull>
     </HStackFull>

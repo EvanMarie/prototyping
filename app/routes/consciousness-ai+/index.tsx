@@ -20,7 +20,7 @@ export default function ConscioussnessIndex() {
   const labelStyles =
     "bg-purple-300/40 px-[1vh] py-[0.5vh] text-zinc-100 textShadow";
   return (
-    <TransitionFull className="overflow-y-auto">
+    <TransitionFull className="overflow-y-auto text-zinc-100">
       <GlowCursor />
       <VStackFull className="h-fit">
         <LayoutContainer className="relative">
@@ -39,33 +39,46 @@ export default function ConscioussnessIndex() {
               imageUrl="/images/consciousnessFrontImage.png"
               dimensions="h-[96vw] w-[96vw] sm:h-[90vw] sm:w-[90vw] md:h-[66vh] md:w-[65vh]"
             />
+            {/* <FlipCardImage
+              mainImageUrl="/images/consciousnessFrontImage.png"
+              dimensions="h-[96vw] w-[96vw] sm:h-[90vw] sm:w-[90vw] md:h-[66vh] md:w-[65vh]"
+            /> */}
           </Box>
         </LayoutContainer>
         <VStackFull>
+          {/* ************************* MODELS ************************* */}
           <StickyLabeledSection
-            labelText="section one"
+            labelText="Models"
             labelClassName={labelStyles}
             sectionPadding="pb-[2vh]"
           >
-            <FlexFull className="h-screen">Page One</FlexFull>
-            <FlexFull className="h-screen z-10">
-              Section One - Page One
-            </FlexFull>
-            <FlexFull className="h-screen  bg-zinc-400/40 z-10">
-              Section One - Page Two
-            </FlexFull>
+            <FlexFull className="h-screen">Section One - Page One</FlexFull>
           </StickyLabeledSection>
+
+          {/* ************************* Generative  ************************* */}
           <StickyLabeledSection
-            labelText="section two"
+            labelText="Generative AI"
             labelClassName={labelStyles}
           >
-            <FlexFull className="h-screen  bg-zinc-200/40">Page One</FlexFull>
-            <FlexFull className="h-screen bg-zinc-300/40 z-10">
-              Section Two Page One
-            </FlexFull>
-            <FlexFull className="h-screen  bg-zinc-400/40 z-10">
-              Section Two Page Two
-            </FlexFull>
+            <FlexFull className="h-screen">Section Two Page One</FlexFull>
+            <FlexFull className="h-screen">Section Two Page Two</FlexFull>
+          </StickyLabeledSection>
+          {/* ************************* ETHICS ************************* */}
+          <StickyLabeledSection
+            labelText="Ethics"
+            labelClassName={labelStyles}
+            sectionPadding="pt-[4vh]"
+          >
+            <FlexFull className="h-screen">Section One - Page One</FlexFull>
+            <FlexFull className="h-screen">Section One - Page Two</FlexFull>
+          </StickyLabeledSection>
+          {/* ************************* CONTACT ************************* */}
+          <StickyLabeledSection
+            labelText="Contact"
+            labelClassName={labelStyles}
+            sectionPadding="pt-[2vh]"
+          >
+            <FlexFull className="h-screen">Page One</FlexFull>
           </StickyLabeledSection>
         </VStackFull>
       </VStackFull>

@@ -11,6 +11,7 @@ interface HStackProps {
   onMouseLeave?: () => void;
   onFocus?: () => void;
   onBlur?: () => void;
+  id?: string;
 }
 
 // Use React.forwardRef to forward the ref to the div element
@@ -27,6 +28,7 @@ const HStack = React.forwardRef<HTMLDivElement, HStackProps>(
       onMouseLeave,
       onFocus,
       onBlur,
+      id,
     },
     ref
   ) => {
@@ -43,6 +45,7 @@ const HStack = React.forwardRef<HTMLDivElement, HStackProps>(
         onMouseLeave={onMouseLeave}
         onFocus={onFocus}
         onBlur={onBlur}
+        id={id}
       >
         {children}
       </div>
