@@ -1,6 +1,8 @@
 import Box from "~/components/buildingBlocks/box";
 import Flex from "~/components/buildingBlocks/flex";
+import FlexFull from "~/components/buildingBlocks/flexFull";
 import HStackFull from "~/components/buildingBlocks/hStackFull";
+import Text from "~/components/buildingBlocks/text";
 import VStackFull from "~/components/buildingBlocks/vStackFull";
 
 export default function StickyLabeledSection({
@@ -8,15 +10,17 @@ export default function StickyLabeledSection({
   menuGap = "gap-[5vh]",
   sectionPadding = "pb-[0px]",
   stickyTopPosition = "top-[3vh]",
-  labelClassName = "",
+  labelClassName,
   labelText,
-  topPadding = "pt-[5vh]",
-  menuSectionWidth = "w-[8vw]",
-  contentSectionWidth = "w-[92vw]",
+  topPadding,
+  menuSectionWidth = "w-[0.2vw]",
+  contentSectionWidth = "w-[95vw]",
   menuSectionClassName,
   menuLabelJustify = "justify-end",
   labelRotation = "-rotate-90",
   contentSectionClassName,
+  contentPadding = "md:px[2vh] xl:px-[3vh]",
+  spacerHeight = "h-[10vh]",
   id,
 }: {
   children: React.ReactNode;
@@ -33,25 +37,34 @@ export default function StickyLabeledSection({
   labelRotation?: string;
   id?: string;
   contentSectionClassName?: string;
+  contentPadding?: string;
+  spacerHeight?: string;
 }) {
   return (
-    <HStackFull gap={menuGap} className={`relative ${sectionPadding}`} id={id}>
-      <Flex
-        className={`${menuSectionWidth} ${menuSectionClassName} ${menuLabelJustify} ${topPadding}`}
+    <VStackFull className="">
+      <FlexFull className={`${spacerHeight} text-transparent`}>spacer</FlexFull>
+      <HStackFull
+        gap={menuGap}
+        className={`relative justify-between ${sectionPadding}`}
+        id={id}
       >
-        <Box
-          className={`${labelRotation} h-fit sticky ${stickyTopPosition} ${labelClassName}`}
-          style={{ transformOrigin: "100% 0" }}
+        <Flex
+          className={`${menuSectionWidth} ${menuSectionClassName} ${menuLabelJustify} ${topPadding}`}
         >
-          {labelText}
-        </Box>
-      </Flex>
-      <VStackFull
-        className={`h-fit ${contentSectionWidth} ${contentSectionClassName}`}
-        gap="gap-[0px]"
-      >
-        {children}
-      </VStackFull>
-    </HStackFull>
+          <Box
+            className={`${labelRotation} h-fit sticky ${stickyTopPosition} ${labelClassName}`}
+            style={{ transformOrigin: "100% 0" }}
+          >
+            <Text className="text-nowrap">{labelText}</Text>
+          </Box>
+        </Flex>
+        <VStackFull
+          className={`${contentSectionWidth} ${contentSectionClassName} ${contentPadding}`}
+          gap="gap-[0px]"
+        >
+          {children}
+        </VStackFull>
+      </HStackFull>
+    </VStackFull>
   );
 }

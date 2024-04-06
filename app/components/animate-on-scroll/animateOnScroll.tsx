@@ -28,6 +28,7 @@ interface Props {
   children?: React.ReactNode;
   animation?: Animations;
   duration?: number;
+  triggerPercent?: number;
   xOffset?: string;
   yOffset?: string;
   zoomInFrom?: number;
@@ -36,12 +37,14 @@ interface Props {
   zoomOutYOffset?: string;
   delay?: number;
   className?: string;
+  runOnce?: boolean;
 }
 
 const AnimatedComponent: React.FC<Props> = ({
   children,
   animation = "slideInY",
   duration = 1,
+  triggerPercent = 0.1,
   xOffset = "40vw",
   yOffset = "20vh",
   zoomInFrom = 0.1,
@@ -50,9 +53,12 @@ const AnimatedComponent: React.FC<Props> = ({
   zoomOutYOffset = "40vh",
   delay = 0.2,
   className,
+  runOnce = false,
 }) => {
+  const [hasPlayed, setHasPlayed] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
   const animationVariants: Record<Animations, Variants> = {
     slideInX: {
       hidden: { x: xOffset, opacity: 0 },
@@ -258,11 +264,21 @@ const AnimatedComponent: React.FC<Props> = ({
 
   useEffect(() => {
     const currentRef = ref.current;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        // Check runOnce and hasPlayed to decide if we should trigger the animation
+        if (
+          (runOnce && !hasPlayed && entry.intersectionRatio > triggerPercent) ||
+          (!runOnce && entry.intersectionRatio > triggerPercent)
+        ) {
+          setIsVisible(true);
+          if (runOnce) {
+            setHasPlayed(true);
+          }
+        }
       },
-      { threshold: 0.1 }
+      { threshold: [0.9, triggerPercent] }
     );
 
     if (currentRef) {
@@ -274,7 +290,7 @@ const AnimatedComponent: React.FC<Props> = ({
         observer.unobserve(currentRef);
       }
     };
-  }, []);
+  }, [triggerPercent, runOnce, hasPlayed]); // Add runOnce to the dependency array
 
   const variants = animationVariants[animation];
 
