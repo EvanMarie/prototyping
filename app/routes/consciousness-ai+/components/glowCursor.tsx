@@ -11,8 +11,10 @@ export default function GlowCursor() {
     };
 
     const updateCursorPosition = () => {
-      cursorPos.current.x += (targetPos.current.x - cursorPos.current.x) * 0.02;
-      cursorPos.current.y += (targetPos.current.y - cursorPos.current.y) * 0.02;
+      cursorPos.current.x +=
+        (targetPos.current.x - cursorPos.current.x) * 0.035;
+      cursorPos.current.y +=
+        (targetPos.current.y - cursorPos.current.y) * 0.035;
 
       if (cursorRef.current) {
         cursorRef.current.style.left = `${cursorPos.current.x}px`;
