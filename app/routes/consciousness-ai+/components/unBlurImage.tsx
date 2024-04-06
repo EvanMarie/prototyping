@@ -13,8 +13,8 @@ interface UnblurImageProps {
 
 export default function UnblurImage({
   imageUrl,
-  rows = 8,
-  columns = 8,
+  rows = 7,
+  columns = 7,
   blurAmount = 70,
   transitionDuration = 0.4,
   dimensions = "w-[50vh] h-[50vh]",

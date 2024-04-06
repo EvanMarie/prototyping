@@ -20,17 +20,17 @@ export default function ConscioussnessIndex() {
       <ConsciousnessHeroMenu />
       <VStack
         align="items-start"
-        className="text-teal-300 text-[3vh] absolute left-[10vh] top-[9vh] sm:left-[5vh] md:left-[6vh] md:top-[13vh] lg:top-[12vh] lg:left-[13vh] xl:left-[20vh] xxl:left-[20vh] xxl:top-[20vh] textShadow"
+        className="text-teal-300 text-[3vh] absolute right-[2vh] top-[11vh] md:left-[10vh] md:top-[13vh] lg:top-[12vh] lg:left-[13vh] xl:left-[20vh] xxl:left-[20vh] xxl:top-[20vh] textShadow"
       >
         <Text>What can you do with AI?</Text>
         {/* <Text>What can you</Text>
         <Text>do with AI?</Text> */}
       </VStack>
-      <Box className="h-[96vw] w-[96vw] sm:h-[90vw] sm:w-[90vw] md:h-[60vh] md:w-[60vh] absolute top-[20vh] opacity-60">
+      <Box className="h-[96vw] w-[96vw] sm:h-[90vw] sm:w-[90vw] md:h-[66vh] md:w-[65vh] absolute top-[20vh] md:top-[25vh] opacity-60">
         {/* <Image src="/images/consciousnessFrontImage.png" alt="consciousness" /> */}
         <UnblurImage
           imageUrl="/images/consciousnessFrontImage.png"
-          dimensions="h-[96vw] w-[96vw] sm:h-[90vw] sm:w-[90vw] md:h-[60vh] md:w-[60vh]"
+          dimensions="h-[96vw] w-[96vw] sm:h-[90vw] sm:w-[90vw] md:h-[66vh] md:w-[65vh]"
         />
       </Box>
     </TransitionFull>

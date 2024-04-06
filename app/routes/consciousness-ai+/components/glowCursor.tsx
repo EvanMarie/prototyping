@@ -11,10 +11,8 @@ export default function GlowCursor() {
     };
 
     const updateCursorPosition = () => {
-      cursorPos.current.x +=
-        (targetPos.current.x - cursorPos.current.x) * 0.035;
-      cursorPos.current.y +=
-        (targetPos.current.y - cursorPos.current.y) * 0.035;
+      cursorPos.current.x += (targetPos.current.x - cursorPos.current.x) * 0.04;
+      cursorPos.current.y += (targetPos.current.y - cursorPos.current.y) * 0.04;
 
       if (cursorRef.current) {
         cursorRef.current.style.left = `${cursorPos.current.x}px`;
@@ -43,7 +41,7 @@ export default function GlowCursor() {
         height: "60vh",
         borderRadius: "50%",
         background:
-          "radial-gradient(circle, rgba(110, 37, 153, 0.7) 0%, rgba(90, 38, 120, 0.7) 25%, rgba(73, 0, 115, 0.3) 50%, rgba(0, 0, 0, 0) 80%)",
+          "radial-gradient(circle, rgba(110, 37, 153, 0.8) 0%, rgba(90, 38, 120, 0.6) 25%, rgba(73, 0, 115, 0.4) 50%, rgba(255, 255, 255, 0) 80%)",
         opacity: 0.3,
         transform: "translate(-50%, -50%)",
         transition: "opacity 0.3s ease-in-out",
