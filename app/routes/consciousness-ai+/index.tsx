@@ -23,7 +23,7 @@ function AnimatedFlipTestBox({ text, delay }: { text: string; delay: number }) {
       delay={delay}
       duration={0.5}
     >
-      <Center className="p-[2vh] h-[40vh] w-[35vh] bg-purple-600/50">
+      <Center className="p-[2vh] h-[40vh] w-[35vh] shadowBroadLooser border-970-md bg-zinc-300 bg-gradient-to-br from-purple-700/70 via-indigo-700/70 to-teal-700/70">
         {text}
       </Center>
     </AnimatedComponent>
@@ -45,7 +45,7 @@ export default function ConscioussnessIndex() {
           <ConsciousnessHeroMenu />
           <VStack
             align="items-start"
-            className="text-teal-300 text-[3vh] absolute right-[2vh] top-[11vh] md:left-[10vh] md:top-[13vh] lg:top-[12vh] lg:left-[13vh] xl:left-[20vh] xxl:left-[20vh] xxl:top-[20vh] textShadow"
+            className="text-teal-200 text-[3vh] absolute right-[2vh] top-[11vh] md:left-[10vh] md:top-[13vh] lg:top-[12vh] lg:left-[13vh] xl:left-[20vh] xxl:left-[20vh] xxl:top-[20vh] textShadow"
           >
             <Text>What can you do with AI?</Text>
           </VStack>
@@ -61,7 +61,11 @@ export default function ConscioussnessIndex() {
         </LayoutContainer>
         <VStackFull className="h-fit">
           {/* ************************* MODELS ************************* */}
-          <StickyLabeledSection labelText="Models" labelClassName={labelStyles}>
+          <StickyLabeledSection
+            labelText="Models"
+            labelClassName={labelStyles}
+            id="models"
+          >
             <FlexFull className="h-fit">
               <Wrap className="w-full justify-center md:justify-evenly gap-[6vh] py-[2vh]">
                 <AnimatedFlipTestBox text="Card One" delay={GetRandomDelay()} />
@@ -88,6 +92,7 @@ export default function ConscioussnessIndex() {
             labelText="Generative AI"
             labelClassName={labelStyles}
             spacerHeight="h-[6vh]"
+            id="generative"
           >
             <AnimatedComponent
               animation="fadeIn"
@@ -95,7 +100,7 @@ export default function ConscioussnessIndex() {
               runOnce={true}
             >
               <FlexFull className="h-screen py-[2vh] px-[1vh] sm:px-[2vh]">
-                <CenterFull className="h-full bg-teal-600/30">
+                <CenterFull className="h-full  shadowBroadLooser border-970-md bg-zinc-900 bg-gradient-to-br from-purple-700/70 via-indigo-700/70 to-teal-700/70">
                   Section Two Page One
                 </CenterFull>
               </FlexFull>
@@ -106,6 +111,7 @@ export default function ConscioussnessIndex() {
             labelText="Ethics"
             labelClassName={labelStyles}
             spacerHeight="h-[14vh]"
+            id="ethics"
           >
             <FlexFull className="h-screen ">Section One - Page One</FlexFull>
             <FlexFull className="h-screen">Section One - Page Two</FlexFull>
@@ -115,6 +121,7 @@ export default function ConscioussnessIndex() {
             labelText="Contact"
             labelClassName={labelStyles}
             spacerHeight="h-[5vh]"
+            id="contact"
           >
             <FlexFull className="h-screen">Page One</FlexFull>
           </StickyLabeledSection>

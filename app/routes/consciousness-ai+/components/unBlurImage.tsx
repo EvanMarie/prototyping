@@ -15,7 +15,7 @@ export default function UnblurImage({
   imageUrl,
   rows = 7,
   columns = 7,
-  blurAmount = 70,
+  blurAmount = 75,
   transitionDuration = 0.4,
   dimensions = "w-[50vh] h-[50vh]",
   initialOpacity = 0.3,
