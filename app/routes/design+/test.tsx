@@ -8,12 +8,12 @@ import Flex from "~/components/buildingBlocks/flex";
 import Center from "~/components/buildingBlocks/center";
 import Text from "~/components/buildingBlocks/text";
 
-const itemNumbers = Array.from({ length: 100 }, (_, i) => i + 1);
+const itemNumbers = Array.from({ length: 3 }, (_, i) => i + 1);
 
 export default function Test() {
   function TickerItem({ itemNumber }: { itemNumber: number }) {
     return (
-      <Center>
+      <Center className="p-[1vh] bg-col-490 text-col-100 textShadow shadowNarrowNormal border-970-md">
         <Text>Item: {String(itemNumber)}</Text>
       </Center>
     );
@@ -21,12 +21,8 @@ export default function Test() {
   return (
     <TransitionFull className="relative">
       <LayoutContainer className="relative overflow-y-auto">
-        <Flex className="w-[40vh] bg-col-550 p-[2vh] h-fit">
-          <Ticker>
-            {itemNumbers.map((itemNumber) => (
-              <TickerItem key={itemNumber} itemNumber={itemNumber} />
-            ))}
-          </Ticker>
+        <Flex className="w-[40vh] bg-col-950 p-[2vh] h-fit">
+          <Ticker speed={70} items = {}>
         </Flex>
       </LayoutContainer>
     </TransitionFull>
