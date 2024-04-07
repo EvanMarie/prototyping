@@ -13,6 +13,8 @@ import AnimatedComponent from "~/components/animate-on-scroll/animateOnScroll";
 import Wrap from "~/components/buildingBlocks/wrap";
 import Center from "~/components/buildingBlocks/center";
 import CenterFull from "~/components/buildingBlocks/centerFull";
+import Flex from "~/components/buildingBlocks/flex";
+import ShiftingImages from "./components/shiftingImages";
 
 function AnimatedFlipTestBox({ text, delay }: { text: string; delay: number }) {
   return (
@@ -36,6 +38,12 @@ function GetRandomDelay() {
 }
 
 export default function ConscioussnessIndex() {
+  const genSectionStyles =
+    "w-[75vw] h-[75vw] rounded-full shadowBroadLooser border-970-md";
+  const genImages = Array.from(
+    { length: 17 },
+    (_, i) => `/images/consciousness_ai/genArt${i + 1}.png`
+  );
   const labelStyles = "px-[1vh] py-[0.5vh] text-zinc-100 textShadow text-[3vh]";
   return (
     <TransitionFull className="overflow-y-auto text-zinc-100">
@@ -100,10 +108,15 @@ export default function ConscioussnessIndex() {
               runOnce={true}
               triggerPercent={0.3}
             >
-              <FlexFull className="h-screen py-[2vh] px-[1vh] sm:px-[2vh] justify-center">
-                <CenterFull className="h-full md:w-95% lg:w-85% shadowBroadLooser border-970-md bg-zinc-900 bg-gradient-to-br from-purple-700/70 via-indigo-700/70 to-teal-700/70">
-                  Section Two Page One
-                </CenterFull>
+              <FlexFull className="h-fitxl:h-screen py-[2vh] px-[1vh] sm:px-[2vh] justify-center">
+                <FlexFull className="h-fit md:w-95% lg:w-85% shadowBroadLooser border-970-md bg-zinc-900 bg-gradient-to-br from-purple-700/70 via-indigo-700/70 to-teal-700/70">
+                  <FlexFull className="flex-col xl:flex-row items-center p-[2vh] gap-[2vh]">
+                    <Flex className={genSectionStyles}>
+                      <ShiftingImages imageArray={genImages} shape="circle" />
+                    </Flex>
+                    <Flex className={genSectionStyles}></Flex>
+                  </FlexFull>
+                </FlexFull>
               </FlexFull>
             </AnimatedComponent>
           </StickyLabeledSection>

@@ -38,19 +38,20 @@ const TickerItem: React.FC<TickerItemProps> = ({
     });
   }, [controls]);
 
+  const rect = ref.current?.getBoundingClientRect();
+  const xPos = rect?.x || 0;
+  console.log(xPos);
   useEffect(() => {
     const tickerItem = ref.current;
     const parentWidth = tickerItem?.parentElement?.offsetWidth || 0;
-    if (onPositionTrigger && tickerItem) {
-      const rect = tickerItem.getBoundingClientRect();
-      const xPos = rect.x;
+    if (onPositionTrigger && tickerItem && xPos && rect) {
       console.log(xPos); // Logs the x position
       if (xPos < parentWidth - positionFactor * rect.width) {
         console.log("Triggered");
         onPositionTrigger();
       }
     }
-  }, [onPositionTrigger, positionFactor]);
+  }, [onPositionTrigger, positionFactor, xPos]);
 
   return (
     <motion.div ref={ref} animate={controls}>

@@ -5,7 +5,7 @@ import HStackFull from "~/components/buildingBlocks/hStackFull";
 
 export default function ImageGallery() {
   const [imageArray, setImageArray] = useState<string[]>([]);
-  const imageDimensions = "w-[20vw] h-[20vw]";
+  const imageDimensions = "w-[90vh] h-[90vh]";
   useEffect(() => {
     const imageCount = 10;
     const imageWidth = 800;
@@ -29,7 +29,7 @@ export default function ImageGallery() {
           imageDimensions={imageDimensions}
           shape="diamond"
         />
-        <ShiftingImages
+        {/* <ShiftingImages
           imageArray={imageArray}
           imageDimensions={imageDimensions}
           shape="diamond"
@@ -53,7 +53,7 @@ export default function ImageGallery() {
           imageArray={imageArray}
           imageDimensions={imageDimensions}
           shape="diamond"
-        />
+        /> */}
       </HStackFull>
     </CenterFull>
   );
