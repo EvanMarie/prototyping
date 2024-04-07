@@ -1,10 +1,11 @@
 import CenterFull from "~/components/buildingBlocks/centerFull";
 import ShiftingImages from "./components/shiftingImages";
 import { useEffect, useState } from "react";
+import HStackFull from "~/components/buildingBlocks/hStackFull";
 
 export default function ImageGallery() {
   const [imageArray, setImageArray] = useState<string[]>([]);
-
+  const imageDimensions = "w-[20vw] h-[20vw]";
   useEffect(() => {
     const imageCount = 10;
     const imageWidth = 800;
@@ -22,7 +23,38 @@ export default function ImageGallery() {
 
   return (
     <CenterFull>
-      <ShiftingImages imageArray={imageArray} />
+      <HStackFull className="justify-evenly" gap="gap-[0px]">
+        <ShiftingImages
+          imageArray={imageArray}
+          imageDimensions={imageDimensions}
+          shape="diamond"
+        />
+        <ShiftingImages
+          imageArray={imageArray}
+          imageDimensions={imageDimensions}
+          shape="diamond"
+        />
+        <ShiftingImages
+          imageArray={imageArray}
+          imageDimensions={imageDimensions}
+          shape="diamond"
+        />
+        <ShiftingImages
+          imageArray={imageArray}
+          imageDimensions={imageDimensions}
+          shape="diamond"
+        />
+        <ShiftingImages
+          imageArray={imageArray}
+          imageDimensions={imageDimensions}
+          shape="diamond"
+        />
+        <ShiftingImages
+          imageArray={imageArray}
+          imageDimensions={imageDimensions}
+          shape="diamond"
+        />
+      </HStackFull>
     </CenterFull>
   );
 }

@@ -6,21 +6,41 @@ interface ShiftingImagesProps {
   imageArray: string[];
   delaySeconds?: number;
   transitionDuration?: number;
-  height?: string;
-  width?: string;
+  imageDimensions?: string;
+  shape?:
+    | "rectangle"
+    | "circle"
+    | "triangle"
+    | "diamond"
+    | "octagon"
+    | "invertedTriangle";
+  imageClassName?: string;
+  containerClassName?: string;
+  shadow?: string;
 }
+
+const shapeStyles = {
+  rectangle: "",
+  circle: "circle(50%)",
+  triangle: "polygon(50% 0%, 0% 100%, 100% 100%)",
+  invertedTriangle: "polygon(0% 0%, 100% 0%, 50% 100%)",
+  diamond: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+  octagon:
+    "polygon(30% 10%, 70% 10%, 90% 30%, 90% 70%, 70% 90%, 30% 90%, 10% 70%, 10% 30%)",
+};
 
 export default function ShiftingImages({
   imageArray,
   delaySeconds = 3,
   transitionDuration = 5,
-  height = "h-full",
-  width = "w-full",
+  imageDimensions = "h-full w-full",
+  shape = "rectangle",
+  imageClassName = "",
+  containerClassName = "",
 }: ShiftingImagesProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    const transitionDuration = 3;
     const totalDisplayTime = delaySeconds * 1000 + transitionDuration * 1000;
     const timer = setTimeout(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageArray.length);
@@ -29,10 +49,14 @@ export default function ShiftingImages({
     return () => {
       clearTimeout(timer);
     };
-  }, [currentImageIndex, delaySeconds, imageArray.length]);
+  }, [currentImageIndex, delaySeconds, imageArray.length, transitionDuration]);
+
+  const imageStyle = {
+    ...(shapeStyles[shape] ? { clipPath: shapeStyles[shape] } : {}),
+  };
 
   return (
-    <FlexFull className={`relative ${height} ${width}`}>
+    <FlexFull className={`relative ${imageDimensions} ${containerClassName}`}>
       <AnimatePresence>
         <motion.img
           key={currentImageIndex}
@@ -41,7 +65,8 @@ export default function ShiftingImages({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: transitionDuration, ease: "easeInOut" }}
-          className="absolute inset-0 w-full h-full object-cover"
+          style={imageStyle}
+          className={`absolute inset-0 object-cover ${imageDimensions} ${imageClassName}`}
         />
       </AnimatePresence>
     </FlexFull>
