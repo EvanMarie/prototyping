@@ -11,6 +11,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@motionone/utils": "^10.17.0",
     "@observablehq/plot": "^0.6.14",
     "@react-spring/parallax": "^9.7.3",
     "@remix-run/node": "^2.8.1",
