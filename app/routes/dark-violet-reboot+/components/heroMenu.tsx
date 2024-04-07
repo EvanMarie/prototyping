@@ -22,7 +22,7 @@ export default function DarkVioletHero() {
     linkUrl: string;
   }) {
     const linkStyle =
-      "w-[9vh] lg:w-[10vh] lg:w-[12vh] xl:w-[15vh] xxl:w-[16vh] text-[2.5vh] md:text-[2.5vh] lg:text-[3vh] xl:text-[3.5vh] xxl:text-[4vh] text-cyan-200 textShadow flex justify-center items-center flex-shrink-0 hover:text-fuchsia-600 transition-300";
+      "w-20% md:text-[2.1vh] lg:text-[2.8vh] xl:text-[3.5vh]  text-cyan-200 textShadow flex justify-center items-center  hover:text-fuchsia-600 transition-300";
 
     return (
       <motion.div
@@ -46,6 +46,10 @@ export default function DarkVioletHero() {
       to: "#us",
     },
     {
+      title: "blog",
+      to: "#blog",
+    },
+    {
       title: "chat",
       to: "#chat",
     },
@@ -56,18 +60,17 @@ export default function DarkVioletHero() {
   ];
 
   return (
-    <HStackFull className="h-[10vh] lg:h-[12vh] xl:h-[13vh] justify-between px-[1.5vh] lg:px-[2vh] xxl:px-[5vh] items-end relative">
+    <HStackFull className="h-[10vh] lg:h-[12vh] xl:h-[13vh] justify-between px-[1.5vh] lg:px-[2vh] xxl:px-[5vh] items-end relative gap-[5vh]">
       <Flex className="text-[3.7vh] sm:text-[4vh] md:text-[4.5vh] lg:text-[6vh] xl:text-[7vh] leading-tighter textShadow kufam-font flex-shrink-0 items-center h-full text-purple-300">
         <AnimatedText
           text="DarkViolet.ai"
-          textClassName="text-fuchsia-400 text-[5.7vh] md:text-[5.7vh] lg:text-[7vh] xl:text-[7.5vh] xxl:text-[8vh] textShadow tracking-wider"
+          textClassName="text-fuchsia-400 text-[5.7vh] md:text-[5vh] lg:text-[7vh] xl:text-[7.5vh] xxl:text-[8vh] textShadow tracking-wider"
         />
       </Flex>
-      <HStack className="h-full items-center hidden md:flex justify-evenly flex-shrink-0 ">
-        <LinkText linkText="portfolio" linkUrl="#portfolio" />
-        <LinkText linkText="us" linkUrl="#us" />
-        <LinkText linkText="chat" linkUrl="#chat" />
-        <LinkText linkText="contact" linkUrl="#contact" />
+      <HStack className="h-full w-[50vw] xl:w-[55vw] items-center hidden md:flex justify-evenly flex-shrink-0 px-[1vh] lg:px-[2vh]">
+        {menuItems.map((item, index) => (
+          <LinkText key={index} linkText={item.title} linkUrl={item.to} />
+        ))}
       </HStack>
 
       <Box className="group bg-cyan-400 p-[0.7vh] hover:bg-fuchsia-800 md:p-[1.5vh] shadowBroadLoose border-970-md absolute top-[1.5vh] right-[1vh] md:hidden transition-400 hover:cursor-pointer">

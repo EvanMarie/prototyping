@@ -16,6 +16,7 @@ import CenterFull from "~/components/buildingBlocks/centerFull";
 import Flex from "~/components/buildingBlocks/flex";
 import ShiftingImages from "./components/shiftingImages";
 import AnimatedText from "~/components/specialty/animatedText";
+import ShiftingComponents from "./components/shiftingComponents";
 
 function AnimatedFlipTestBox({ text, delay }: { text: string; delay: number }) {
   return (
@@ -52,16 +53,16 @@ export default function ConscioussnessIndex() {
       <VStackFull className="h-fit">
         <LayoutContainer className="relative">
           <DarkVioletHero />
-          <VStack align="items-start">
-            <Box className=" absolute right-[2vh] top-[13vh] md:left-[10vh] md:top-[13vh] lg:top-[12vh] lg:left-[13vh] xl:left-[20vh] xxl:left-[20vh] xxl:top-[20vh] textShadow">
-              <AnimatedText
-                text="What can AI do for you?"
-                animationType="fadeIn"
-                textClassName="text-[3vh] text-cyan-300"
-                overallDuration={1.5}
-              />
-            </Box>
-          </VStack>
+
+          <Box className=" absolute w-fit right-[2vh] top-[13vh] md:top-[15vh] md:left-[8vh] lg:top-[15vh] lg:left-[13vh] xl:top-[16vh] xl:left-[16vh] xxl:left-[20vh]">
+            <AnimatedText
+              text="What can AI do for you?"
+              animationType="fadeIn"
+              textClassName="text-[3vh] md:text-[4vh] text-cyan-300 textShadow"
+              overallDuration={1.5}
+            />
+          </Box>
+
           <Box className="h-[96vw] w-[96vw] sm:h-[90vw] sm:w-[90vw] md:h-[66vh] md:w-[65vh] absolute top-[25vh] opacity-60">
             <UnblurImage
               rows={3}
@@ -101,7 +102,7 @@ export default function ConscioussnessIndex() {
 
           {/* ************************* US  ************************* */}
           <StickyLabeledSection
-            labelText="who we are"
+            labelText="about us"
             labelClassName={labelStyles}
             spacerHeight="h-[6vh]"
             id="us"
@@ -122,6 +123,40 @@ export default function ConscioussnessIndex() {
                   </FlexFull>
                 </FlexFull>
               </FlexFull>
+            </AnimatedComponent>
+          </StickyLabeledSection>
+
+          {/* ************************* BLOG  ************************* */}
+          <StickyLabeledSection
+            labelText="blog"
+            labelClassName={labelStyles}
+            spacerHeight="h-[6vh]"
+            id="blog"
+          >
+            <AnimatedComponent
+              animation="zoomIn"
+              className="w-full h-screen"
+              runOnce={true}
+              triggerPercent={0.3}
+            >
+              <CenterFull className="h-fit xl:h-screen py-[2vh] px-[1vh] sm:px-[2vh] justify-center">
+                {" "}
+                <Flex className="w-[50vh] h-[50vh]">
+                  <ShiftingComponents
+                    componentArray={[
+                      <Center className="bg-purple-400 text-zinc-100 h-[40vh] w-[40vh]">
+                        One
+                      </Center>,
+                      <Center className="bg-fuchsia-400 text-zinc-100 h-[40vh] w-[40vh]">
+                        Two
+                      </Center>,
+                      <Center className="bg-cyan-400 text-zinc-100 h-[40vh] w-[40vh]">
+                        Three
+                      </Center>,
+                    ]}
+                  />
+                </Flex>
+              </CenterFull>
             </AnimatedComponent>
           </StickyLabeledSection>
 
