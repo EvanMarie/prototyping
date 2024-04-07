@@ -55,7 +55,7 @@ export default function StickyLabeledSection({
             className={`${labelRotation} h-fit sticky ${stickyTopPosition} ${labelClassName}`}
             style={{ transformOrigin: "100% 0" }}
           >
-            <Text className="text-nowrap">{labelText}</Text>
+            <Text className="whitespace-nowrap">{labelText}</Text>
           </Box>
         </Flex>
         <VStackFull

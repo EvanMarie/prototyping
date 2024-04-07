@@ -60,7 +60,7 @@ export default function DarkVioletHero() {
       <Flex className="text-[3.7vh] sm:text-[4vh] md:text-[4.5vh] lg:text-[6vh] xl:text-[7vh] leading-tighter textShadow kufam-font flex-shrink-0 items-center h-full text-purple-300">
         <AnimatedText
           text="DarkViolet.ai"
-          textClassName="text-fuchsia-400 text-[7vh] md:text-[5.7vh] lg:text-[7vh] xl:text-[7.5vh] xxl:text-[8vh] textShadow tracking-wider"
+          textClassName="text-fuchsia-400 text-[5.7vh] md:text-[5.7vh] lg:text-[7vh] xl:text-[7.5vh] xxl:text-[8vh] textShadow tracking-wider"
         />
       </Flex>
       <HStack className="h-full items-center hidden md:flex justify-evenly flex-shrink-0 ">
