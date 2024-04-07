@@ -19,18 +19,30 @@ const Ticker: React.FC<TickerProps> = ({
   const tickerRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
   const [itemStack, setItemStack] = React.useState<React.ReactNode[]>([]);
-    const refArray = useRef([]);
+  const refArray = useRef<HTMLDivElement[]>([]);
 
   // STACK BUILDING
-  useEffect(() => {
-    const newItems = items.map((item, index) => (
-      <motion.div key={index} ref={refArray.current[index]}>{item}</motion.div>
-    ));
+useEffect(() => {
+    const newItems = items.map((item, index) => {
+        if (!refArray.current[index]) {
+            refArray.current[index] = React.createRef();
+        }
+        return <motion.div key={index} ref={refArray.current[index]}>{item}</motion.div>;
+    });
     setItemStack(newItems);
-  }, [items]);
+}, [items]);
+
 
 useEffect(() => {
+    const lastItem = refArray.current[itemStack.length - 1];
+    if (lastItem) {
+        const rect = lastItem.getBoundingClientRect();
+        const xPos = rect.x;
+        console.log(xPos); // Logs the x position of the last item
+    }
+}, [itemStack]);
     
+
 
 
   //   ANIMATION MOVEMENT
