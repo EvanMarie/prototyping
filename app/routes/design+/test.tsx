@@ -20,7 +20,8 @@ export default function Test() {
   }
   return (
     <TransitionFull className="relative">
-      <LayoutContainer className="relative overflow-y-auto">
+      this
+      {/* <LayoutContainer className="relative overflow-y-auto">
         <Flex className="w-[40vh] bg-col-950 p-[2vh] h-fit">
           <Ticker
             speed={70}
@@ -29,7 +30,7 @@ export default function Test() {
             ))}
           />
         </Flex>
-      </LayoutContainer>
+      </LayoutContainer> */}
     </TransitionFull>
   );
 }
