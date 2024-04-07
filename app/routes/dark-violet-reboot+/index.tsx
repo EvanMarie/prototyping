@@ -2,8 +2,6 @@ import TransitionFull from "~/components/buildingBlocks/TransitionFull";
 import FlexFull from "~/components/buildingBlocks/flexFull";
 import TopMenu from "./components/topMenu";
 import Box from "~/components/buildingBlocks/box";
-import Text from "~/components/buildingBlocks/text";
-import VStack from "~/components/buildingBlocks/vStack";
 import GlowCursor from "./components/glowCursor";
 import UnblurImage from "./components/unBlurImage";
 import VStackFull from "~/components/buildingBlocks/vStackFull";
@@ -17,9 +15,8 @@ import Flex from "~/components/buildingBlocks/flex";
 import ShiftingImages from "./components/shiftingImages";
 import AnimatedText from "~/components/specialty/animatedText";
 import ShiftingComponents from "./components/shiftingComponents";
-import PorfolioCard from "~/routes/dark-violet-reboot+/components/portfolioFlashCard";
-import { PortfolioImage, PortfolioItem, Projects } from "./components/data";
-import CenterHorizontalFull from "~/components/buildingBlocks/centerHorizontalFull";
+import { PortfolioItem, Projects } from "./components/data";
+import ShiftingPortfolioCard from "./components/shiftingPortfolioCard";
 
 function GetRandomDelay() {
   return Math.random() * (0.6 - 0.1) + 0.1;
@@ -69,18 +66,19 @@ export default function ConscioussnessIndex() {
           >
             <FlexFull className="h-fit">
               <VStackFull className="h-fit">
-                <FlexFull className="justify-center bg-white">
+                <FlexFull className="justify-center pt-[2vh]">
                   <ShiftingImages
+                    containerClassName="border-970-md shadowBroadLooser"
                     imageArray={genImages}
                     shape="rectangle"
-                    imageDimensions="h-[70vh] w-[80vw]"
+                    imageDimensions="h-[80vh] w-[80vw]"
                   />
                 </FlexFull>
                 <Wrap className="w-full h-fit justify-center md:justify-around items-evenly gap-[6vh] py-[2vh]">
                   {Projects.map((project, i) => (
-                    <PorfolioCard
+                    <ShiftingPortfolioCard
                       key={i}
-                      porfolioItem={project as PortfolioItem}
+                      portfolioItem={project as PortfolioItem}
                       delay={i * 0.1}
                     />
                   ))}

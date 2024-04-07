@@ -1,5 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import CenterHorizontalFull from "~/components/buildingBlocks/centerHorizontalFull";
+import Flex from "~/components/buildingBlocks/flex";
 import FlexFull from "~/components/buildingBlocks/flexFull";
 
 interface ShiftingImagesProps {
@@ -31,8 +33,8 @@ const shapeStyles = {
 
 export default function ShiftingImages({
   imageArray,
-  delaySeconds = 3,
-  transitionDuration = 5,
+  delaySeconds = 4,
+  transitionDuration = 4,
   imageDimensions = "h-full w-full",
   shape = "rectangle",
   imageClassName = "",
@@ -56,21 +58,22 @@ export default function ShiftingImages({
   };
 
   return (
-    <FlexFull
-      className={`relative ${imageDimensions} ${containerClassName} justify-center `}
-    >
-      <AnimatePresence>
-        <motion.img
-          key={currentImageIndex}
-          src={imageArray[currentImageIndex]}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: transitionDuration, ease: "easeInOut" }}
-          style={imageStyle}
-          className={`absolute inset-0 object-cover ${imageDimensions} ${imageClassName}`}
-        />
-      </AnimatePresence>
-    </FlexFull>
+    <CenterHorizontalFull>
+      <Flex className={`relative ${imageDimensions} ${containerClassName}`}>
+        <AnimatePresence>
+          {" "}
+          <motion.img
+            key={currentImageIndex}
+            src={imageArray[currentImageIndex]}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: transitionDuration, ease: "easeInOut" }}
+            style={imageStyle}
+            className={`absolute inset-0 object-cover ${imageDimensions} ${imageClassName} `}
+          />
+        </AnimatePresence>
+      </Flex>
+    </CenterHorizontalFull>
   );
 }
