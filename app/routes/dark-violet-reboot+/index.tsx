@@ -57,12 +57,12 @@ export default function ConscioussnessIndex() {
           >
             <Text>What can AI do for you?</Text>
           </VStack>
-          <Box className="h-[50vh] w-[60vw] sm:h-[90vw] sm:w-[90vw] md:h-[66vh] md:w-[65vh] absolute top-[25vh] opacity-60">
+          <Box className="h-[96vw] w-[96vw] sm:h-[90vw] sm:w-[90vw] md:h-[66vh] md:w-[65vh] absolute top-[25vh] opacity-60">
             <UnblurImage
               rows={3}
               columns={3}
-              imageUrl="/images/dark_violet/frontImage.png"
-              dimensions="h-[50vh] w-[60vw] sm:h-[90vw] sm:w-[90vw] md:h-[66vh] md:w-[65vh]"
+              imageUrl="/images/consciousnessFrontImage.png"
+              dimensions="h-[96vw] w-[96vw] sm:h-[90vw] sm:w-[90vw] md:h-[66vh] md:w-[65vh]"
             />
           </Box>
         </LayoutContainer>

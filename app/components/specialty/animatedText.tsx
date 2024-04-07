@@ -87,21 +87,27 @@ export default function AnimatedText({
   const randomLetterAnimationVariant = () => {
     const shouldSpin = Math.random() < 0.5; // 50% chance to spin
     const shouldScale = Math.random() < 0.5; // 50% chance to scale
+    const shouldMove = Math.random() < 0.5; // 50% chance to move along the y-axis
 
-    const spinDuration = 0.3 + Math.random() * 1.7; // Duration between 0.3 and 2 seconds
-    const scaleDuration = 0.3 + Math.random() * 1.7; // Duration between 0.3 and 2 seconds
-    const randomDelay = Math.random() * 2; // Random delay between 0 and 2 seconds
+    const spinDuration = 0.6 + Math.random() * 1.7; // Duration between 0.6 and 2.3 seconds
+    const scaleDuration = 0.6 + Math.random() * 1.7; // Duration between 0.3 and 2 seconds
+    const moveDuration = 0.6 + Math.random() * 1.7; // Duration between 0.3 and 2 seconds
+
+    const moveDistance = shouldMove ? 10 + Math.random() * 30 : 0; // Move distance between 10 and 40 units
+    const spinDirection = Math.random() < 0.5 ? 1 : -1; // Randomly choose clockwise or counter-clockwise
 
     return {
       hidden: {
         opacity: 1,
         rotate: 0,
         scale: 1,
+        y: 0,
       },
       visible: {
         opacity: 1,
-        rotate: shouldSpin ? [0, 360, 0] : 0,
+        rotate: shouldSpin ? [0, spinDirection * 360] : 0,
         scale: shouldScale ? [1, 1 + Math.random(), 1] : 1,
+        y: shouldMove ? [0, moveDistance, 0] : 0,
         transition: {
           opacity: { duration: 0.5 },
           rotate: {
@@ -109,14 +115,22 @@ export default function AnimatedText({
             ease: "linear",
             times: [0, 0.5, 1],
             repeat: Infinity,
-            repeatDelay: 1 + randomDelay, // Ensuring at least 1 second between animations
+            repeatDelay: 9, // Assuming a fixed delay for simplicity
           },
           scale: {
             duration: scaleDuration,
-            ease: "linear",
+            ease: "easeInOut",
             times: [0, 0.5, 1],
             repeat: Infinity,
-            repeatDelay: 1 + randomDelay, // Ensuring at least 1 second between animations
+            repeatDelay: 8,
+            yoyo: Infinity,
+          },
+          y: {
+            duration: moveDuration,
+            ease: "easeInOut",
+            times: [0, 0.5, 1],
+            repeat: Infinity,
+            repeatDelay: 8,
             yoyo: Infinity,
           },
         },

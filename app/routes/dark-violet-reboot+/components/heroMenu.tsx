@@ -22,7 +22,7 @@ export default function DarkVioletHero() {
     linkUrl: string;
   }) {
     const linkStyle =
-      "w-[9vh] lg:w-[11vh] xl:w-[13vh] text-[2vh] lg:text-[2.5vh] xl:text-[3vh] text-teal-200 textShadow flex justify-center items-center flex-shrink-0 hover:text-purple-200 transition-300";
+      "w-[9vh] lg:w-[11vh] xl:w-[13vh] text-[2.5vh] lg:text-[2.5vh] xl:text-[3vh] text-teal-200 textShadow flex justify-center items-center flex-shrink-0 hover:text-purple-200 transition-300";
 
     return (
       <motion.div
@@ -37,15 +37,11 @@ export default function DarkVioletHero() {
   }
 
   return (
-    <HStackFull className="h-[8.5vh] lg:h-[11vh] justify-between px-[1.5vh] lg:px-[2vh] xxl:px-[5vh] items-end relative">
+    <HStackFull className="h-[10vh] lg:h-[11vh] justify-between px-[1.5vh] lg:px-[2vh] xxl:px-[5vh] items-end relative">
       <Flex className="text-[3.7vh] sm:text-[4vh] md:text-[4.5vh] lg:text-[6vh] xl:text-[7vh] leading-tighter textShadow kufam-font flex-shrink-0 items-center h-full text-purple-300">
-        <AnimateInPlaceText
+        <AnimatedText
           text="DarkViolet.ai"
-          isWave
-          textColor="text-fuchsia-400"
-          textShadow=""
-          textSize="text-[5vh] md:text-[8vh]"
-          waveSize={13}
+          textClassName="text-fuchsia-400 text-[7vh] md:text-[5.7vh] textShadow tracking-wider"
         />
       </Flex>
       <HStack className="h-full items-center hidden md:flex justify-evenly flex-shrink-0 ">
