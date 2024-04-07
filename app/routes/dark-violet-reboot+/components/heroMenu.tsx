@@ -22,7 +22,7 @@ export default function DarkVioletHero() {
     linkUrl: string;
   }) {
     const linkStyle =
-      "w-[9vh] lg:w-[11vh] xl:w-[13vh] text-[2.5vh] lg:text-[2.5vh] xl:text-[3vh] text-teal-200 textShadow flex justify-center items-center flex-shrink-0 hover:text-purple-200 transition-300";
+      "w-[9vh] lg:w-[10vh] lg:w-[12vh] xl:w-[15vh] xxl:w-[16vh] text-[2.5vh] md:text-[2.5vh] lg:text-[3vh] xl:text-[3.5vh] xxl:text-[4vh] text-cyan-200 textShadow flex justify-center items-center flex-shrink-0 hover:text-fuchsia-600 transition-300";
 
     return (
       <motion.div
@@ -36,12 +36,31 @@ export default function DarkVioletHero() {
     );
   }
 
+  const menuItems = [
+    {
+      title: "portfolio",
+      to: "#portfolio",
+    },
+    {
+      title: "us",
+      to: "#us",
+    },
+    {
+      title: "chat",
+      to: "#chat",
+    },
+    {
+      title: "contact",
+      to: "#contact",
+    },
+  ];
+
   return (
-    <HStackFull className="h-[10vh] lg:h-[11vh] justify-between px-[1.5vh] lg:px-[2vh] xxl:px-[5vh] items-end relative">
+    <HStackFull className="h-[10vh] lg:h-[12vh] xl:h-[13vh] justify-between px-[1.5vh] lg:px-[2vh] xxl:px-[5vh] items-end relative">
       <Flex className="text-[3.7vh] sm:text-[4vh] md:text-[4.5vh] lg:text-[6vh] xl:text-[7vh] leading-tighter textShadow kufam-font flex-shrink-0 items-center h-full text-purple-300">
         <AnimatedText
           text="DarkViolet.ai"
-          textClassName="text-fuchsia-400 text-[7vh] md:text-[5.7vh] textShadow tracking-wider"
+          textClassName="text-fuchsia-400 text-[7vh] md:text-[5.7vh] lg:text-[7vh] xl:text-[7.5vh] xxl:text-[8vh] textShadow tracking-wider"
         />
       </Flex>
       <HStack className="h-full items-center hidden md:flex justify-evenly flex-shrink-0 ">
@@ -51,25 +70,29 @@ export default function DarkVioletHero() {
         <LinkText linkText="contact" linkUrl="#contact" />
       </HStack>
 
-      <Box className="bg-cyan-800/50 p-[0.7vh] md:p-[1.5vh] shadowBroadLoose border-970-md  absolute top-[1.5vh] right-[1vh] md:hidden">
+      <Box className="group bg-cyan-400 p-[0.7vh] hover:bg-fuchsia-800 md:p-[1.5vh] shadowBroadLoose border-970-md absolute top-[1.5vh] right-[1vh] md:hidden transition-400 hover:cursor-pointer">
         <StaggerMenu
+          menuItems={menuItems}
           enterFrom="top"
           staggerDuration={0.2}
           overlayStyle=" bg- backdrop-blur-md"
           menuDirection="flex-col"
           containerClassName="w-screen justify-evenly p-[1vh]"
           itemPadding="px-[1.5vh] py-[0.5vh]"
-          itemStyle="bg-col-300"
-          itemHoverStyle="hoverbg-col-200 transition-400"
-          itemHoverAnimation="hover:-translate-x-[1vh]"
+          itemStyle="bg-purple-700 border-970-md shadowBroadLooser w-[75vw] sm:w-[65vw] h-[5.5vh] flex items-center text-[2.5vh] text-zinc-100 textShadow hover:bg-purple-500 transition-400"
+          itemHoverStyle="hover:bg-fuchsia-600 transition-400"
           closeButtonDelay={1}
+          menuGap="gap-[3vh]"
+          menuPosition="left-0 top-[2vh]"
           slideDistance={10}
           damping={10}
           stiffness={100}
           buttonComponent={
             <Icon
               icon={DotsMenuIcon}
-              iconClassName="text-zinc-100 text-[3vh]"
+              iconClassName="text-gray-900 text-[3vh] group-hover:text-cyan-200 transition-400"
+              containerClassName="w-full h-full"
+              hoverCursor="cursor-pointer"
             />
           }
         />

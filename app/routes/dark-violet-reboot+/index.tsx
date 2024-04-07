@@ -15,6 +15,7 @@ import Center from "~/components/buildingBlocks/center";
 import CenterFull from "~/components/buildingBlocks/centerFull";
 import Flex from "~/components/buildingBlocks/flex";
 import ShiftingImages from "./components/shiftingImages";
+import AnimatedText from "~/components/specialty/animatedText";
 
 function AnimatedFlipTestBox({ text, delay }: { text: string; delay: number }) {
   return (
@@ -51,11 +52,15 @@ export default function ConscioussnessIndex() {
       <VStackFull className="h-fit">
         <LayoutContainer className="relative">
           <DarkVioletHero />
-          <VStack
-            align="items-start"
-            className="text-teal-200 text-[3vh] absolute right-[2vh] top-[11vh] md:left-[10vh] md:top-[13vh] lg:top-[12vh] lg:left-[13vh] xl:left-[20vh] xxl:left-[20vh] xxl:top-[20vh] textShadow"
-          >
-            <Text>What can AI do for you?</Text>
+          <VStack align="items-start">
+            <Box className=" absolute right-[2vh] top-[13vh] md:left-[10vh] md:top-[13vh] lg:top-[12vh] lg:left-[13vh] xl:left-[20vh] xxl:left-[20vh] xxl:top-[20vh] textShadow">
+              <AnimatedText
+                text="What can AI do for you?"
+                animationType="fadeIn"
+                textClassName="text-[3vh] text-cyan-300"
+                overallDuration={1.5}
+              />
+            </Box>
           </VStack>
           <Box className="h-[96vw] w-[96vw] sm:h-[90vw] sm:w-[90vw] md:h-[66vh] md:w-[65vh] absolute top-[25vh] opacity-60">
             <UnblurImage
@@ -71,7 +76,7 @@ export default function ConscioussnessIndex() {
           <StickyLabeledSection
             labelText="portfolio"
             labelClassName={labelStyles}
-            id="models"
+            id="portfolio"
           >
             <FlexFull className="h-fit">
               <Wrap className="w-full justify-center md:justify-evenly gap-[6vh] py-[2vh]">
@@ -99,7 +104,7 @@ export default function ConscioussnessIndex() {
             labelText="who we are"
             labelClassName={labelStyles}
             spacerHeight="h-[6vh]"
-            id="generative"
+            id="us"
           >
             <AnimatedComponent
               animation="fadeIn"
@@ -125,7 +130,7 @@ export default function ConscioussnessIndex() {
             labelText="chat"
             labelClassName={labelStyles}
             spacerHeight="h-[14vh]"
-            id="ethics"
+            id="chat"
           >
             <FlexFull className="h-screen ">Section One - Page One</FlexFull>
             <FlexFull className="h-screen">Section One - Page Two</FlexFull>

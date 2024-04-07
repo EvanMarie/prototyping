@@ -45,7 +45,7 @@ export default function StaggerMenu({
   itemPadding = "px-[1.5vh] py-[0.5vh]",
   itemStyle = "bg-col-300",
   itemHoverStyle = "hover:bg-col-200 transition-400",
-  itemHoverAnimation = "hover:-translate-x-[1vh]",
+  itemHoverAnimation,
   slideDistance = 100,
   damping = 10,
   stiffness = 100,
@@ -211,7 +211,7 @@ export default function StaggerMenu({
                     className={`${menuDirection} ${menuGap} w-full ${
                       menuDirection === "flex-row"
                         ? "justify-around items-center"
-                        : "justify-center items-between"
+                        : "justify-center items-center"
                     }`}
                   >
                     {menuItems.map((item, index) => (
@@ -220,6 +220,11 @@ export default function StaggerMenu({
                         variants={itemVariants}
                         custom={enterFrom}
                         exit={itemVariants.exit(enterFrom)}
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { duration: 0.4 },
+                        }}
+                        whileTap={{ scale: 0.9, transition: { duration: 0.4 } }}
                       >
                         {item.to && (
                           <NavLink to={item.to}>
@@ -246,19 +251,22 @@ export default function StaggerMenu({
                         )}
                       </motion.div>
                     ))}
+                    <Transition delay={closeButtonDelay}>
+                      <FlexFull className="p-[0.5vh] justify-center">
+                        <motion.div
+                          className="py-[0.2vh] px-[0.7vh] bg-col-960 hover:bg-col-990 transition-400"
+                          whileHover={{ scale: "1.05", rotate: 5 }}
+                        >
+                          <IconButton
+                            onClick={toggleMenu}
+                            icon={CgClose}
+                            type="smallUnstyled"
+                            iconClassName="text-col-100"
+                          />
+                        </motion.div>
+                      </FlexFull>
+                    </Transition>
                   </Flex>
-                  <Transition delay={closeButtonDelay}>
-                    <FlexFull className="p-[0.5vh] justify-center">
-                      <Box className="py-[0.2vh] px-[0.7vh] bg-col-950">
-                        <IconButton
-                          onClick={toggleMenu}
-                          icon={CgClose}
-                          type="smallUnstyled"
-                          iconClassName="text-col-100"
-                        />
-                      </Box>
-                    </FlexFull>
-                  </Transition>
                 </Flex>
               </motion.div>
             </motion.div>
