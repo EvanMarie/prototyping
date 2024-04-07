@@ -2,6 +2,7 @@ import CenterFull from "~/components/buildingBlocks/centerFull";
 import ShiftingImages from "./components/shiftingImages";
 import { useEffect, useState } from "react";
 import HStackFull from "~/components/buildingBlocks/hStackFull";
+import AnimatedText from "~/components/specialty/animatedText";
 
 export default function ImageGallery() {
   const [imageArray, setImageArray] = useState<string[]>([]);
@@ -23,38 +24,10 @@ export default function ImageGallery() {
 
   return (
     <CenterFull>
-      <HStackFull className="justify-evenly" gap="gap-[0px]">
-        <ShiftingImages
-          imageArray={imageArray}
-          imageDimensions={imageDimensions}
-          shape="diamond"
-        />
-        {/* <ShiftingImages
-          imageArray={imageArray}
-          imageDimensions={imageDimensions}
-          shape="diamond"
-        />
-        <ShiftingImages
-          imageArray={imageArray}
-          imageDimensions={imageDimensions}
-          shape="diamond"
-        />
-        <ShiftingImages
-          imageArray={imageArray}
-          imageDimensions={imageDimensions}
-          shape="diamond"
-        />
-        <ShiftingImages
-          imageArray={imageArray}
-          imageDimensions={imageDimensions}
-          shape="diamond"
-        />
-        <ShiftingImages
-          imageArray={imageArray}
-          imageDimensions={imageDimensions}
-          shape="diamond"
-        /> */}
-      </HStackFull>
+      <AnimatedText
+        text="DarkViolet.ai"
+        textClassName="text-fuchsia-400 text-[10vh] textShadow"
+      />
     </CenterFull>
   );
 }

@@ -9,7 +9,7 @@ import HStackFull from "~/components/buildingBlocks/hStackFull";
 import Icon from "~/components/buildingBlocks/icon";
 import StaggerMenu from "~/components/specialty/staggerMenu";
 import { motion } from "framer-motion";
-import AnimatedText from "~/components/specialty/animatedTitle";
+import AnimatedText from "~/components/specialty/animatedText";
 import AnimatedTitleDemo from "~/routes/design+/components/animatedTextDemo";
 import AnimateInPlaceText from "~/components/specialty/animateInPlaceText";
 
@@ -42,18 +42,17 @@ export default function DarkVioletHero() {
         <AnimateInPlaceText
           text="DarkViolet.ai"
           isWave
-          // gradient="logoGradient"
-          textColor="text-fuchsia-300"
+          textColor="text-fuchsia-400"
           textShadow=""
           textSize="text-[5vh] md:text-[8vh]"
           waveSize={13}
         />
       </Flex>
       <HStack className="h-full items-center hidden md:flex justify-evenly flex-shrink-0 ">
-        <LinkText linkText="Portfolio" linkUrl="#portfolio" />
-        <LinkText linkText="Us" linkUrl="#us" />
+        <LinkText linkText="portfolio" linkUrl="#portfolio" />
+        <LinkText linkText="us" linkUrl="#us" />
         <LinkText linkText="chat" linkUrl="#chat" />
-        <LinkText linkText="Contact" linkUrl="#contact" />
+        <LinkText linkText="contact" linkUrl="#contact" />
       </HStack>
 
       <Box className="bg-cyan-800/50 p-[0.7vh] md:p-[1.5vh] shadowBroadLoose border-970-md  absolute top-[1.5vh] right-[1vh] md:hidden">

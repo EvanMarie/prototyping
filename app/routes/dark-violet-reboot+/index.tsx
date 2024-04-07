@@ -55,21 +55,21 @@ export default function ConscioussnessIndex() {
             align="items-start"
             className="text-teal-200 text-[3vh] absolute right-[2vh] top-[11vh] md:left-[10vh] md:top-[13vh] lg:top-[12vh] lg:left-[13vh] xl:left-[20vh] xxl:left-[20vh] xxl:top-[20vh] textShadow"
           >
-            <Text>Catch Phrase</Text>
+            <Text>What can AI do for you?</Text>
           </VStack>
           <Box className="h-[50vh] w-[60vw] sm:h-[90vw] sm:w-[90vw] md:h-[66vh] md:w-[65vh] absolute top-[25vh] opacity-60">
             <UnblurImage
               rows={3}
               columns={3}
-              imageUrl="/images/dark_violet/darkviolet.png"
+              imageUrl="/images/dark_violet/frontImage.png"
               dimensions="h-[50vh] w-[60vw] sm:h-[90vw] sm:w-[90vw] md:h-[66vh] md:w-[65vh]"
             />
           </Box>
         </LayoutContainer>
         <VStackFull className="h-fit">
-          {/* ************************* MODELS ************************* */}
+          {/* ************************* PORTFOLIO ************************* */}
           <StickyLabeledSection
-            labelText="Models"
+            labelText="portfolio"
             labelClassName={labelStyles}
             id="models"
           >
@@ -94,9 +94,9 @@ export default function ConscioussnessIndex() {
             </FlexFull>
           </StickyLabeledSection>
 
-          {/* ************************* Generative  ************************* */}
+          {/* ************************* US  ************************* */}
           <StickyLabeledSection
-            labelText="Generative AI"
+            labelText="who we are"
             labelClassName={labelStyles}
             spacerHeight="h-[6vh]"
             id="generative"
@@ -120,9 +120,9 @@ export default function ConscioussnessIndex() {
             </AnimatedComponent>
           </StickyLabeledSection>
 
-          {/* ************************* ETHICS ************************* */}
+          {/* ************************* CHAT ************************* */}
           <StickyLabeledSection
-            labelText="Ethics"
+            labelText="chat"
             labelClassName={labelStyles}
             spacerHeight="h-[14vh]"
             id="ethics"
@@ -133,7 +133,7 @@ export default function ConscioussnessIndex() {
 
           {/* ************************* CONTACT ************************* */}
           <StickyLabeledSection
-            labelText="Contact"
+            labelText="contact"
             labelClassName={labelStyles}
             spacerHeight="h-[5vh]"
             id="contact"

@@ -1,0 +1,302 @@
+import { motion } from "framer-motion";
+
+export type AnimationType =
+  | "inFromTop"
+  | "inFromBottom"
+  | "inFromLeft"
+  | "inFromRight"
+  | "fadeIn"
+  | "custom"
+  | "spinInPlace"
+  | "spinOnScreen"
+  | "shuffleIntoPlace"
+  | "leanAndStraighten"
+  | "randomLetterAnimation";
+
+interface AnimatedTextProps {
+  text?: string;
+  className?: string;
+  animationType?: AnimationType;
+  animationMotion?: "spring" | "tween";
+  letterDelay?: number;
+  textClassName?: string;
+  damping?: number;
+  stiffness?: number;
+  overallDelay?: number;
+  overallDuration?: number;
+  letterDuration?: number;
+  yDistance?: number;
+  xDistance?: number;
+  distanceAsVH?: boolean;
+  numSpins?: number;
+  gradient?: Gradient;
+  leanAngle?: number;
+  leanDuration?: number;
+  leanRepeat?: number;
+}
+
+interface Gradient {
+  colors: string[];
+  direction?: string;
+}
+
+export default function AnimatedText({
+  text,
+  className = "",
+  animationType = "randomLetterAnimation",
+  animationMotion = "spring",
+  letterDelay = 0.09,
+  damping = 12,
+  stiffness = 100,
+  overallDelay = 0.2,
+  overallDuration,
+  letterDuration = 0.5,
+  yDistance = 150,
+  xDistance = 150,
+  distanceAsVH = false,
+  gradient,
+  textClassName = "text-[6vh] font-bold text-col-200 textShadow text-stroke-10-500",
+  numSpins = 2,
+  leanAngle = 25, // Default angle for leaning
+  leanDuration = 8, // Default duration for lean animation
+  leanRepeat = 10, // Default repeat times, fallback to numSpins if not specified
+}: AnimatedTextProps) {
+  const letters = text ? Array.from(text) : [];
+  const xStringDistance = distanceAsVH ? String(xDistance) + "vh" : undefined;
+  const yStringDistance = distanceAsVH ? String(yDistance) + "vh" : undefined;
+
+  const useXDistance = distanceAsVH ? xStringDistance : xDistance;
+  const useNegXDistance = distanceAsVH ? "-" + xStringDistance : -xDistance;
+  const useYDistance = distanceAsVH ? yStringDistance : yDistance;
+  const useNegYDistance = distanceAsVH ? "-" + yStringDistance : -yDistance;
+
+  const container = {
+    hidden: { opacity: 1 }, // Start with full opacity to prevent fade-in effect
+    visible: {
+      opacity: 1,
+      transition: {
+        // Only apply staggering if it's necessary for the specific animation
+        staggerChildren:
+          animationType === "leanAndStraighten" ? 0 : letterDelay,
+        delayChildren: animationType === "leanAndStraighten" ? 0 : overallDelay,
+        duration: animationType === "leanAndStraighten" ? 0 : overallDuration,
+      },
+    },
+  };
+
+  const randomLetterAnimationVariant = () => {
+    const shouldSpin = Math.random() < 0.5; // 50% chance to spin
+    const shouldScale = Math.random() < 0.5; // 50% chance to scale
+
+    const spinDuration = 0.3 + Math.random() * 1.7; // Duration between 0.3 and 2 seconds
+    const scaleDuration = 0.3 + Math.random() * 1.7; // Duration between 0.3 and 2 seconds
+    const randomDelay = Math.random() * 2; // Random delay between 0 and 2 seconds
+
+    return {
+      hidden: {
+        opacity: 1,
+        rotate: 0,
+        scale: 1,
+      },
+      visible: {
+        opacity: 1,
+        rotate: shouldSpin ? [0, 360, 0] : 0,
+        scale: shouldScale ? [1, 1 + Math.random(), 1] : 1,
+        transition: {
+          opacity: { duration: 0.5 },
+          rotate: {
+            duration: spinDuration,
+            ease: "linear",
+            times: [0, 0.5, 1],
+            repeat: Infinity,
+            repeatDelay: 1 + randomDelay, // Ensuring at least 1 second between animations
+          },
+          scale: {
+            duration: scaleDuration,
+            ease: "linear",
+            times: [0, 0.5, 1],
+            repeat: Infinity,
+            repeatDelay: 1 + randomDelay, // Ensuring at least 1 second between animations
+            yoyo: Infinity,
+          },
+        },
+      },
+    };
+  };
+
+  const initialRotations = letters.map(
+    () => Math.random() * leanAngle * 2 - leanAngle
+  );
+
+  const leanAndStraightenVariant = (index: number) => ({
+    hidden: {
+      opacity: 0,
+      rotate: initialRotations[index],
+      x: 0,
+      y: 0,
+    },
+    visible: {
+      opacity: 1,
+      rotate: 0,
+      transition: {
+        opacity: { duration: 0.2 },
+        rotate: {
+          duration: leanDuration,
+          ease: "easeInOut",
+          repeat: leanRepeat,
+          repeatType: "reverse",
+          type: animationMotion, // Use the animationMotion prop to determine the transition type
+          delay: index * letterDelay, // Add delay based on the letter index to create a staggered effect
+        },
+      },
+    },
+  });
+
+  const spinInPlaceVariant = {
+    hidden: {
+      opacity: 0,
+      rotate: -360,
+      x: -50,
+    },
+    visible: {
+      opacity: 1,
+      rotate: 0,
+      x: 0,
+      transition: {
+        type: "spring",
+        damping: 20,
+        stiffness: 300,
+      },
+    },
+  };
+
+  const spinOnScreenVariant = (numSpins: number) => ({
+    hidden: {
+      opacity: 0,
+      rotate: -360 * numSpins,
+      x: useXDistance,
+      y: useYDistance,
+    },
+    visible: {
+      opacity: 1,
+      rotate: 0,
+      x: 0,
+      y: 0,
+      transition: {
+        type: "tween",
+        duration: letterDuration,
+        times: [0, 0.8, 1],
+        rotate: {
+          duration: letterDuration,
+          ease: "linear",
+          times: Array.from(
+            { length: numSpins },
+            (_, i) => (i + 1) / (numSpins + 1)
+          ),
+          repeat: numSpins - 1,
+        },
+      },
+    },
+  });
+
+  const fadeLetterVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: letterDuration },
+    },
+  };
+
+  const child = {
+    visible: {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        type: animationMotion,
+        duration: letterDuration,
+        damping: damping,
+        stiffness: stiffness,
+      },
+    },
+    hidden: {
+      opacity: 0,
+      y:
+        animationType === "custom"
+          ? useYDistance
+          : animationType === "inFromTop"
+          ? useNegYDistance
+          : animationType === "inFromBottom"
+          ? useYDistance
+          : 0,
+      x:
+        animationType === "custom"
+          ? useXDistance
+          : animationType === "inFromLeft"
+          ? useNegXDistance
+          : animationType === "inFromRight"
+          ? useXDistance
+          : animationType === "shuffleIntoPlace"
+          ? Math.random() *
+              (typeof useXDistance === "number" ? useXDistance : 0) -
+            (typeof useXDistance === "number" ? useXDistance / 2 : 0)
+          : 0,
+    },
+  };
+
+  // Gradient style handling
+  const gradientStyle = gradient
+    ? {
+        background: `linear-gradient(${
+          gradient.direction || "to right"
+        }, ${gradient.colors.join(", ")})`,
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+      }
+    : {};
+
+  return (
+    <motion.div
+      className={`flex justify-center items-center ${className}`}
+      initial="hidden"
+      animate="visible"
+      variants={container}
+    >
+      {letters.map((letter, index) => {
+        // Determine the variant to use based on the animationType
+        let variant;
+        switch (animationType) {
+          case "leanAndStraighten":
+            variant = leanAndStraightenVariant(index);
+            break;
+          case "fadeIn":
+            variant = fadeLetterVariants;
+            break;
+          case "spinInPlace":
+            variant = spinInPlaceVariant;
+            break;
+          case "spinOnScreen":
+            variant = spinOnScreenVariant(numSpins);
+            break;
+          case "randomLetterAnimation":
+            variant = randomLetterAnimationVariant();
+            break;
+          // Include other cases as needed
+          default:
+            variant = child; // Fallback to the child variant
+        }
+
+        return (
+          <motion.span
+            key={index}
+            variants={variant}
+            style={gradientStyle}
+            className={textClassName}
+          >
+            {letter === " " ? "\u00A0" : letter}
+          </motion.span>
+        );
+      })}
+    </motion.div>
+  );
+}

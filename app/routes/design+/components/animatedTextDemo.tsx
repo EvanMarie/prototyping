@@ -19,7 +19,7 @@ import Text from "~/components/buildingBlocks/text";
 import DropDownMenu from "~/components/buildingBlocks/dropDownMenu";
 import AnimatedText, {
   AnimationType,
-} from "~/components/specialty/animatedTitle";
+} from "~/components/specialty/animatedText";
 import NavIconButton from "~/components/buildingBlocks/navLinkIconButton";
 import { ReturnPathIcon } from "styles";
 
