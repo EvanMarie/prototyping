@@ -43,6 +43,7 @@ export default function DarkVioletHero() {
           text="DarkViolet.ai"
           isWave
           // gradient="logoGradient"
+          textColor="text-fuchsia-300"
           textShadow=""
           textSize="text-[5vh] md:text-[8vh]"
           waveSize={13}
