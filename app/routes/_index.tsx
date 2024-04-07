@@ -57,6 +57,7 @@ export default function Index() {
           <Wrap className="animate-slideInUp50vh gap-[3vh] duration-2200 justify-center">
             <NavButton text="Design Presets" to="/design" />
             <NavButton text="Consciousness AI" to="/consciousness-ai" />
+            <NavButton text="Dark Violet Reboot" to="/dark-violet-reboot" />
           </Wrap>
         </VStackFull>
       </Transition>
