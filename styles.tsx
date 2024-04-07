@@ -8,6 +8,8 @@ import {
   FaCode,
   FaEye,
   FaEyeSlash,
+  FaGithub,
+  FaLink,
   FaPlusSquare,
   FaRegSave,
   FaSearch,
@@ -118,6 +120,8 @@ export const StopIcon = FaStopCircle;
 export const HideIcon = FaEyeSlash;
 export const CodeIcon = FaCode;
 export const RefreshIcon = LuRefreshCw;
+export const LinkIcon = FaLink;
+export const GitHubIcon = FaGithub;
 
 export const colors = {
   100: "#F2E3D5",

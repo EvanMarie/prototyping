@@ -12,8 +12,9 @@ import { motion } from "framer-motion";
 import AnimatedText from "~/components/specialty/animatedText";
 import AnimatedTitleDemo from "~/routes/design+/components/animatedTextDemo";
 import AnimateInPlaceText from "~/components/specialty/animateInPlaceText";
+import Image from "~/components/buildingBlocks/image";
 
-export default function DarkVioletHero() {
+export default function TopMenu() {
   function LinkText({
     linkText,
     linkUrl,
@@ -61,12 +62,12 @@ export default function DarkVioletHero() {
 
   return (
     <HStackFull className="h-[10vh] lg:h-[12vh] xl:h-[13vh] justify-between px-[1.5vh] lg:px-[2vh] xxl:px-[5vh] items-end relative gap-[5vh]">
-      <Flex className="text-[3.7vh] sm:text-[4vh] md:text-[4.5vh] lg:text-[6vh] xl:text-[7vh] leading-tighter textShadow kufam-font flex-shrink-0 items-center h-full text-purple-300">
+      <HStack className="text-[3.7vh] sm:text-[4vh] md:text-[4.5vh] lg:text-[6vh] xl:text-[7vh] leading-tighter textShadow kufam-font flex-shrink-0 items-center h-full text-purple-300 ">
         <AnimatedText
           text="DarkViolet.ai"
           textClassName="text-fuchsia-400 text-[5.7vh] md:text-[5vh] lg:text-[7vh] xl:text-[7.5vh] xxl:text-[8vh] textShadow tracking-wider"
         />
-      </Flex>
+      </HStack>
       <HStack className="h-full w-[50vw] xl:w-[55vw] items-center hidden md:flex justify-evenly flex-shrink-0 px-[1vh] lg:px-[2vh]">
         {menuItems.map((item, index) => (
           <LinkText key={index} linkText={item.title} linkUrl={item.to} />

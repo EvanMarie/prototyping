@@ -1,24 +1,25 @@
-export type ProjectInfoSection = {
+export interface PortfolioImage {
+  src: string;
+  title?: string;
+  dimension?: string;
+}
+
+export interface PortfolioItemInfoSection {
   heading: string;
   paragraphs: string[];
-};
+}
 
-export type ProjectInfoImage = {
-  src: string;
-  dimension: string;
-};
-
-export type Project = {
+export interface PortfolioItem {
   id: number;
   title: string;
   description: string;
   link: string;
   github: string;
-  projectImages: { src: string; title: string }[];
-  projectInfo: ProjectInfoSection[];
-  projectInfoImages: ProjectInfoImage[];
+  projectInfoImages: PortfolioImage[];
+  projectInfo: PortfolioItemInfoSection[];
+  projectImages: PortfolioImage[];
   thumbnail: string;
-};
+}
 
 export const thumbnailSettings = "?width=400&resize=contain&quality=50";
 export const projectImageSettings = "?width=1000&resize=contain&quality=70";

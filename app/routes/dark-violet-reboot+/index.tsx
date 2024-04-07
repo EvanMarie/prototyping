@@ -1,6 +1,6 @@
 import TransitionFull from "~/components/buildingBlocks/TransitionFull";
 import FlexFull from "~/components/buildingBlocks/flexFull";
-import DarkVioletHero from "./components/heroMenu";
+import TopMenu from "./components/topMenu";
 import Box from "~/components/buildingBlocks/box";
 import Text from "~/components/buildingBlocks/text";
 import VStack from "~/components/buildingBlocks/vStack";
@@ -17,27 +17,15 @@ import Flex from "~/components/buildingBlocks/flex";
 import ShiftingImages from "./components/shiftingImages";
 import AnimatedText from "~/components/specialty/animatedText";
 import ShiftingComponents from "./components/shiftingComponents";
+import PorfolioCard from "~/routes/dark-violet-reboot+/components/portfolioFlashCard";
+import { PortfolioImage, PortfolioItem, Projects } from "./components/data";
+import CenterHorizontalFull from "~/components/buildingBlocks/centerHorizontalFull";
 
-function AnimatedFlipTestBox({ text, delay }: { text: string; delay: number }) {
-  return (
-    <AnimatedComponent
-      animation="flipUp"
-      className="h-fit"
-      runOnce={true}
-      delay={delay}
-      duration={0.5}
-    >
-      <Center className="p-[2vh] h-[40vh] w-[35vh] shadowBroadLooser border-970-md bg-zinc-300 bg-gradient-to-br from-purple-700/70 via-indigo-700/70 to-teal-700/70">
-        {text}
-      </Center>
-    </AnimatedComponent>
-  );
-}
-
-// get a random decimal value between 0.1 and 1.2
 function GetRandomDelay() {
   return Math.random() * (0.6 - 0.1) + 0.1;
 }
+
+const arrayOf6 = Array.from({ length: 6 }, (_, i) => i + 1);
 
 export default function ConscioussnessIndex() {
   const genSectionStyles =
@@ -52,7 +40,7 @@ export default function ConscioussnessIndex() {
       <GlowCursor />
       <VStackFull className="h-fit">
         <LayoutContainer className="relative">
-          <DarkVioletHero />
+          <TopMenu />
 
           <Box className=" absolute w-fit right-[2vh] top-[13vh] md:top-[15vh] md:left-[8vh] lg:top-[15vh] lg:left-[13vh] xl:top-[16vh] xl:left-[16vh] xxl:left-[20vh]">
             <AnimatedText
@@ -80,23 +68,24 @@ export default function ConscioussnessIndex() {
             id="portfolio"
           >
             <FlexFull className="h-fit">
-              <Wrap className="w-full justify-center md:justify-evenly gap-[6vh] py-[2vh]">
-                <AnimatedFlipTestBox text="Card One" delay={GetRandomDelay()} />
-                <AnimatedFlipTestBox text="Card Two" delay={GetRandomDelay()} />
-                <AnimatedFlipTestBox
-                  text="Card Three"
-                  delay={GetRandomDelay()}
-                />
-                <AnimatedFlipTestBox
-                  text="Card Four"
-                  delay={GetRandomDelay()}
-                />
-                <AnimatedFlipTestBox
-                  text="Card Five"
-                  delay={GetRandomDelay()}
-                />
-                <AnimatedFlipTestBox text="Card Six" delay={GetRandomDelay()} />
-              </Wrap>
+              <VStackFull className="h-fit">
+                <FlexFull className="justify-center bg-white">
+                  <ShiftingImages
+                    imageArray={genImages}
+                    shape="rectangle"
+                    imageDimensions="h-[70vh] w-[80vw]"
+                  />
+                </FlexFull>
+                <Wrap className="w-full h-fit justify-center md:justify-around items-evenly gap-[6vh] py-[2vh]">
+                  {Projects.map((project, i) => (
+                    <PorfolioCard
+                      key={i}
+                      porfolioItem={project as PortfolioItem}
+                      delay={i * 0.1}
+                    />
+                  ))}
+                </Wrap>
+              </VStackFull>
             </FlexFull>
           </StickyLabeledSection>
 

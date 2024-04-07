@@ -56,7 +56,9 @@ export default function ShiftingImages({
   };
 
   return (
-    <FlexFull className={`relative ${imageDimensions} ${containerClassName}`}>
+    <FlexFull
+      className={`relative ${imageDimensions} ${containerClassName} justify-center `}
+    >
       <AnimatePresence>
         <motion.img
           key={currentImageIndex}

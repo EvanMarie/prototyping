@@ -55,7 +55,7 @@ const AnimatedComponentSpring: React.FC<Props> = ({
   damping = 10,
   stiffness = 100,
   delay = 0.2,
-  className,
+  className = "w-fit",
   useSpring = true,
   runOnce = false,
 }) => {
