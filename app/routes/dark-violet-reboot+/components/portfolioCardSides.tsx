@@ -15,16 +15,18 @@ export function FrontOfCard({
   portfolioItem: PortfolioItem;
 }) {
   return (
-    <Box className="h-full w-full">
-      <Image
-        src={portfolioItem.thumbnail}
-        alt={portfolioItem.title}
-        className="w-full h-full absolute top-0 left-0 right-0 bottom-0"
-      />
+    <VStack className="h-full w-full">
+      <Box className="h-full w-full">
+        <Image
+          src={portfolioItem.thumbnail}
+          alt={portfolioItem.title}
+          className="w-full h-90%"
+        />
+      </Box>
       <CenterHorizontalFull className="absolute bottom-0 left-0 right-0 bg-zinc-900/90 py-[0.5vh] rounded-t-none text-[2.3vh] textShadow text-fuchsia-300">
         {portfolioItem.title}
       </CenterHorizontalFull>
-    </Box>
+    </VStack>
   );
 }
 

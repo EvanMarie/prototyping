@@ -65,7 +65,7 @@ export default function ConscioussnessIndex() {
             id="portfolio"
           >
             <FlexFull className="h-fit">
-              <VStackFull className="h-fit">
+              <VStackFull className="h-fit" gap="gap-[5vh]">
                 <FlexFull className="justify-center pt-[2vh]">
                   <ShiftingImages
                     containerClassName="border-970-md shadowBroadLooser"
@@ -76,11 +76,13 @@ export default function ConscioussnessIndex() {
                 </FlexFull>
                 <Wrap className="w-full h-fit justify-center md:justify-around items-evenly gap-[6vh] py-[2vh]">
                   {Projects.map((project, i) => (
-                    <ShiftingPortfolioCard
-                      key={i}
-                      portfolioItem={project as PortfolioItem}
-                      delay={i * 0.1}
-                    />
+                    <Box className={`h-fit ${i % 2 === 0 ? "" : "pt-[10vh]"}`}>
+                      <ShiftingPortfolioCard
+                        key={i}
+                        portfolioItem={project as PortfolioItem}
+                        delay={i * 0.2}
+                      />
+                    </Box>
                   ))}
                 </Wrap>
               </VStackFull>

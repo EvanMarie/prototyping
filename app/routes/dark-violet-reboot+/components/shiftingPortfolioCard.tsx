@@ -8,18 +8,20 @@ import { BackOfCard, FrontOfCard } from "./portfolioCardSides";
 
 export default function ShiftingPortfolioCard({
   delay = 0,
-  visibilityThreshold = "400px",
+  visibilityThreshold = "300px",
   portfolioItem,
+  transitionDuration = 0.8,
 }: {
   delay?: number;
   visibilityThreshold?: string;
   portfolioItem: PortfolioItem;
+  transitionDuration?: number;
 }) {
   const cardDimensions = "h-[55vh] w-[40vh]";
   const animationProps = {
     initial: { scale: 0 },
     whileInView: { scale: 1 },
-    whileHover: { scale: 1.05 },
+    whileHover: { scale: 1.03 },
     transition: {
       type: "spring",
       stiffness: 80,
@@ -49,9 +51,9 @@ export default function ShiftingPortfolioCard({
             className="absolute inset-0"
             animate={{ opacity: 1 }}
             whileHover={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: transitionDuration }}
           >
-            <FlexFull className="h-full shadowBroadLoose border-970-md">
+            <FlexFull className="h-full ">
               <FrontOfCard portfolioItem={portfolioItem as PortfolioItem} />
             </FlexFull>
           </motion.div>
@@ -60,7 +62,7 @@ export default function ShiftingPortfolioCard({
             initial={{ opacity: 0 }}
             animate={{ opacity: 0 }}
             whileHover={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: transitionDuration }}
           >
             <Center className="h-full w-full shadowBroadLoose">
               <BackOfCard portfolioItem={portfolioItem} />
