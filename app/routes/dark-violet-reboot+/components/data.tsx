@@ -48,7 +48,7 @@ export const Projects = [
     ],
     projectInfo: [
       {
-        heading: "Create Your Own Characters",
+        heading: "Create Characters",
         paragraphs: [
           "Chatter is the ultimate roleplaying chat app that allows you to create your own unique characters. Customize their appearances, personalities, and backstories to bring them to life. With Chatter, you have the power to create characters that feel real and engaging.",
         ],

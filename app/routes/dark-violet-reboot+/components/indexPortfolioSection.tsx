@@ -25,10 +25,10 @@ export default function IndexPortfolioSection() {
           <Wrap className="w-full h-fit justify-center md:justify-around items-evenly gap-[6vh] py-[2vh]">
             {Projects.map((project, i) => (
               <Box
+                key={i}
                 className={`h-fit p-[2vh] ${i % 2 === 0 ? "" : "pt-[10vh]"}`}
               >
                 <ShiftingPortfolioCard
-                  key={i}
                   portfolioItem={project as PortfolioItem}
                 />
               </Box>

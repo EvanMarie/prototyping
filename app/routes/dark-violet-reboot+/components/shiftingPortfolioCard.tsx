@@ -32,44 +32,42 @@ export default function ShiftingPortfolioCard({
   };
 
   return (
-    <NavLink to={`/dark-violet-reboot/portfolio/${portfolioItem.id}`}>
-      <motion.div
-        initial={animationProps.initial}
-        whileInView={animationProps.whileInView}
-        whileHover={animationProps.whileHover}
-        transition={animationProps.transition}
-        viewport={{
-          once: true,
-          amount: 1.0,
-          margin: `-${visibilityThreshold} 0px 0px 0px`,
-        }}
+    <motion.div
+      initial={animationProps.initial}
+      whileInView={animationProps.whileInView}
+      whileHover={animationProps.whileHover}
+      transition={animationProps.transition}
+      viewport={{
+        once: true,
+        amount: 1.0,
+        margin: `-${visibilityThreshold} 0px 0px 0px`,
+      }}
+    >
+      <Box
+        className={`${cardDimensions} perspective-100 group overflow-hidden relative`}
       >
-        <Box
-          className={`${cardDimensions} perspective-100 group overflow-hidden relative`}
+        <motion.div
+          className="absolute inset-0"
+          animate={{ opacity: 1 }}
+          whileHover={{ opacity: 0 }}
+          transition={{ duration: transitionDuration }}
         >
-          <motion.div
-            className="absolute inset-0"
-            animate={{ opacity: 1 }}
-            whileHover={{ opacity: 0 }}
-            transition={{ duration: transitionDuration }}
-          >
-            <FlexFull className="h-full ">
-              <FrontOfCard portfolioItem={portfolioItem as PortfolioItem} />
-            </FlexFull>
-          </motion.div>
-          <motion.div
-            className="absolute inset-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0 }}
-            whileHover={{ opacity: 1 }}
-            transition={{ duration: transitionDuration }}
-          >
-            <Center className="h-full w-full shadowBroadLoose">
-              <BackOfCard portfolioItem={portfolioItem} />
-            </Center>
-          </motion.div>
-        </Box>
-      </motion.div>
-    </NavLink>
+          <FlexFull className="h-full ">
+            <FrontOfCard portfolioItem={portfolioItem as PortfolioItem} />
+          </FlexFull>
+        </motion.div>
+        <motion.div
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+          transition={{ duration: transitionDuration }}
+        >
+          <Center className="h-full w-full shadowBroadLoose">
+            <BackOfCard portfolioItem={portfolioItem} />
+          </Center>
+        </motion.div>
+      </Box>
+    </motion.div>
   );
 }
