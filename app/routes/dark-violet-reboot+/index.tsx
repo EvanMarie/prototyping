@@ -22,6 +22,7 @@ import IndexTopSection from "./components/indexTopSection";
 import IndexAboutUsSection from "./components/indexAboutUsSection";
 import IndexBlogSection from "./components/indexBlogSection";
 import IndexChatSection from "./components/indexChatSection";
+import IndexContactSection from "./components/indexContactSection";
 
 function GetRandomDelay() {
   return Math.random() * (0.6 - 0.1) + 0.1;
@@ -50,6 +51,7 @@ export default function ConscioussnessIndex() {
         {/* ************************* CHAT ************************* */}
         <IndexChatSection />
         {/* ************************* CONTACT ************************* */}
+        <IndexContactSection />
       </VStackFull>
     </TransitionFull>
   );
