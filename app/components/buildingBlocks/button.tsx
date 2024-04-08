@@ -122,6 +122,7 @@ export default function Button({
     >
       <HStack
         className={combinedClasses}
+        hoverCursor="hover:cursor-pointer"
         style={{
           transition:
             "background-color 0.4s ease-in-out, color 0.4s ease-in-out, border-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out, text-shadow 0.4s ease-in-out",

@@ -120,8 +120,13 @@ export default function NavLinkButton({
 
   return (
     <NavLink to={to} target={target}>
-      <Flex onClick={!isDisabled ? () => onClick : undefined} ref={ref}>
+      <Flex
+        onClick={!isDisabled ? () => onClick : undefined}
+        ref={ref}
+        className="hover:cursor-pointer"
+      >
         <HStack
+          hoverCursor="hover:cursor-pointer"
           className={combinedClasses}
           style={{
             transition:

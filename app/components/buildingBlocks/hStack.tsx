@@ -12,6 +12,7 @@ interface HStackProps {
   onFocus?: () => void;
   onBlur?: () => void;
   id?: string;
+  hoverCursor?: string;
 }
 
 // Use React.forwardRef to forward the ref to the div element
@@ -29,6 +30,7 @@ const HStack = React.forwardRef<HTMLDivElement, HStackProps>(
       onFocus,
       onBlur,
       id,
+      hoverCursor = "hover:cursor-default",
     },
     ref
   ) => {
@@ -36,7 +38,7 @@ const HStack = React.forwardRef<HTMLDivElement, HStackProps>(
       <div
         role="button"
         tabIndex={0}
-        className={`flex flex-row ${gap} ${className} hover:cursor-default`}
+        className={`flex flex-row ${gap} ${className} ${hoverCursor}`}
         onClick={onClick}
         onKeyDown={onKeyDown}
         ref={ref}

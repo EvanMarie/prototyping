@@ -8,6 +8,7 @@ interface BoxProps {
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   ref?: RefObject<HTMLDivElement>;
+  hoverCursor?: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
@@ -19,6 +20,7 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
       onKeyDown,
       style = {},
       className = "",
+      hoverCursor = "hover:cursor-default",
       onMouseEnter,
       onMouseLeave,
     },
@@ -28,7 +30,7 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
       <div
         role="button"
         tabIndex={0}
-        className={`${className} hover:cursor-default`}
+        className={`${className} ${hoverCursor}`}
         style={{ ...style }}
         onClick={onClick}
         onKeyDown={onKeyDown}

@@ -17,6 +17,7 @@ import VStack from "~/components/buildingBlocks/vStack";
 
 import RadialScrollProgress from "./radialProgress";
 import Image from "~/components/buildingBlocks/image";
+import RadialProgressiveImage from "./radialProgressImage";
 
 export default function PortfolioItemParallax() {
   const { title } = useParams();
@@ -30,7 +31,7 @@ export default function PortfolioItemParallax() {
   return (
     <VStackFull className="relative h-fit min-h-[95vh] bg-slate-800 bg-gradient-to-br from-violet-900/40 via-indigo-900/40 to-fuchsia-900/40 p-[0.5vh] insetShadowXl text-slate-100 pt-[6vh] md:pt-[7.5vh] border-900-md">
       {/* HEADER  */}
-      <HStackFull className="absolute top-0 left-0 h-[6vh] md:h-[7.5vh] justify-between px-[1vh] py-[0.5vh] items-center bg-slate-900/60">
+      <HStackFull className="absolute top-0 left-0 h-[6vh] md:h-[7.5vh] justify-between px-[1vh] py-[0.5vh] items-center bg-slate-900/60 border-b-970-md">
         <VStack
           className="w-93% h-full justify-evenly"
           align="items-start"
@@ -48,31 +49,30 @@ export default function PortfolioItemParallax() {
         </Flex>
       </HStackFull>
       {/* FOOTER  */}
-      <CenterHorizontalFull className="absolute bottom-0 left-0 h-[4vh] p-[1vh] items-center bg-slate-900/60">
-        <NavLinkButton
-          iconLeft={CloseIcon}
-          to="/dark-violet-reboot/#portfolio"
-          buttonText="close"
-          type="smallNormal"
-        />
+      <CenterHorizontalFull className="absolute bottom-0 left-0 h-[4vh] p-[1vh] items-center bg-slate-900/60 border-t-970-md">
+        <Box className="z-20">
+          <NavLinkButton
+            iconLeft={CloseIcon}
+            to="/dark-violet-reboot/#portfolio"
+            buttonText="close"
+            type="smallNormal"
+          />
+        </Box>
       </CenterHorizontalFull>
       {/* BODY  */}
       <FlexFull>
         <Parallax ref={parallax} pages={6} className="hide-scrollbar">
           <ParallaxLayer offset={0} speed={0.2}>
             <CenterHorizontalFull className="pt-[1.5vh]">
-              <Flex className="h-fit w-[93vw] max-h-[75vh]">
+              <Flex className="h-fit w-[93vw] max-h-[85vh]">
                 <RadialScrollProgress title={project?.title}>
                   {project?.projectImages.map((image, index) => (
-                    <VStack className="w-fit flex-shrink-0">
-                      <Flex className=" w-auto">
-                        <Image
-                          src={image.src}
-                          alt={image.title}
-                          className="w-full h-full max-h-[68vh]"
-                        />
-                      </Flex>
-                    </VStack>
+                    <Flex className="w-fit flex-shrink-0 snap-center snap-always ">
+                      <RadialProgressiveImage
+                        image={image.src}
+                        title={image.title}
+                      />
+                    </Flex>
                   ))}
                 </RadialScrollProgress>
               </Flex>

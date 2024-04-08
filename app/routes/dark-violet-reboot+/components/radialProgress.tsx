@@ -10,12 +10,13 @@ import Text from "~/components/buildingBlocks/text";
 
 export default function RadialScrollProgress({
   children,
-  containerPadding = "p-[2vh]",
-  bg = "bg-gray-900/70 bg-gradient-to-b from-violet-300/30 via-indigo-300/30 to-fuchsia-300/30 border-970-md shadowBroadTight",
-  innerBg = "bg-col-270",
-  innerPadding = "p-[0.5vh]",
+  containerPadding = "px-[0.5vh] pb-[0.5vh] sm:px-[1vh] sm:pb-[1vh] md:px-[2vh] md:pb-[2vh]",
+  bg = "bg-gray-900/60 bg-gradient-to-b from-violet-300/40 via-indigo-300/40 to-fuchsia-300/40 border-970-md shadowBroadTight",
+  innerBg = "bg-slate-300/50",
+  innerPadding = "py-[1vh]",
+  itemGap = "gap-[1.5vh]",
   title = "Content Title",
-  topPadding = "pt-[6vh]",
+  topPadding = "pt-[7vh]",
   trackOpacity = "opacity-30",
   titlePosition = "top-[1vh] right-[1vh]",
   titleClassName = "h-[3.2vh] pr-[2vh] text-[2.5vh] md:text-[3vh] font-bold text-cyan-300 textShadow",
@@ -28,6 +29,7 @@ export default function RadialScrollProgress({
 }: {
   children?: React.ReactNode;
   containerPadding?: string;
+  itemGap?: string;
   bg?: string;
   innerBg?: string;
   innerPadding?: string;
@@ -50,7 +52,7 @@ export default function RadialScrollProgress({
 
   return (
     <CenterFull
-      className={`w-full h-full relative ${bg} ${topPadding} ${containerPadding} max-h-[75vh]`}
+      className={`w-full h-full relative ${bg} ${containerPadding} ${topPadding} max-h-[75vh]`}
     >
       <Box className={`absolute ${progressPosition}`}>
         <svg
@@ -87,15 +89,18 @@ export default function RadialScrollProgress({
         <Text>{title}</Text>
       </Flex>
       <Box
-        className={`${innerPadding} ${innerBg} insetShadowXl border-970-md overflow-x-hidden`}
+        className={`${innerPadding} ${innerBg} insetShadowXl border-980-lg overflow-x-hidden w-full`}
       >
         <FlexFull
-          className={`overflow-x-auto overflow-y-hidden scrollbar-hide ${
+          className={`overflow-x-auto overflow-y-hidden ${
             snapScroll ? "snap-mandatory snap-x" : ""
-          } `}
+          } hide-scrollbar`}
           ref={scrollRef}
         >
-          <HStackFull className="w-fit h-full items-center">
+          <HStackFull
+            className="w-fit h-full items-center p-[1vh]"
+            gap={itemGap}
+          >
             {children}
           </HStackFull>
         </FlexFull>
