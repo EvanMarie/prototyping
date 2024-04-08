@@ -34,7 +34,7 @@ const shapeStyles = {
 export default function ShiftingImages({
   imageArray,
   delaySeconds = 4,
-  transitionDuration = 4,
+  transitionDuration = 2,
   imageDimensions = "h-full w-full",
   shape = "rectangle",
   imageClassName = "",

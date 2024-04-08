@@ -22,17 +22,11 @@ export default function IndexPortfolioSection() {
     >
       <FlexFull className="h-fit">
         <VStackFull className="h-fit" gap="gap-[5vh]">
-          <FlexFull className="justify-center pt-[2vh]">
-            <ShiftingImages
-              containerClassName="border-970-md shadowBroadLooser"
-              imageArray={genImages}
-              shape="rectangle"
-              imageDimensions="h-[80vh] w-[80vw]"
-            />
-          </FlexFull>
           <Wrap className="w-full h-fit justify-center md:justify-around items-evenly gap-[6vh] py-[2vh]">
             {Projects.map((project, i) => (
-              <Box className={`h-fit ${i % 2 === 0 ? "" : "pt-[10vh]"}`}>
+              <Box
+                className={`h-fit p-[2vh] ${i % 2 === 0 ? "" : "pt-[10vh]"}`}
+              >
                 <ShiftingPortfolioCard
                   key={i}
                   portfolioItem={project as PortfolioItem}
@@ -40,6 +34,19 @@ export default function IndexPortfolioSection() {
               </Box>
             ))}
           </Wrap>
+          <VStackFull className="h-fit">
+            <FlexFull className="justify-center text-[4vh] text-cyan-300 textShadow">
+              Generative AI Design
+            </FlexFull>
+            <FlexFull className="justify-center pt-[2vh]">
+              <ShiftingImages
+                containerClassName="border-970-md shadowBroadLooser"
+                imageArray={genImages}
+                shape="rectangle"
+                imageDimensions="h-[80vh] w-[80vw]"
+              />
+            </FlexFull>
+          </VStackFull>
         </VStackFull>
       </FlexFull>
     </StickyLabeledSection>

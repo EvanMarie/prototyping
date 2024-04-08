@@ -17,14 +17,14 @@ export function FrontOfCard({
 }) {
   return (
     <VStack className="h-full w-full justify-between">
-      <Flex className="w-full h-80%">
+      <Flex className="w-full h-75% shadowBroadLoose">
         <Image
           src={portfolioItem.thumbnail}
           alt={portfolioItem.title}
           className="w-full"
         />
       </Flex>
-      <VStackFull className="bg-slate-900/90 py-[0.5vh] px-[1vh] h-20%">
+      <VStackFull className="bg-slate-900/90 py-[0.5vh] px-[1vh] h-20% shadowBroadLoose">
         <Text className=" text-[2.3vh] textShadow text-fuchsia-300">
           {portfolioItem.title}
         </Text>
@@ -42,7 +42,7 @@ export function BackOfCard({
   const heading = portfolioItem.projectInfo[0].heading;
   const paragraph = portfolioItem.projectInfo[0].paragraphs[0];
   return (
-    <VStackFull className="h-full bg-slate-800 bg-gradient-to-b from-indigo-700/80 via-violet-700/80 to-indigo-700/80/80 relative justify-between shadowBroadLoose border-900-md">
+    <VStackFull className="h-full bg-slate-900 bg-gradient-to-br from-indigo-700/70 via-violet-900/70 to-fuchsia-900/70 relative justify-between shadowBroadLoose border-900-md">
       <FlexFull className="absolute z-10 top-0 left-0 bottom-0 right-0 hover:cursor-pointer text-transparent">
         curosr overlay
       </FlexFull>
