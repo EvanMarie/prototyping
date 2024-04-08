@@ -14,7 +14,9 @@ import { useNavigate, useParams } from "@remix-run/react";
 import useEscapeKey from "~/utils/useEscapeKey";
 import Flex from "~/components/buildingBlocks/flex";
 import VStack from "~/components/buildingBlocks/vStack";
-import RadialScrollProgressContainer from "~/components/specialty/radialScrollProgressContainer";
+
+import RadialScrollProgress from "./radialProgress";
+import Image from "~/components/buildingBlocks/image";
 
 export default function PortfolioItemParallax() {
   const { title } = useParams();
@@ -26,14 +28,18 @@ export default function PortfolioItemParallax() {
 
   const infoSections = project?.projectInfo as PortfolioItemInfoSection[];
   return (
-    <VStackFull className="relative h-fit min-h-[95vh] bg-slate-800 bg-gradient-to-br from-violet-900/40 via-indigo-900/40 to-fuchsia-900/40 p-[0.5vh] insetShadowXl text-slate-100 pt-[6vh] border-900-md">
+    <VStackFull className="relative h-fit min-h-[95vh] bg-slate-800 bg-gradient-to-br from-violet-900/40 via-indigo-900/40 to-fuchsia-900/40 p-[0.5vh] insetShadowXl text-slate-100 pt-[6vh] md:pt-[7.5vh] border-900-md">
       {/* HEADER  */}
-      <HStackFull className="absolute top-0 left-0 h-[7.5vh] justify-between px-[1vh] py-[0.5vh] items-center bg-slate-900/60">
-        <VStack className="w-93%" align="items-start" gap="gap-[0px]">
-          <Text className="text-cyan-300 text-[2.7vh] leading-tighter">
+      <HStackFull className="absolute top-0 left-0 h-[6vh] md:h-[7.5vh] justify-between px-[1vh] py-[0.5vh] items-center bg-slate-900/60">
+        <VStack
+          className="w-93% h-full justify-evenly"
+          align="items-start"
+          gap="gap-[0px]"
+        >
+          <Text className="text-cyan-300 text-[2vh] leading-[2.3vh] md:text-[2.7vh] md:leading-[3vh] leading-tighter">
             {project?.title}
           </Text>
-          <Text className="text-[1.7vh] leading-tighter">
+          <Text className="text-[1.3vh] leading-[1.5vh] md:text-[1.7vh] md:leading-[2vh] leading-tighter">
             {project?.description}
           </Text>
         </VStack>
@@ -53,11 +59,24 @@ export default function PortfolioItemParallax() {
       {/* BODY  */}
       <FlexFull>
         <Parallax ref={parallax} pages={6} className="hide-scrollbar">
-          <ParallaxLayer offset={1} speed={0.2}>
-            <RadialScrollProgressContainer
-              items={project?.projectImages as any[]}
-              itemComponent={Box}
-            />
+          <ParallaxLayer offset={0} speed={0.2}>
+            <CenterHorizontalFull className="pt-[1.5vh]">
+              <Flex className="h-fit w-[93vw] max-h-[75vh]">
+                <RadialScrollProgress title={project?.title}>
+                  {project?.projectImages.map((image, index) => (
+                    <VStack className="w-fit flex-shrink-0">
+                      <Flex className=" w-auto">
+                        <Image
+                          src={image.src}
+                          alt={image.title}
+                          className="w-full h-full max-h-[68vh]"
+                        />
+                      </Flex>
+                    </VStack>
+                  ))}
+                </RadialScrollProgress>
+              </Flex>
+            </CenterHorizontalFull>
           </ParallaxLayer>
           <ParallaxLayer sticky={{ start: 1, end: 2 }}>THIS</ParallaxLayer>
           <ParallaxLayer sticky={{ start: 2, end: 3 }}>THAT</ParallaxLayer>

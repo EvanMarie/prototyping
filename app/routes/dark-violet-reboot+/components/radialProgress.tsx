@@ -8,35 +8,30 @@ import HStackFull from "~/components/buildingBlocks/hStackFull";
 import Flex from "~/components/buildingBlocks/flex";
 import Text from "~/components/buildingBlocks/text";
 
-type ItemComponent = React.ComponentType<any>;
-export default function RadialScrollProgressContainer({
-  items,
-  itemComponent: ItemComponent,
+export default function RadialScrollProgress({
+  children,
   containerPadding = "p-[2vh]",
-  bg = "bg-100-linear2op50",
+  bg = "bg-gray-900/70 bg-gradient-to-b from-violet-300/30 via-indigo-300/30 to-fuchsia-300/30 border-970-md shadowBroadTight",
   innerBg = "bg-col-270",
   innerPadding = "p-[0.5vh]",
-  itemClassName = "",
   title = "Content Title",
-  topPadding = "pt-[5vh]",
+  topPadding = "pt-[6vh]",
   trackOpacity = "opacity-30",
   titlePosition = "top-[1vh] right-[1vh]",
-  titleClassName = "h-[3.2vh] pr-[2vh] text-[2.5vh] font-bold",
-  progressPosition = "top-[0.3vh] left-[0.3vh]",
-  progressColor = "stroke-cyan-600",
+  titleClassName = "h-[3.2vh] pr-[2vh] text-[2.5vh] md:text-[3vh] font-bold text-cyan-300 textShadow",
+  progressPosition = "top-[0.5vh] left-[0.5vh]",
+  progressColor = "stroke-cyan-300",
   progressWidth = "1.2vh",
   radius = 40,
   progressCircleSize = "4.5vh",
   snapScroll = true,
 }: {
-  items: any[];
-  itemComponent: ItemComponent;
+  children?: React.ReactNode;
   containerPadding?: string;
   bg?: string;
   innerBg?: string;
   innerPadding?: string;
   topPadding?: string;
-  itemClassName?: string;
   title?: string;
   titlePosition?: string;
   titleClassName?: string;
@@ -55,7 +50,7 @@ export default function RadialScrollProgressContainer({
 
   return (
     <CenterFull
-      className={`w-full h-full relative ${bg} ${topPadding} ${containerPadding}`}
+      className={`w-full h-full relative ${bg} ${topPadding} ${containerPadding} max-h-[75vh]`}
     >
       <Box className={`absolute ${progressPosition}`}>
         <svg
@@ -101,18 +96,7 @@ export default function RadialScrollProgressContainer({
           ref={scrollRef}
         >
           <HStackFull className="w-fit h-full items-center">
-            {items.map((i, index) => (
-              <Flex
-                key={index}
-                className={
-                  snapScroll
-                    ? `snap-center snap-always ${itemClassName}`
-                    : itemClassName
-                }
-              >
-                <ItemComponent key={i} label={i.toString()} />
-              </Flex>
-            ))}
+            {children}
           </HStackFull>
         </FlexFull>
       </Box>
