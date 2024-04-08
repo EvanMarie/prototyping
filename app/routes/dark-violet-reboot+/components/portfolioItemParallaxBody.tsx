@@ -137,7 +137,7 @@ export function PortfolioItemParallaxBodyLarge({
       {projectInfoImages[0] && (
         <ParallaxLayer offset={1} speed={1.9} className="hidden lg:block">
           <CenterHorizontalFull>
-            <Box className="w-[50vw] border-970-md shadowBroadLoose">
+            <Box className="w-[45vw] border-970-md shadowBroadLoose">
               <Image src={projectInfoImages[0].src} alt="project image" />
             </Box>
           </CenterHorizontalFull>

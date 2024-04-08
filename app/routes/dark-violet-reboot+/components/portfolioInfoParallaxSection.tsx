@@ -53,7 +53,10 @@ export default function PortfolioParallaxSection({
         >
           {projectInfoSection.paragraphs.map((paragraph, index) => (
             <FlexFull className="xl:max-w-[80vw]">
-              <Text key={index} className="text-[2.1vh] textShadow">
+              <Text
+                key={index}
+                className="text-[1.9vh] sm:text-[2.1vh] textShadow"
+              >
                 {paragraph}
               </Text>
             </FlexFull>

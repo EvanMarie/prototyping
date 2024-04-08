@@ -11,7 +11,7 @@ import Box from "~/components/buildingBlocks/box";
 import NavIconButton from "~/components/buildingBlocks/navLinkIconButton";
 import { CloseIcon } from "styles";
 import { IParallax, Parallax, ParallaxLayer } from "@react-spring/parallax";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import VStackFull from "~/components/buildingBlocks/vStackFull";
 import CenterHorizontalFull from "~/components/buildingBlocks/centerHorizontalFull";
 import NavLinkButton from "~/components/buildingBlocks/navLinkButton";
@@ -30,184 +30,127 @@ import {
   PortfolioItemParallaxBodyMobile,
   PortfolioItemParallaxBodySmall,
 } from "./portfolioItemParallaxBody";
+import { useScroll, motion } from "framer-motion";
 
 export default function PortfolioItemParallax() {
+  // Your existing setup...
   const { title } = useParams();
-  console.log(title);
   const project = Projects.find((project) => project.title === title);
   const navigate = useNavigate();
-  useEscapeKey(() => navigate(`/dark-violet-reboot/#portfolio`));
-  const parallax = useRef<IParallax>(null!);
+  const parallax = useRef<IParallax>(null);
 
-  const infoSections = project?.projectInfo as PortfolioItemInfoSection[];
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    // Access the DOM node of the Parallax container
+    const parallaxContainer = parallax.current?.container.current;
+
+    if (parallaxContainer) {
+      const handleScroll = () => {
+        const maxScroll =
+          parallaxContainer.scrollHeight - parallaxContainer.clientHeight;
+        const progress = parallaxContainer.scrollTop / maxScroll;
+        setScrollProgress(progress); // Update the scroll progress state
+      };
+
+      // Add the scroll event listener
+      parallaxContainer.addEventListener("scroll", handleScroll);
+
+      return () => {
+        // Remove the scroll event listener on cleanup
+        parallaxContainer.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, []);
+
   return (
-    <VStackFull className="relative h-[95vh] bg-slate-800 bg-gradient-to-br from-violet-900/40 via-indigo-900/40 to-fuchsia-900/40 p-[0.5vh] insetShadowXl text-slate-100 pt-[6vh] md:pt-[7.5vh] border-900-md">
-      {/* HEADER  */}
-      <HStackFull className="absolute top-0 left-0 h-[6vh] md:h-[7.5vh] justify-between px-[1vh] py-[0.5vh] items-center bg-slate-900/60 border-b-970-md">
-        <VStack
-          className="w-93% h-full justify-evenly"
-          align="items-start"
-          gap="gap-[0px]"
-        >
-          <Text className="text-cyan-300 text-[2vh] leading-[2.3vh] md:text-[2.7vh] md:leading-[3vh] leading-tighter">
-            {project?.title}
-          </Text>
-          <Text className="text-[1.3vh] leading-[1.5vh] md:text-[1.7vh] md:leading-[2vh] leading-tighter">
-            {project?.description}
-          </Text>
-        </VStack>
-        <Flex className="h-full w-7% justify-end">
-          <NavIconButton icon={CloseIcon} to="/dark-violet-reboot/#portfolio" />
-        </Flex>
-      </HStackFull>
-      {/* FOOTER  */}
-      <CenterHorizontalFull className="absolute bottom-0 left-0 h-[4vh] p-[1vh] items-center bg-slate-900/60 border-t-970-md">
-        <Box className="z-20">
-          <NavLinkButton
-            iconLeft={CloseIcon}
-            to="/dark-violet-reboot/#portfolio"
-            buttonText="close"
-            type="smallNormal"
+    <FlexFull className="bg-[url('https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/aurora.png?quality=60')] bg-center bg-cover">
+      <VStackFull className="relative h-[95vh] bg-gradient-to-br from-violet-900/90 via-indigo-900/90 to-fuchsia-900/90 p-[0.5vh] insetShadowXl text-slate-100 pt-[7vh] md:pt-[8.5vh] border-900-md">
+        {/* HEADER  */}
+        <VStackFull className="absolute top-0 left-0 h-[7vh] md:h-[8.5vh]  bg-slate-900/60 border-b-970-md">
+          <HStackFull className="justify-between px-[1vh] py-[0.5vh] items-center">
+            <VStack
+              className="w-93% h-full justify-evenly"
+              align="items-start"
+              gap="gap-[0px]"
+            >
+              <Text className="text-cyan-300 text-[2vh] leading-[2.3vh] md:text-[2.7vh] md:leading-[3vh] leading-tighter">
+                {project?.title}
+              </Text>
+              <Text className="text-[1.3vh] leading-[1.5vh] md:text-[1.7vh] md:leading-[2vh] leading-tighter">
+                {project?.description}
+              </Text>
+            </VStack>
+            <Flex className="h-full w-7% justify-end">
+              <NavIconButton
+                icon={CloseIcon}
+                to="/dark-violet-reboot/#portfolio"
+              />
+            </Flex>
+          </HStackFull>
+          <motion.div
+            className="h-[0.8vh] rounded-l-none w-full bg-gradient-to-r from-violet-400 via-indigo-400 to-fuchsia-400  absolute bottom-0 left-0"
+            style={{ scaleX: scrollProgress, transformOrigin: "left" }}
           />
-        </Box>
-      </CenterHorizontalFull>
-
-      <FlexFull className="">
-        <Parallax
-          ref={parallax}
-          pages={7}
-          className="hide-scrollbar max-h-[85vh] md:max-h-[83vh]"
-        >
-          {/* IMAGES  */}
-          <ParallaxLayer offset={0} speed={0.6}>
-            <CenterHorizontalFull className="pt-[1.5vh]">
-              <Flex className="h-fit w-[93vw] max-h-[85vh]">
-                <RadialScrollProgress title={project?.title}>
-                  {project?.projectImages.map((image, index) => (
-                    <Flex className="w-fit flex-shrink-0 snap-center snap-always ">
-                      <RadialProgressiveImage
-                        image={image.src}
-                        title={image.title}
-                      />
-                    </Flex>
-                  ))}
-                </RadialScrollProgress>
-              </Flex>
-            </CenterHorizontalFull>
-          </ParallaxLayer>
-          {/* PARAGRAPHS  */}
-          <PortfolioItemParallaxBodyMobile
-            infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
-            projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
-          />
-          <PortfolioItemParallaxBodySmall
-            infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
-            projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
-          />
-          <PortfolioItemParallaxBodyMedium
-            infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
-            projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
-          />
-          <PortfolioItemParallaxBodyLarge
-            infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
-            projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
-          />
-        </Parallax>
-      </FlexFull>
-    </VStackFull>
+        </VStackFull>
+        {/* FOOTER  */}
+        <CenterHorizontalFull className="absolute bottom-0 left-0 h-[4vh] p-[1vh] items-center bg-slate-900/60 border-t-970-md">
+          <Box className="z-20">
+            <NavLinkButton
+              iconLeft={CloseIcon}
+              to="/dark-violet-reboot/#portfolio"
+              buttonText="close"
+              type="smallNormal"
+            />
+          </Box>
+        </CenterHorizontalFull>
+        {/* CONTENT  */}
+        <FlexFull>
+          <Parallax
+            ref={parallax}
+            pages={7}
+            className="hide-scrollbar max-h-[84vh] md:max-h-[82vh]"
+          >
+            {/* IMAGES  */}
+            <ParallaxLayer offset={0} speed={0.6}>
+              <CenterHorizontalFull className="pt-[1.5vh]">
+                <Flex className="h-fit w-[93vw] max-h-[85vh]">
+                  <RadialScrollProgress title={project?.title}>
+                    {project?.projectImages.map((image, index) => (
+                      <Flex
+                        key={index}
+                        className="w-fit flex-shrink-0 snap-center snap-always "
+                      >
+                        <RadialProgressiveImage
+                          image={image.src}
+                          title={image.title}
+                        />
+                      </Flex>
+                    ))}
+                  </RadialScrollProgress>
+                </Flex>
+              </CenterHorizontalFull>
+            </ParallaxLayer>
+            {/* PARAGRAPHS  */}
+            <PortfolioItemParallaxBodyMobile
+              infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
+              projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
+            />
+            <PortfolioItemParallaxBodySmall
+              infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
+              projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
+            />
+            <PortfolioItemParallaxBodyMedium
+              infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
+              projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
+            />
+            <PortfolioItemParallaxBodyLarge
+              infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
+              projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
+            />
+          </Parallax>
+        </FlexFull>
+      </VStackFull>
+    </FlexFull>
   );
 }
-
-{
-  /* <FlexFull className="h-full bg-col-890 bg-radial6op50">
-        <VStackFull className="h-full max-h-full">
-          <VStackFull gap="gap-[0px]" className="h-full max-h-full"> */
-}
-{
-  /* HEADER */
-}
-// <VStackFull className="bg-col-900 bg-radial6op50 border-b-970-md rounded-b-none p-[1vh] h-15% flex-shrink-0">
-//   <Heading
-//     text={project.title}
-//     layout="text-xxl-normal md:text-insane-tight"
-//     color="text-col-500"
-//     shadow="textShadow"
-//   />
-
-// </VStackFull>
-{
-  /* CONTENT */
-}
-//     <VStack className="h-85% max-h-85% py-[2vh] px-[1vh] md:px-[2vh] overflow-y-auto">
-//       <div>
-//         {project.projectInfoImages[0] && (
-//           <Box
-//             className={`${project.projectInfoImages[0].dimension} float-end my-[2vh] ml-[2vh] shadowBroadNormal`}
-//           >
-//             <Image
-//               src={
-//                 project.projectInfoImages[0].src +
-//                 projectInfoImageSettings
-//               }
-//               alt={project.title}
-//             />
-//           </Box>
-//         )}
-//         {sectionsOne.map((section, index) => (
-//           <p key={index}>
-//             <Heading
-//               text={section.heading}
-//               layout="text-xl-normal mb-[1vh]"
-//               color="text-col-pink text-stroke-5-970"
-//               shadow="textShadow"
-//               noOfLines={5}
-//             />
-//             {section.paragraphs.map((paragraph, index) => (
-//               <p key={index} className="mb-[1vh]">
-//                 {paragraph}
-//               </p>
-//             ))}
-//           </p>
-//         ))}
-//       </div>
-//       <div>
-//         {project.projectInfoImages[1] && (
-//           <Box
-//             className={`${project.projectInfoImages[1].dimension} float-start my-[2vh] mr-[2vh] shadowBroadNormal`}
-//           >
-//             <Image
-//               src={
-//                 project.projectInfoImages[1].src +
-//                 projectInfoImageSettings
-//               }
-//               alt={project.title}
-//             />
-//           </Box>
-//         )}
-//         {sectionsTwo.map((section, index) => (
-//           <p key={index}>
-//             <Heading
-//               text={section.heading}
-//               layout="text-xl-normal mb-[1vh]"
-//               color="text-col-pink text-stroke-5-970"
-//               shadow="textShadow"
-//               noOfLines={5}
-//             />
-//             {section.paragraphs.map((paragraph, index) => (
-//               <p key={index} className="mb-[1vh]">
-//                 {paragraph}
-//               </p>
-//             ))}
-//           </p>
-//         ))}
-//       </div>
-//     </VStack>
-//   </VStackFull>
-{
-  /* FOOTER */
-}
-//     </VStackFull>
-//   </FlexFull>
-//   <FlexFull className="h-[5vh] bg-col-900 bg-radial6op50 border-t-970-md rounded-t-none absolute bottom-0 left-0 flex-shrink-0 justify-center items-center">
-//     <Button buttonText="close" type="smallNormal" onClick={onClose} />
-//   </FlexFull>
