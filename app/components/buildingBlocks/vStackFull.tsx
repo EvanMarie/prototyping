@@ -13,7 +13,7 @@ export default function VStackFull({
   gap?: string;
   style?: React.CSSProperties;
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  align?: "items-start" | "items-center" | "items-end";
+  align?: "items-start" | "items-center" | "items-end" | string;
 }) {
   return (
     <VStack

@@ -1,5 +1,10 @@
 import FlexFull from "~/components/buildingBlocks/flexFull";
-import { PortfolioItem, PortfolioItemInfoSection, Projects } from "./data";
+import {
+  PortfolioImage,
+  PortfolioItem,
+  PortfolioItemInfoSection,
+  Projects,
+} from "./data";
 import HStackFull from "~/components/buildingBlocks/hStackFull";
 import Text from "~/components/buildingBlocks/text";
 import Box from "~/components/buildingBlocks/box";
@@ -18,6 +23,13 @@ import VStack from "~/components/buildingBlocks/vStack";
 import RadialScrollProgress from "./radialProgress";
 import Image from "~/components/buildingBlocks/image";
 import RadialProgressiveImage from "./radialProgressImage";
+import PortfolioParallaxSection from "./portfolioInfoParallaxSection";
+import {
+  PortfolioItemParallaxBodyLarge,
+  PortfolioItemParallaxBodyMedium,
+  PortfolioItemParallaxBodyMobile,
+  PortfolioItemParallaxBodySmall,
+} from "./portfolioItemParallaxBody";
 
 export default function PortfolioItemParallax() {
   const { title } = useParams();
@@ -29,7 +41,7 @@ export default function PortfolioItemParallax() {
 
   const infoSections = project?.projectInfo as PortfolioItemInfoSection[];
   return (
-    <VStackFull className="relative h-fit min-h-[95vh] bg-slate-800 bg-gradient-to-br from-violet-900/40 via-indigo-900/40 to-fuchsia-900/40 p-[0.5vh] insetShadowXl text-slate-100 pt-[6vh] md:pt-[7.5vh] border-900-md">
+    <VStackFull className="relative h-[95vh] bg-slate-800 bg-gradient-to-br from-violet-900/40 via-indigo-900/40 to-fuchsia-900/40 p-[0.5vh] insetShadowXl text-slate-100 pt-[6vh] md:pt-[7.5vh] border-900-md">
       {/* HEADER  */}
       <HStackFull className="absolute top-0 left-0 h-[6vh] md:h-[7.5vh] justify-between px-[1vh] py-[0.5vh] items-center bg-slate-900/60 border-b-970-md">
         <VStack
@@ -59,10 +71,15 @@ export default function PortfolioItemParallax() {
           />
         </Box>
       </CenterHorizontalFull>
-      {/* BODY  */}
-      <FlexFull>
-        <Parallax ref={parallax} pages={6} className="hide-scrollbar">
-          <ParallaxLayer offset={0} speed={0.2}>
+
+      <FlexFull className="">
+        <Parallax
+          ref={parallax}
+          pages={7}
+          className="hide-scrollbar max-h-[85vh] md:max-h-[83vh]"
+        >
+          {/* IMAGES  */}
+          <ParallaxLayer offset={0} speed={0.6}>
             <CenterHorizontalFull className="pt-[1.5vh]">
               <Flex className="h-fit w-[93vw] max-h-[85vh]">
                 <RadialScrollProgress title={project?.title}>
@@ -78,9 +95,23 @@ export default function PortfolioItemParallax() {
               </Flex>
             </CenterHorizontalFull>
           </ParallaxLayer>
-          <ParallaxLayer sticky={{ start: 1, end: 2 }}>THIS</ParallaxLayer>
-          <ParallaxLayer sticky={{ start: 2, end: 3 }}>THAT</ParallaxLayer>
-          <ParallaxLayer sticky={{ start: 3, end: 5 }}>THE OTHER</ParallaxLayer>
+          {/* PARAGRAPHS  */}
+          <PortfolioItemParallaxBodyMobile
+            infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
+            projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
+          />
+          <PortfolioItemParallaxBodySmall
+            infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
+            projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
+          />
+          <PortfolioItemParallaxBodyMedium
+            infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
+            projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
+          />
+          <PortfolioItemParallaxBodyLarge
+            infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
+            projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
+          />
         </Parallax>
       </FlexFull>
     </VStackFull>
