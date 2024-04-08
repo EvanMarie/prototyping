@@ -62,7 +62,7 @@ export default function TopMenu() {
 
   return (
     <HStackFull className="h-[10vh] lg:h-[12vh] xl:h-[13vh] justify-between px-[1.5vh] lg:px-[2vh] xxl:px-[5vh] items-end relative gap-[5vh]">
-      <HStack className="text-[3.7vh] sm:text-[4vh] md:text-[4.5vh] lg:text-[6vh] xl:text-[7vh] leading-tighter textShadow kufam-font flex-shrink-0 items-center h-full text-purple-300 ">
+      <HStack className="text-[3.7vh] sm:text-[4vh] md:text-[4.5vh] lg:text-[6vh] xl:text-[7vh] leading-tighter textShadow kufam-font flex-shrink-0 items-center h-full text-violet-300 ">
         <AnimatedText
           text="DarkViolet.ai"
           textClassName="text-fuchsia-400 text-[5.7vh] md:text-[5vh] lg:text-[7vh] xl:text-[7.5vh] xxl:text-[8vh] textShadow tracking-wider"
@@ -83,7 +83,7 @@ export default function TopMenu() {
           menuDirection="flex-col"
           containerClassName="w-screen justify-evenly p-[1vh]"
           itemPadding="px-[1.5vh] py-[0.5vh]"
-          itemStyle="bg-purple-700 border-970-md shadowBroadLooser w-[75vw] sm:w-[65vw] h-[5.5vh] flex items-center text-[2.5vh] text-zinc-100 textShadow hover:bg-purple-500 transition-400"
+          itemStyle="bg-violet-700 border-970-md shadowBroadLooser w-[75vw] sm:w-[65vw] h-[5.5vh] flex items-center text-[2.5vh] text-slate-100 textShadow hover:bg-violet-500 transition-400"
           itemHoverStyle="hover:bg-fuchsia-600 transition-400"
           closeButtonDelay={1}
           menuGap="gap-[3vh]"

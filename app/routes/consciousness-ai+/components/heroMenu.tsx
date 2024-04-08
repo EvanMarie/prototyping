@@ -19,7 +19,7 @@ export default function ConsciousnessHeroMenu() {
     linkUrl: string;
   }) {
     const linkStyle =
-      "w-[9vh] lg:w-[11vh] xl:w-[13vh] text-[2vh] lg:text-[2.5vh] xl:text-[3vh] text-teal-200 textShadow flex justify-center items-center flex-shrink-0 hover:text-purple-200 transition-300";
+      "w-[9vh] lg:w-[11vh] xl:w-[13vh] text-[2vh] lg:text-[2.5vh] xl:text-[3vh] text-teal-200 textShadow flex justify-center items-center flex-shrink-0 hover:text-violet-200 transition-300";
 
     return (
       <motion.div
@@ -35,7 +35,7 @@ export default function ConsciousnessHeroMenu() {
 
   return (
     <HStackFull className="h-[8.5vh] lg:h-[11vh] justify-between px-[1.5vh] lg:px-[2vh] xxl:px-[5vh] items-end relative">
-      <Flex className="text-[3.7vh] sm:text-[4vh] md:text-[4.5vh] lg:text-[6vh] xl:text-[7vh] leading-tighter textShadow kufam-font flex-shrink-0 items-center h-full text-purple-300">
+      <Flex className="text-[3.7vh] sm:text-[4vh] md:text-[4.5vh] lg:text-[6vh] xl:text-[7vh] leading-tighter textShadow kufam-font flex-shrink-0 items-center h-full text-violet-300">
         Consciousness AI
       </Flex>
       <HStack className="h-full items-center hidden md:flex justify-evenly flex-shrink-0 ">
@@ -50,7 +50,7 @@ export default function ConsciousnessHeroMenu() {
           buttonComponent={
             <Icon
               icon={DotsMenuIcon}
-              iconClassName="text-zinc-100 text-[3vh]"
+              iconClassName="text-slate-100 text-[3vh]"
             />
           }
         />

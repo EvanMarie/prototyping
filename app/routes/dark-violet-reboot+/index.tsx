@@ -17,23 +17,23 @@ import AnimatedText from "~/components/specialty/animatedText";
 import ShiftingComponents from "./components/shiftingComponents";
 import { PortfolioItem, Projects } from "./components/data";
 import ShiftingPortfolioCard from "./components/shiftingPortfolioCard";
+import IndexPortfolioSection from "./components/indexPortfolioSection";
 
 function GetRandomDelay() {
   return Math.random() * (0.6 - 0.1) + 0.1;
 }
+
+export const labelStyles =
+  "px-[1vh] py-[0.5vh] text-slate-100 textShadow text-[3vh]";
 
 const arrayOf6 = Array.from({ length: 6 }, (_, i) => i + 1);
 
 export default function ConscioussnessIndex() {
   const genSectionStyles =
     "w-[75vw] h-[75vw] rounded-full shadowBroadLooser border-970-md";
-  const genImages = Array.from(
-    { length: 17 },
-    (_, i) => `/images/consciousness_ai/genArt${i + 1}.png`
-  );
-  const labelStyles = "px-[1vh] py-[0.5vh] text-zinc-100 textShadow text-[3vh]";
+
   return (
-    <TransitionFull className="overflow-y-auto text-zinc-100">
+    <TransitionFull className="overflow-y-auto text-slate-100">
       <GlowCursor />
       <VStackFull className="h-fit">
         <LayoutContainer className="relative">
@@ -59,36 +59,7 @@ export default function ConscioussnessIndex() {
         </LayoutContainer>
         <VStackFull className="h-fit">
           {/* ************************* PORTFOLIO ************************* */}
-          <StickyLabeledSection
-            labelText="portfolio"
-            labelClassName={labelStyles}
-            id="portfolio"
-          >
-            <FlexFull className="h-fit">
-              <VStackFull className="h-fit" gap="gap-[5vh]">
-                <FlexFull className="justify-center pt-[2vh]">
-                  <ShiftingImages
-                    containerClassName="border-970-md shadowBroadLooser"
-                    imageArray={genImages}
-                    shape="rectangle"
-                    imageDimensions="h-[80vh] w-[80vw]"
-                  />
-                </FlexFull>
-                <Wrap className="w-full h-fit justify-center md:justify-around items-evenly gap-[6vh] py-[2vh]">
-                  {Projects.map((project, i) => (
-                    <Box className={`h-fit ${i % 2 === 0 ? "" : "pt-[10vh]"}`}>
-                      <ShiftingPortfolioCard
-                        key={i}
-                        portfolioItem={project as PortfolioItem}
-                        delay={i * 0.2}
-                      />
-                    </Box>
-                  ))}
-                </Wrap>
-              </VStackFull>
-            </FlexFull>
-          </StickyLabeledSection>
-
+          <IndexPortfolioSection />
           {/* ************************* US  ************************* */}
           <StickyLabeledSection
             labelText="about us"
@@ -103,13 +74,8 @@ export default function ConscioussnessIndex() {
               triggerPercent={0.3}
             >
               <FlexFull className="h-fitxl:h-screen py-[2vh] px-[1vh] sm:px-[2vh] justify-center">
-                <FlexFull className="h-fit md:w-95% lg:w-85% shadowBroadLooser border-970-md bg-zinc-900 bg-gradient-to-br from-purple-700/70 via-indigo-700/70 to-teal-700/70">
-                  <FlexFull className="flex-col xl:flex-row items-center p-[2vh] gap-[2vh]">
-                    <Flex className={genSectionStyles}>
-                      <ShiftingImages imageArray={genImages} shape="circle" />
-                    </Flex>
-                    <Flex className={genSectionStyles}></Flex>
-                  </FlexFull>
+                <FlexFull className="h-fit md:w-95% lg:w-85% shadowBroadLooser border-970-md bg-slate-900 bg-gradient-to-br from-violet-700/70 via-indigo-700/70 to-teal-700/70">
+                  this
                 </FlexFull>
               </FlexFull>
             </AnimatedComponent>
@@ -133,13 +99,13 @@ export default function ConscioussnessIndex() {
                 <Flex className="w-[50vh] h-[50vh]">
                   <ShiftingComponents
                     componentArray={[
-                      <Center className="bg-purple-400 text-zinc-100 h-[40vh] w-[40vh]">
+                      <Center className="bg-violet-400 text-slate-100 h-[40vh] w-[40vh]">
                         One
                       </Center>,
-                      <Center className="bg-fuchsia-400 text-zinc-100 h-[40vh] w-[40vh]">
+                      <Center className="bg-fuchsia-400 text-slate-100 h-[40vh] w-[40vh]">
                         Two
                       </Center>,
-                      <Center className="bg-cyan-400 text-zinc-100 h-[40vh] w-[40vh]">
+                      <Center className="bg-cyan-400 text-slate-100 h-[40vh] w-[40vh]">
                         Three
                       </Center>,
                     ]}

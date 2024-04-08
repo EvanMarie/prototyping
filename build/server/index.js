@@ -1,7 +1,16 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { PassThrough } from "node:stream";
 import { createReadableStreamFromReadable } from "@remix-run/node";
-import { RemixServer, Meta, Links, Outlet, ScrollRestoration, Scripts, NavLink, useLocation } from "@remix-run/react";
+import {
+  RemixServer,
+  Meta,
+  Links,
+  Outlet,
+  ScrollRestoration,
+  Scripts,
+  NavLink,
+  useLocation,
+} from "@remix-run/react";
 import * as isbotModule from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import React, { useState, useRef, useEffect } from "react";
@@ -10,25 +19,37 @@ import { GoSmiley } from "react-icons/go";
 import { BiChevronUp, BiChevronDown, BiMenu, BiSmile } from "react-icons/bi";
 import { BsCalendar3 } from "react-icons/bs";
 import { GiAlarmClock } from "react-icons/gi";
-import { IoCloseCircleOutline, IoReturnUpBackOutline, IoHomeOutline } from "react-icons/io5";
+import {
+  IoCloseCircleOutline,
+  IoReturnUpBackOutline,
+  IoHomeOutline,
+} from "react-icons/io5";
 import { RiArrowLeftSFill, RiArrowRightSFill } from "react-icons/ri";
 import { MdCheckBox, MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import ReactDOM from "react-dom";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { CgScrollV } from "react-icons/cg";
 const ABORT_DELAY = 5e3;
-function handleRequest(request, responseStatusCode, responseHeaders, remixContext, loadContext) {
-  return isBotRequest(request.headers.get("user-agent")) ? handleBotRequest(
-    request,
-    responseStatusCode,
-    responseHeaders,
-    remixContext
-  ) : handleBrowserRequest(
-    request,
-    responseStatusCode,
-    responseHeaders,
-    remixContext
-  );
+function handleRequest(
+  request,
+  responseStatusCode,
+  responseHeaders,
+  remixContext,
+  loadContext
+) {
+  return isBotRequest(request.headers.get("user-agent"))
+    ? handleBotRequest(
+        request,
+        responseStatusCode,
+        responseHeaders,
+        remixContext
+      )
+    : handleBrowserRequest(
+        request,
+        responseStatusCode,
+        responseHeaders,
+        remixContext
+      );
 }
 function isBotRequest(userAgent) {
   if (!userAgent) {
@@ -42,18 +63,20 @@ function isBotRequest(userAgent) {
   }
   return false;
 }
-function handleBotRequest(request, responseStatusCode, responseHeaders, remixContext) {
+function handleBotRequest(
+  request,
+  responseStatusCode,
+  responseHeaders,
+  remixContext
+) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
-      /* @__PURE__ */ jsx(
-        RemixServer,
-        {
-          context: remixContext,
-          url: request.url,
-          abortDelay: ABORT_DELAY
-        }
-      ),
+      /* @__PURE__ */ jsx(RemixServer, {
+        context: remixContext,
+        url: request.url,
+        abortDelay: ABORT_DELAY,
+      }),
       {
         onAllReady() {
           shellRendered = true;
@@ -63,7 +86,7 @@ function handleBotRequest(request, responseStatusCode, responseHeaders, remixCon
           resolve(
             new Response(stream, {
               headers: responseHeaders,
-              status: responseStatusCode
+              status: responseStatusCode,
             })
           );
           pipe(body);
@@ -76,24 +99,26 @@ function handleBotRequest(request, responseStatusCode, responseHeaders, remixCon
           if (shellRendered) {
             console.error(error);
           }
-        }
+        },
       }
     );
     setTimeout(abort, ABORT_DELAY);
   });
 }
-function handleBrowserRequest(request, responseStatusCode, responseHeaders, remixContext) {
+function handleBrowserRequest(
+  request,
+  responseStatusCode,
+  responseHeaders,
+  remixContext
+) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
     const { pipe, abort } = renderToPipeableStream(
-      /* @__PURE__ */ jsx(
-        RemixServer,
-        {
-          context: remixContext,
-          url: request.url,
-          abortDelay: ABORT_DELAY
-        }
-      ),
+      /* @__PURE__ */ jsx(RemixServer, {
+        context: remixContext,
+        url: request.url,
+        abortDelay: ABORT_DELAY,
+      }),
       {
         onShellReady() {
           shellRendered = true;
@@ -103,7 +128,7 @@ function handleBrowserRequest(request, responseStatusCode, responseHeaders, remi
           resolve(
             new Response(stream, {
               headers: responseHeaders,
-              status: responseStatusCode
+              status: responseStatusCode,
             })
           );
           pipe(body);
@@ -116,29 +141,32 @@ function handleBrowserRequest(request, responseStatusCode, responseHeaders, remi
           if (shellRendered) {
             console.error(error);
           }
-        }
+        },
       }
     );
     setTimeout(abort, ABORT_DELAY);
   });
 }
-const entryServer = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: handleRequest
-}, Symbol.toStringTag, { value: "Module" }));
+const entryServer = /* @__PURE__ */ Object.freeze(
+  /* @__PURE__ */ Object.defineProperty(
+    {
+      __proto__: null,
+      default: handleRequest,
+    },
+    Symbol.toStringTag,
+    { value: "Module" }
+  )
+);
 const Flex = React.forwardRef(
   ({ children, style, onClick, className = "", id }, ref) => {
-    return /* @__PURE__ */ jsx(
-      "div",
-      {
-        ref,
-        id,
-        className: `flex ${className}`,
-        style,
-        onClick,
-        children
-      }
-    );
+    return /* @__PURE__ */ jsx("div", {
+      ref,
+      id,
+      className: `flex ${className}`,
+      style,
+      onClick,
+      children,
+    });
   }
 );
 Flex.displayName = "Flex";
@@ -147,55 +175,72 @@ function LayoutContainer({
   className = "",
   pt = "",
   pb = "",
-  bg = ""
+  bg = "",
 }) {
-  const isImageUrl = bg.startsWith("http://") || bg.startsWith("https://") || bg.startsWith("/images");
-  const backgroundStyle = isImageUrl ? { backgroundImage: `url(${bg})`, backgroundSize: "cover" } : {};
+  const isImageUrl =
+    bg.startsWith("http://") ||
+    bg.startsWith("https://") ||
+    bg.startsWith("/images");
+  const backgroundStyle = isImageUrl
+    ? { backgroundImage: `url(${bg})`, backgroundSize: "cover" }
+    : {};
   const backgroundClass = isImageUrl ? "" : bg;
-  return /* @__PURE__ */ jsx(
-    Flex,
-    {
-      className: `w-screen overflow-hidden justify-center ${pt} ${pb} ${backgroundClass} ${className}`,
-      style: { height: "100svh", maxHeight: "100svh", ...backgroundStyle },
-      children
-    }
-  );
+  return /* @__PURE__ */ jsx(Flex, {
+    className: `w-screen overflow-hidden justify-center ${pt} ${pb} ${backgroundClass} ${className}`,
+    style: { height: "100svh", maxHeight: "100svh", ...backgroundStyle },
+    children,
+  });
 }
 const links = () => [
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+    href: "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap",
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Waiting+for+the+Sunrise&display=swap"
-  }
+    href: "https://fonts.googleapis.com/css2?family=Waiting+for+the+Sunrise&display=swap",
+  },
 ];
 function App() {
-  return /* @__PURE__ */ jsxs("html", { lang: "en", children: [
-    /* @__PURE__ */ jsxs("head", { children: [
-      /* @__PURE__ */ jsx("meta", { charSet: "utf-8" }),
-      /* @__PURE__ */ jsx("meta", { name: "viewport", content: "width=device-width, initial-scale=1" }),
-      /* @__PURE__ */ jsx(Meta, {}),
-      /* @__PURE__ */ jsx(Links, {})
-    ] }),
-    /* @__PURE__ */ jsx("body", { children: /* @__PURE__ */ jsxs(LayoutContainer, { className: "bg-col-880", children: [
-      /* @__PURE__ */ jsx(Outlet, {}),
-      /* @__PURE__ */ jsx(ScrollRestoration, {}),
-      /* @__PURE__ */ jsx(Scripts, {})
-    ] }) })
-  ] });
+  return /* @__PURE__ */ jsxs("html", {
+    lang: "en",
+    children: [
+      /* @__PURE__ */ jsxs("head", {
+        children: [
+          /* @__PURE__ */ jsx("meta", { charSet: "utf-8" }),
+          /* @__PURE__ */ jsx("meta", {
+            name: "viewport",
+            content: "width=device-width, initial-scale=1",
+          }),
+          /* @__PURE__ */ jsx(Meta, {}),
+          /* @__PURE__ */ jsx(Links, {}),
+        ],
+      }),
+      /* @__PURE__ */ jsx("body", {
+        children: /* @__PURE__ */ jsxs(LayoutContainer, {
+          className: "bg-col-880",
+          children: [
+            /* @__PURE__ */ jsx(Outlet, {}),
+            /* @__PURE__ */ jsx(ScrollRestoration, {}),
+            /* @__PURE__ */ jsx(Scripts, {}),
+          ],
+        }),
+      }),
+    ],
+  });
 }
-const route0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: App,
-  links
-}, Symbol.toStringTag, { value: "Module" }));
-function Text({
-  children,
-  className = "",
-  noOfLines
-}) {
+const route0 = /* @__PURE__ */ Object.freeze(
+  /* @__PURE__ */ Object.defineProperty(
+    {
+      __proto__: null,
+      default: App,
+      links,
+    },
+    Symbol.toStringTag,
+    { value: "Module" }
+  )
+);
+function Text({ children, className = "", noOfLines }) {
   const style = {};
   if (noOfLines) {
     style.overflow = "hidden";
@@ -210,113 +255,113 @@ const transitionVariants = {
   fade: {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
-    exit: { opacity: 0 }
+    exit: { opacity: 0 },
   },
   scale: {
     initial: { scale: 0 },
     animate: { scale: 1 },
-    exit: { scale: 0 }
+    exit: { scale: 0 },
   },
   rotate: {
     initial: { rotate: -90, opacity: 0 },
     animate: { rotate: 0, opacity: 1 },
-    exit: { rotate: 90, opacity: 0 }
+    exit: { rotate: 90, opacity: 0 },
   },
   flip: {
     initial: { scaleX: -1, opacity: 0 },
     animate: { scaleX: 1, opacity: 1 },
-    exit: { scaleX: -1, opacity: 0 }
+    exit: { scaleX: -1, opacity: 0 },
   },
   zoom: {
     initial: { scale: 0.5, opacity: 0 },
     animate: { scale: 1, opacity: 1 },
-    exit: { scale: 0.5, opacity: 0 }
+    exit: { scale: 0.5, opacity: 0 },
   },
   slide: {
     initial: { x: "-100%" },
     animate: { x: 0 },
-    exit: { x: "-100%" }
+    exit: { x: "-100%" },
   },
   slideInLeft: {
     initial: { x: "-100%" },
     animate: { x: 0 },
-    exit: { x: "-100%" }
+    exit: { x: "-100%" },
   },
   slideInTopLeft: {
     initial: { x: "-100%", y: "-100%" },
     animate: { x: 0, y: 0 },
-    exit: { x: "-100%", y: "-100%" }
+    exit: { x: "-100%", y: "-100%" },
   },
   slideInBottomLeft: {
     initial: { x: "-100%", y: "100%" },
     animate: { x: 0, y: 0 },
-    exit: { x: "-100%", y: "100%" }
+    exit: { x: "-100%", y: "100%" },
   },
   slideInTop: {
     initial: { y: "-100%" },
     animate: { y: 0 },
-    exit: { y: "-100%" }
+    exit: { y: "-100%" },
   },
   slideInTopRight: {
     initial: { x: "100%", y: "-100%" },
     animate: { x: 0, y: 0 },
-    exit: { x: "100%", y: "-100%" }
+    exit: { x: "100%", y: "-100%" },
   },
   slideInRight: {
     initial: { x: "100%" },
     animate: { x: 0 },
-    exit: { x: "100%" }
+    exit: { x: "100%" },
   },
   slideInBottomRight: {
     initial: { x: "100%", y: "100%" },
     animate: { x: 0, y: 0 },
-    exit: { x: "100%", y: "100%" }
+    exit: { x: "100%", y: "100%" },
   },
   slideInBottom: {
     initial: { y: "100%" },
     animate: { y: 0 },
-    exit: { y: "100%" }
+    exit: { y: "100%" },
   },
   fadeSlideInRight: {
     initial: { x: "50%", opacity: 0 },
     animate: { x: 0, opacity: 1 },
-    exit: { x: "50%", opacity: 0 }
+    exit: { x: "50%", opacity: 0 },
   },
   fadeSlideInLeft: {
     initial: { x: "-50%", opacity: 0 },
     animate: { x: 0, opacity: 1 },
-    exit: { x: "-50%", opacity: 0 }
+    exit: { x: "-50%", opacity: 0 },
   },
   fadeSlideInTopLeft: {
     initial: { x: "-50%", y: "-50%", opacity: 0 },
     animate: { x: 0, y: 0, opacity: 1 },
-    exit: { x: "-50%", y: "-50%", opacity: 0 }
+    exit: { x: "-50%", y: "-50%", opacity: 0 },
   },
   fadeSlideInBottomLeft: {
     initial: { x: "-50%", y: "50%", opacity: 0 },
     animate: { x: 0, y: 0, opacity: 1 },
-    exit: { x: "-50%", y: "50%", opacity: 0 }
+    exit: { x: "-50%", y: "50%", opacity: 0 },
   },
   fadeSlideInTop: {
     initial: { y: "-50%", opacity: 0 },
     animate: { y: 0, opacity: 1 },
-    exit: { y: "-50%", opacity: 0 }
+    exit: { y: "-50%", opacity: 0 },
   },
   fadeSlideInTopRight: {
     initial: { x: "50%", y: "-50%", opacity: 0 },
     animate: { x: 0, y: 0, opacity: 1 },
-    exit: { x: "50%", y: "-50%", opacity: 0 }
+    exit: { x: "50%", y: "-50%", opacity: 0 },
   },
   fadeSlideInBottomRight: {
     initial: { x: "50%", y: "50%", opacity: 0 },
     animate: { x: 0, y: 0, opacity: 1 },
-    exit: { x: "50%", y: "50%", opacity: 0 }
+    exit: { x: "50%", y: "50%", opacity: 0 },
   },
   fadeSlideInBottom: {
     initial: { y: "50%", opacity: 0 },
     animate: { y: 0, opacity: 1 },
-    exit: { y: "50%", opacity: 0 }
-  }
+    exit: { y: "50%", opacity: 0 },
+  },
 };
 function Transition({
   children,
@@ -326,7 +371,7 @@ function Transition({
   style = {},
   duration = 0.5,
   onClick,
-  key
+  key,
 }) {
   return /* @__PURE__ */ jsx(
     motion.div,
@@ -339,98 +384,129 @@ function Transition({
       transition: { duration, delay },
       style,
       onClick,
-      children
+      children,
     },
     key
   );
 }
 const VStack = React.forwardRef(
-  ({
-    children,
-    gap = "gap-2",
-    className = "",
-    style = {},
-    align = "items-center",
-    onClick
-  }, ref) => {
-    return /* @__PURE__ */ jsx(
-      "div",
-      {
-        onClick,
-        className: `flex flex-col ${align} ${gap} ${className}`,
-        ref,
-        style,
-        children
-      }
-    );
+  (
+    {
+      children,
+      gap = "gap-2",
+      className = "",
+      style = {},
+      align = "items-center",
+      onClick,
+    },
+    ref
+  ) => {
+    return /* @__PURE__ */ jsx("div", {
+      onClick,
+      className: `flex flex-col ${align} ${gap} ${className}`,
+      ref,
+      style,
+      children,
+    });
   }
 );
 VStack.displayName = "VStack";
 const meta = () => {
   return [
     { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" }
+    { name: "description", content: "Welcome to Remix!" },
   ];
 };
 function Index() {
-  return /* @__PURE__ */ jsx(LayoutContainer, { children: /* @__PURE__ */ jsx(Transition, { className: "w-full h-full justify-center items-center", children: /* @__PURE__ */ jsxs(VStack, { children: [
-    /* @__PURE__ */ jsx(Text, { className: "font-cursive boldTextGlow text-col-900 text-stroke-8-170 text-[10vh] ", children: "Remix, Vite, & Tailwind" }),
-    /* @__PURE__ */ jsx(Text, { className: "text-col-100 text-2xl textShadow", children: "A Project Launchpad with Vite, Tailwind CSS, and Remix Flat Routes" }),
-    /* @__PURE__ */ jsx(Text, { className: "text-col-100 text-2xl textShadow", children: "including extensive preset options and components with quick customization." }),
-    /* @__PURE__ */ jsx(NavLink, { to: "/design", children: /* @__PURE__ */ jsx(Text, { className: "p-[1.5vh] bg-100-linear3op25 text-col-900 shadowBroadNormal hover:bg-400-diagonal3op75 transition-400", children: "Preset Design Options" }) })
-  ] }) }) });
+  return /* @__PURE__ */ jsx(LayoutContainer, {
+    children: /* @__PURE__ */ jsx(Transition, {
+      className: "w-full h-full justify-center items-center",
+      children: /* @__PURE__ */ jsxs(VStack, {
+        children: [
+          /* @__PURE__ */ jsx(Text, {
+            className:
+              "font-cursive boldTextGlow text-col-900 text-stroke-8-170 text-[10vh] ",
+            children: "Remix, Vite, & Tailwind",
+          }),
+          /* @__PURE__ */ jsx(Text, {
+            className: "text-col-100 text-2xl textShadow",
+            children:
+              "A Project Launchpad with Vite, Tailwind CSS, and Remix Flat Routes",
+          }),
+          /* @__PURE__ */ jsx(Text, {
+            className: "text-col-100 text-2xl textShadow",
+            children:
+              "including extensive preset options and components with quick customization.",
+          }),
+          /* @__PURE__ */ jsx(NavLink, {
+            to: "/design",
+            children: /* @__PURE__ */ jsx(Text, {
+              className:
+                "p-[1.5vh] bg-100-linear3op25 text-col-900 shadowBroadNormal hover:bg-400-diagonal3op75 transition-400",
+              children: "Preset Design Options",
+            }),
+          }),
+        ],
+      }),
+    }),
+  });
 }
-const route1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: Index,
-  meta
-}, Symbol.toStringTag, { value: "Module" }));
+const route1 = /* @__PURE__ */ Object.freeze(
+  /* @__PURE__ */ Object.defineProperty(
+    {
+      __proto__: null,
+      default: Index,
+      meta,
+    },
+    Symbol.toStringTag,
+    { value: "Module" }
+  )
+);
 const HStack = React.forwardRef(
-  ({
-    children,
-    onClick = () => ({}),
-    onKeyDown,
-    gap = "gap-2",
-    className = "",
-    style = {},
-    onMouseEnter,
-    onMouseLeave,
-    onFocus,
-    onBlur
-  }, ref) => {
-    return /* @__PURE__ */ jsx(
-      "div",
-      {
-        role: "button",
-        tabIndex: 0,
-        className: `flex flex-row ${gap} ${className}`,
-        onClick,
-        onKeyDown,
-        ref,
-        style,
-        onMouseEnter,
-        onMouseLeave,
-        onFocus,
-        onBlur,
-        children
-      }
-    );
+  (
+    {
+      children,
+      onClick = () => ({}),
+      onKeyDown,
+      gap = "gap-2",
+      className = "",
+      style = {},
+      onMouseEnter,
+      onMouseLeave,
+      onFocus,
+      onBlur,
+    },
+    ref
+  ) => {
+    return /* @__PURE__ */ jsx("div", {
+      role: "button",
+      tabIndex: 0,
+      className: `flex flex-row ${gap} ${className}`,
+      onClick,
+      onKeyDown,
+      ref,
+      style,
+      onMouseEnter,
+      onMouseLeave,
+      onFocus,
+      onBlur,
+      children,
+    });
   }
 );
 HStack.displayName = "HStack";
-const FlexFull = React.forwardRef(({ children, className, onClick, id, style = {} }, ref) => {
-  return /* @__PURE__ */ jsx(
-    Flex,
-    {
+const FlexFull = React.forwardRef(
+  ({ children, className, onClick, id, style = {} }, ref) => {
+    return /* @__PURE__ */ jsx(Flex, {
       className: `w-full ${className}`,
       id,
       ref,
       onClick,
       style,
-      children
-    }
-  );
-});
+      children,
+    });
+  }
+);
 FlexFull.displayName = "FlexFull";
 const bounceAnimation = `
 @keyframes bounce {
@@ -445,39 +521,42 @@ function BouncingDots({
   color = "cyan",
   dotSize = 10,
   dotCount = 5,
-  speed = "4s"
+  speed = "4s",
 }) {
   const dots = Array.from({ length: dotCount });
-  return /* @__PURE__ */ jsxs(Fragment, { children: [
-    /* @__PURE__ */ jsx("style", { children: bounceAnimation }),
-    /* @__PURE__ */ jsx(
-      "div",
-      {
+  return /* @__PURE__ */ jsxs(Fragment, {
+    children: [
+      /* @__PURE__ */ jsx("style", { children: bounceAnimation }),
+      /* @__PURE__ */ jsx("div", {
         style: {
           display: "flex",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         },
-        children: dots.map((_, index) => /* @__PURE__ */ jsx(
-          "div",
-          {
-            style: {
-              width: `${dotSize}px`,
-              height: `${dotSize}px`,
-              margin: "0 6px",
-              backgroundColor: color,
-              borderRadius: "50%",
-              boxShadow: "2px 2px 2px black",
-              display: "inline-block",
-              // The delay is also adjusted to make sure it's positive
-              animation: `bounce ${speed} ${0.5 * index}s infinite ease-in-out both`
-            }
-          },
-          index
-        ))
-      }
-    )
-  ] });
+        children: dots.map((_, index) =>
+          /* @__PURE__ */ jsx(
+            "div",
+            {
+              style: {
+                width: `${dotSize}px`,
+                height: `${dotSize}px`,
+                margin: "0 6px",
+                backgroundColor: color,
+                borderRadius: "50%",
+                boxShadow: "2px 2px 2px black",
+                display: "inline-block",
+                // The delay is also adjusted to make sure it's positive
+                animation: `bounce ${speed} ${
+                  0.5 * index
+                }s infinite ease-in-out both`,
+              },
+            },
+            index
+          )
+        ),
+      }),
+    ],
+  });
 }
 function Icon({
   icon: IconComponent,
@@ -491,24 +570,23 @@ function Icon({
   r,
   b,
   rounded = "rounded-xs",
-  onClick
+  onClick,
 }) {
   const handleKeyDown = (event) => {
     if (event.key === "Enter" || event.key === " ") {
       onClick && onClick();
     }
   };
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      role: "button",
-      tabIndex: 0,
-      className: `${rounded} ${w} ${h} ${pos} ${t} ${b} ${r} ${l} ${containerClassName}`,
-      onClick,
-      onKeyDown: handleKeyDown,
-      children: /* @__PURE__ */ jsx(IconComponent, { className: `${rounded} ${iconClassName}` })
-    }
-  );
+  return /* @__PURE__ */ jsx("div", {
+    role: "button",
+    tabIndex: 0,
+    className: `${rounded} ${w} ${h} ${pos} ${t} ${b} ${r} ${l} ${containerClassName}`,
+    onClick,
+    onKeyDown: handleKeyDown,
+    children: /* @__PURE__ */ jsx(IconComponent, {
+      className: `${rounded} ${iconClassName}`,
+    }),
+  });
 }
 function Button({
   className,
@@ -525,50 +603,94 @@ function Button({
   type = "normal",
   width = "w-fit",
   height,
-  to
+  to,
 }) {
-  const buttonClass = type === "normal" ? "normalButtonStyles" : type === "smallNormal" ? "smallButtonStyles" : type === "negative" ? "negativeButtonStyles" : type === "smallNegative" ? "smallNegativeButtonStyles" : type === "unstyled" ? "unstyledButtonStyles" : "smallUnstyledButtonStyles";
-  const buttonHeight = height ? height : type === "normal" ? "h-[3.5vh]" : type === "smallNormal" ? "h-[2.6vh]" : type === "negative" ? "h-[3.5vh]" : type === "smallNegative" ? "h-[2.6vh]" : type === "unstyled" ? "h-[3.5vh]" : "h-[2.6vh]";
-  const displayIconSize = type === "normal" ? "text-[2.3vh]" : type === "smallNormal" ? "text-[1.7vh]" : type === "negative" ? "text-[2.3vh]" : type === "smallNegative" ? "text-[1.7vh]" : type === "unstyled" ? "text-[2.3vh]" : "text-[1.7vh]";
+  const buttonClass =
+    type === "normal"
+      ? "normalButtonStyles"
+      : type === "smallNormal"
+      ? "smallButtonStyles"
+      : type === "negative"
+      ? "negativeButtonStyles"
+      : type === "smallNegative"
+      ? "smallNegativeButtonStyles"
+      : type === "unstyled"
+      ? "unstyledButtonStyles"
+      : "smallUnstyledButtonStyles";
+  const buttonHeight = height
+    ? height
+    : type === "normal"
+    ? "h-[3.5vh]"
+    : type === "smallNormal"
+    ? "h-[2.6vh]"
+    : type === "negative"
+    ? "h-[3.5vh]"
+    : type === "smallNegative"
+    ? "h-[2.6vh]"
+    : type === "unstyled"
+    ? "h-[3.5vh]"
+    : "h-[2.6vh]";
+  const displayIconSize =
+    type === "normal"
+      ? "text-[2.3vh]"
+      : type === "smallNormal"
+      ? "text-[1.7vh]"
+      : type === "negative"
+      ? "text-[2.3vh]"
+      : type === "smallNegative"
+      ? "text-[1.7vh]"
+      : type === "unstyled"
+      ? "text-[2.3vh]"
+      : "text-[1.7vh]";
   function ButtonInsides() {
-    const combinedClasses = `${buttonClass} ${width} ${buttonHeight} ${className} ${padding} relative ${isDisabled ? "opacity-40 cursor-not-allowed" : ""}`;
-    return /* @__PURE__ */ jsx(
-      "button",
-      {
-        onClick: !isDisabled ? onClick : void 0,
-        disabled: isDisabled,
-        type: htmlType,
-        ref,
-        children: /* @__PURE__ */ jsxs(HStack, { className: combinedClasses, children: [
-          isLoading && buttonText !== "" && type !== "unstyled" && type !== "smallUnstyled" && /* @__PURE__ */ jsx(FlexFull, { className: "absolute top-0 left-0 h-full justify-center items-center z-10", children: /* @__PURE__ */ jsx(
-            BouncingDots,
-            {
-              dotCount: 3,
-              color: "white",
-              dotSize: 7,
-              speed: "3s"
-            }
-          ) }),
-          iconLeft && /* @__PURE__ */ jsx(
-            Icon,
-            {
+    const combinedClasses = `${buttonClass} ${width} ${buttonHeight} ${className} ${padding} relative ${
+      isDisabled ? "opacity-40 cursor-not-allowed" : ""
+    }`;
+    return /* @__PURE__ */ jsx("button", {
+      onClick: !isDisabled ? onClick : void 0,
+      disabled: isDisabled,
+      type: htmlType,
+      ref,
+      children: /* @__PURE__ */ jsxs(HStack, {
+        className: combinedClasses,
+        children: [
+          isLoading &&
+            buttonText !== "" &&
+            type !== "unstyled" &&
+            type !== "smallUnstyled" &&
+            /* @__PURE__ */ jsx(FlexFull, {
+              className:
+                "absolute top-0 left-0 h-full justify-center items-center z-10",
+              children: /* @__PURE__ */ jsx(BouncingDots, {
+                dotCount: 3,
+                color: "white",
+                dotSize: 7,
+                speed: "3s",
+              }),
+            }),
+          iconLeft &&
+            /* @__PURE__ */ jsx(Icon, {
               icon: iconLeft,
-              iconClassName: `${displayIconSize} ${iconStyle}`
-            }
-          ),
+              iconClassName: `${displayIconSize} ${iconStyle}`,
+            }),
           buttonText,
-          iconRight && /* @__PURE__ */ jsx(
-            Icon,
-            {
+          iconRight &&
+            /* @__PURE__ */ jsx(Icon, {
               icon: iconRight,
-              iconClassName: `${displayIconSize} ${iconStyle}`
-            }
-          )
-        ] })
-      }
-    );
+              iconClassName: `${displayIconSize} ${iconStyle}`,
+            }),
+        ],
+      }),
+    });
   }
-  return /* @__PURE__ */ jsx(Fragment, { children: to ? /* @__PURE__ */ jsx(NavLink, { to, children: /* @__PURE__ */ jsx(ButtonInsides, {}) }) : /* @__PURE__ */ jsx(ButtonInsides, {}) });
+  return /* @__PURE__ */ jsx(Fragment, {
+    children: to
+      ? /* @__PURE__ */ jsx(NavLink, {
+          to,
+          children: /* @__PURE__ */ jsx(ButtonInsides, {}),
+        })
+      : /* @__PURE__ */ jsx(ButtonInsides, {}),
+  });
 }
 function VStackFull({
   children,
@@ -576,21 +698,22 @@ function VStackFull({
   gap,
   onClick,
   style = {},
-  align = "items-center"
+  align = "items-center",
 }) {
-  return /* @__PURE__ */ jsx(
-    VStack,
-    {
-      className: `w-full ${gap} ${className}`,
-      onClick,
-      style,
-      align,
-      children
-    }
-  );
+  return /* @__PURE__ */ jsx(VStack, {
+    className: `w-full ${gap} ${className}`,
+    onClick,
+    style,
+    align,
+    children,
+  });
 }
 function Wrap({ children, className = "", style }) {
-  return /* @__PURE__ */ jsx("div", { className: `flex flex-wrap ${className}`, style, children });
+  return /* @__PURE__ */ jsx("div", {
+    className: `flex flex-wrap ${className}`,
+    style,
+    children,
+  });
 }
 const textShadows = [
   "lightTextShadow",
@@ -600,7 +723,7 @@ const textShadows = [
   "textFog",
   "textGlow",
   "boldText",
-  "boldTextGlow"
+  "boldTextGlow",
 ];
 const textExamples = [
   "text-xs-tighter",
@@ -652,7 +775,7 @@ const textExamples = [
   "text-insane-tight",
   "text-insane-normal",
   "text-insane-loose",
-  "text-insane-looser"
+  "text-insane-looser",
 ];
 const textStrokeDarkBg = [
   "text-stroke-1-white",
@@ -1074,7 +1197,7 @@ const textStrokeDarkBg = [
   "text-stroke-20-500",
   "text-stroke-20-590",
   "text-stroke-20-580",
-  "text-stroke-20-570"
+  "text-stroke-20-570",
 ];
 const textStrokeLightBg = [
   "text-stroke-1-600",
@@ -1416,7 +1539,7 @@ const textStrokeLightBg = [
   "text-stroke-20-990",
   "text-stroke-20-980",
   "text-stroke-20-970",
-  "text-stroke-20-black"
+  "text-stroke-20-black",
 ];
 const allColors = [
   "bg-col-100",
@@ -1427,7 +1550,7 @@ const allColors = [
   "bg-col-600",
   "bg-col-700",
   "bg-col-800",
-  "bg-col-900"
+  "bg-col-900",
 ];
 const allColorsRGB = [
   { code: "bg-col-100", rgb: "rgb(228, 237, 245)" },
@@ -1438,7 +1561,7 @@ const allColorsRGB = [
   { code: "bg-col-600", rgb: "rgb(97, 116, 140)" },
   { code: "bg-col-700", rgb: "rgb(41, 60, 84)" },
   { code: "bg-col-800", rgb: "rgb(1, 42, 94)" },
-  { code: "bg-col-900", rgb: "rgb(1, 17, 38)" }
+  { code: "bg-col-900", rgb: "rgb(1, 17, 38)" },
 ];
 const colors100 = [
   "bg-col-100",
@@ -1450,7 +1573,7 @@ const colors100 = [
   "bg-col-160",
   "bg-col-170",
   "bg-col-180",
-  "bg-col-190"
+  "bg-col-190",
 ];
 const colors200 = [
   "bg-col-200",
@@ -1462,7 +1585,7 @@ const colors200 = [
   "bg-col-260",
   "bg-col-270",
   "bg-col-280",
-  "bg-col-290"
+  "bg-col-290",
 ];
 const colors300 = [
   "bg-col-300",
@@ -1474,7 +1597,7 @@ const colors300 = [
   "bg-col-360",
   "bg-col-370",
   "bg-col-380",
-  "bg-col-390"
+  "bg-col-390",
 ];
 const colors400 = [
   "bg-col-400",
@@ -1486,7 +1609,7 @@ const colors400 = [
   "bg-col-460",
   "bg-col-470",
   "bg-col-480",
-  "bg-col-490"
+  "bg-col-490",
 ];
 const colors500 = [
   "bg-col-500",
@@ -1498,7 +1621,7 @@ const colors500 = [
   "bg-col-560",
   "bg-col-570",
   "bg-col-580",
-  "bg-col-590"
+  "bg-col-590",
 ];
 const colors600 = [
   "bg-col-600",
@@ -1510,7 +1633,7 @@ const colors600 = [
   "bg-col-660",
   "bg-col-670",
   "bg-col-680",
-  "bg-col-690"
+  "bg-col-690",
 ];
 const colors700 = [
   "bg-col-700",
@@ -1522,7 +1645,7 @@ const colors700 = [
   "bg-col-760",
   "bg-col-770",
   "bg-col-780",
-  "bg-col-790"
+  "bg-col-790",
 ];
 const colors800 = [
   "bg-col-800",
@@ -1534,7 +1657,7 @@ const colors800 = [
   "bg-col-860",
   "bg-col-870",
   "bg-col-880",
-  "bg-col-890"
+  "bg-col-890",
 ];
 const colors900 = [
   "bg-col-900",
@@ -1546,7 +1669,7 @@ const colors900 = [
   "bg-col-960",
   "bg-col-970",
   "bg-col-980",
-  "bg-col-990"
+  "bg-col-990",
 ];
 const gradients = [
   "bg-linear1",
@@ -1620,7 +1743,7 @@ const gradients = [
   "bg-radial6",
   "bg-radial6op25",
   "bg-radial6op50",
-  "bg-radial6op75"
+  "bg-radial6op75",
 ];
 const col100Bgs = {
   bg1: "bg-col-100 bg-linear1op25",
@@ -1676,7 +1799,7 @@ const col100Bgs = {
   bg51: "bg-col-100 bg-radial5op75",
   bg52: "bg-col-100 bg-radial6op25",
   bg53: "bg-col-100 bg-radial6op50",
-  bg54: "bg-col-100 bg-radial6op75"
+  bg54: "bg-col-100 bg-radial6op75",
 };
 const col200Bgs = {
   bg1: "bg-col-200 bg-linear1op25",
@@ -1732,7 +1855,7 @@ const col200Bgs = {
   bg51: "bg-col-200 bg-radial5op75",
   bg52: "bg-col-200 bg-radial6op25",
   bg53: "bg-col-200 bg-radial6op50",
-  bg54: "bg-col-200 bg-radial6op75"
+  bg54: "bg-col-200 bg-radial6op75",
 };
 const col300Bgs = {
   bg1: "bg-col-300 bg-linear1op25",
@@ -1788,7 +1911,7 @@ const col300Bgs = {
   bg51: "bg-col-300 bg-radial5op75",
   bg52: "bg-col-300 bg-radial6op25",
   bg53: "bg-col-300 bg-radial6op50",
-  bg54: "bg-col-300 bg-radial6op75"
+  bg54: "bg-col-300 bg-radial6op75",
 };
 const col400Bgs = {
   bg1: "bg-col-400 bg-linear1op25",
@@ -1844,7 +1967,7 @@ const col400Bgs = {
   bg51: "bg-col-400 bg-radial5op75",
   bg52: "bg-col-400 bg-radial6op25",
   bg53: "bg-col-400 bg-radial6op50",
-  bg54: "bg-col-400 bg-radial6op75"
+  bg54: "bg-col-400 bg-radial6op75",
 };
 const col500Bgs = {
   bg1: "bg-col-500 bg-linear1op25",
@@ -1900,7 +2023,7 @@ const col500Bgs = {
   bg51: "bg-col-500 bg-radial5op75",
   bg52: "bg-col-500 bg-radial6op25",
   bg53: "bg-col-500 bg-radial6op50",
-  bg54: "bg-col-500 bg-radial6op75"
+  bg54: "bg-col-500 bg-radial6op75",
 };
 const col600Bgs = {
   bg1: "bg-col-600 bg-linear1op25",
@@ -1956,7 +2079,7 @@ const col600Bgs = {
   bg51: "bg-col-600 bg-radial5op75",
   bg52: "bg-col-600 bg-radial6op25",
   bg53: "bg-col-600 bg-radial6op50",
-  bg54: "bg-col-600 bg-radial6op75"
+  bg54: "bg-col-600 bg-radial6op75",
 };
 const col700Bgs = {
   bg1: "bg-col-700 bg-linear1op25",
@@ -2012,7 +2135,7 @@ const col700Bgs = {
   bg51: "bg-col-700 bg-radial5op75",
   bg52: "bg-col-700 bg-radial6op25",
   bg53: "bg-col-700 bg-radial6op50",
-  bg54: "bg-col-700 bg-radial6op75"
+  bg54: "bg-col-700 bg-radial6op75",
 };
 const col800Bgs = {
   bg1: "bg-col-800 bg-linear1op25",
@@ -2068,7 +2191,7 @@ const col800Bgs = {
   bg51: "bg-col-800 bg-radial5op75",
   bg52: "bg-col-800 bg-radial6op25",
   bg53: "bg-col-800 bg-radial6op50",
-  bg54: "bg-col-800 bg-radial6op75"
+  bg54: "bg-col-800 bg-radial6op75",
 };
 const col900Bgs = {
   bg1: "bg-col-900 bg-linear1op25",
@@ -2124,7 +2247,7 @@ const col900Bgs = {
   bg51: "bg-col-900 bg-radial5op75",
   bg52: "bg-col-900 bg-radial6op25",
   bg53: "bg-col-900 bg-radial6op50",
-  bg54: "bg-col-900 bg-radial6op75"
+  bg54: "bg-col-900 bg-radial6op75",
 };
 const shadowsLightBack = [
   "shadowNarrowTight",
@@ -2151,7 +2274,7 @@ const shadowsLightBack = [
   "standoutShadowSm",
   "standoutShadowMd",
   "standoutShadowLg",
-  "standoutShadowXl"
+  "standoutShadowXl",
 ];
 const shadowsDarkBack = [
   "lightShadowTight",
@@ -2169,7 +2292,7 @@ const shadowsDarkBack = [
   "metallicEdgesSm",
   "metallicEdgesMd",
   "metallicEdgesLg",
-  "metallicEdgesXl"
+  "metallicEdgesXl",
 ];
 const toastPositions = [
   "top-left",
@@ -2180,7 +2303,7 @@ const toastPositions = [
   "center-bottom",
   "center-left",
   "center-top",
-  "center-center"
+  "center-center",
 ];
 const tooltipPlacements = [
   "top",
@@ -2192,7 +2315,7 @@ const tooltipPlacements = [
   "bottomLeft",
   "bottomRight",
   "topLeftCorner",
-  "topRightCorner"
+  "topRightCorner",
 ];
 const drawerTypes = [
   "right",
@@ -2202,7 +2325,7 @@ const drawerTypes = [
   "left",
   "bottom-left",
   "top-left",
-  "top-center"
+  "top-center",
 ];
 const transitionTypes = [
   "fade",
@@ -2226,7 +2349,7 @@ const transitionTypes = [
   "fadeSlideInTop",
   "fadeSlideInTopRight",
   "fadeSlideInBottomRight",
-  "fadeSlideInBottom"
+  "fadeSlideInBottom",
 ];
 const transitions = [
   "transition-300",
@@ -2246,7 +2369,7 @@ const transitions = [
   "transition-1700",
   "transition-1800",
   "transition-1900",
-  "transition-2000"
+  "transition-2000",
 ];
 const AnimationTypes = [
   "slideInX",
@@ -2269,9 +2392,14 @@ const AnimationTypes = [
   "zoomOutUp",
   "zoomOutDown",
   "zoomOutLeft",
-  "zoomOutRight"
+  "zoomOutRight",
 ];
-const SpinnerSmall = () => /* @__PURE__ */ jsx("div", { className: "spinner", "aria-label": "Loading", children: /* @__PURE__ */ jsx("style", { children: `
+const SpinnerSmall = () =>
+  /* @__PURE__ */ jsx("div", {
+    className: "spinner",
+    "aria-label": "Loading",
+    children: /* @__PURE__ */ jsx("style", {
+      children: `
         .spinner,
         .spinner:after {
           border-radius: 50%;
@@ -2294,7 +2422,9 @@ const SpinnerSmall = () => /* @__PURE__ */ jsx("div", { className: "spinner", "a
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-      ` }) });
+      `,
+    }),
+  });
 function Tooltip({
   label,
   bg = "bg-col-400",
@@ -2303,7 +2433,7 @@ function Tooltip({
   children,
   placement = "bottomRight",
   border = "border-970-md",
-  className = ""
+  className = "",
 }) {
   const [isHovered, setHovered] = useState(false);
   let placementStyles;
@@ -2341,9 +2471,9 @@ function Tooltip({
     default:
       placementStyles = "";
   }
-  return /* @__PURE__ */ jsx("div", { className: `relative ${className}`, children: /* @__PURE__ */ jsxs(
-    "div",
-    {
+  return /* @__PURE__ */ jsx("div", {
+    className: `relative ${className}`,
+    children: /* @__PURE__ */ jsxs("div", {
       className: `relative inline-block ${className}`,
       onMouseEnter: () => setHovered(true),
       onMouseLeave: () => setHovered(false),
@@ -2357,23 +2487,22 @@ function Tooltip({
       role: "button",
       children: [
         children,
-        isHovered && label && /* @__PURE__ */ jsx(
-          "div",
-          {
+        isHovered &&
+          label &&
+          /* @__PURE__ */ jsx("div", {
             className: `absolute ${placementStyles} py-[0.1vh]`,
             onMouseLeave: () => setHovered(false),
-            children: /* @__PURE__ */ jsx(Transition, { className: "rounded-sm", children: /* @__PURE__ */ jsx(
-              "div",
-              {
+            children: /* @__PURE__ */ jsx(Transition, {
+              className: "rounded-sm",
+              children: /* @__PURE__ */ jsx("div", {
                 className: `text-sm-tight justify-center py-[0.3vh] px-[0.8vh] z-30 font-semibold shadowNarrowNormal whitespace-nowrap rounded-sm ${border} ${w} ${bg} ${color}`,
-                children: label
-              }
-            ) })
-          }
-        )
-      ]
-    }
-  ) });
+                children: label,
+              }),
+            }),
+          }),
+      ],
+    }),
+  });
 }
 function IconButton({
   icon,
@@ -2387,63 +2516,104 @@ function IconButton({
   type = "normal",
   tooltipPlacement,
   label,
-  to
+  to,
 }) {
-  const buttonClass = type === "normal" ? "normalButtonStyles" : type === "smallNormal" ? "smallButtonStyles" : type === "negative" ? "negativeButtonStyles" : type === "smallNegative" ? "smallNegativeButtonStyles" : type === "unstyled" ? "unstyledButtonStyles" : "smallUnstyledButtonStyles";
-  const displayIconSize = type === "normal" ? "text-[2.5vh]" : type === "smallNormal" ? "text-[1.6vh]" : type === "negative" ? "text-[2.5vh] " : type === "smallNegative" ? "text-[1.6vh]" : type === "unstyled" ? "" : type === "smallUnstyled" ? "" : "text-[1.6vh]";
-  const iconButtonSize = type === "normal" ? "w-[3.5vh] h-[3.5vh]" : type === "smallNormal" ? "w-[3vh] h-[3vh]" : type === "negative" ? " w-[3.5vh] h-[3.5vh]" : type === "smallNegative" ? "w-[3vh] h-[3vh]" : type === "unstyled" ? "" : type === "smallUnstyled" ? "" : "text-[2vh] w-[3vh] h-[3vh]";
+  const buttonClass =
+    type === "normal"
+      ? "normalButtonStyles"
+      : type === "smallNormal"
+      ? "smallButtonStyles"
+      : type === "negative"
+      ? "negativeButtonStyles"
+      : type === "smallNegative"
+      ? "smallNegativeButtonStyles"
+      : type === "unstyled"
+      ? "unstyledButtonStyles"
+      : "smallUnstyledButtonStyles";
+  const displayIconSize =
+    type === "normal"
+      ? "text-[2.5vh]"
+      : type === "smallNormal"
+      ? "text-[1.6vh]"
+      : type === "negative"
+      ? "text-[2.5vh] "
+      : type === "smallNegative"
+      ? "text-[1.6vh]"
+      : type === "unstyled"
+      ? ""
+      : type === "smallUnstyled"
+      ? ""
+      : "text-[1.6vh]";
+  const iconButtonSize =
+    type === "normal"
+      ? "w-[3.5vh] h-[3.5vh]"
+      : type === "smallNormal"
+      ? "w-[3vh] h-[3vh]"
+      : type === "negative"
+      ? " w-[3.5vh] h-[3.5vh]"
+      : type === "smallNegative"
+      ? "w-[3vh] h-[3vh]"
+      : type === "unstyled"
+      ? ""
+      : type === "smallUnstyled"
+      ? ""
+      : "text-[2vh] w-[3vh] h-[3vh]";
   function ButtonInsides() {
-    return /* @__PURE__ */ jsx(Tooltip, { label, placement: tooltipPlacement, children: /* @__PURE__ */ jsx(
-      "button",
-      {
+    return /* @__PURE__ */ jsx(Tooltip, {
+      label,
+      placement: tooltipPlacement,
+      children: /* @__PURE__ */ jsx("button", {
         onClick,
         disabled: isDisabled,
         type: htmlType,
         ref,
-        children: /* @__PURE__ */ jsx(
-          Flex,
-          {
-            className: `${iconButtonSize} ${buttonClass} ${containerClassName}`,
-            children: isLoading ? /* @__PURE__ */ jsx(SpinnerSmall, {}) : /* @__PURE__ */ jsx(
-              Icon,
-              {
+        children: /* @__PURE__ */ jsx(Flex, {
+          className: `${iconButtonSize} ${buttonClass} ${containerClassName}`,
+          children: isLoading
+            ? /* @__PURE__ */ jsx(SpinnerSmall, {})
+            : /* @__PURE__ */ jsx(Icon, {
                 icon,
                 iconClassName: `${displayIconSize} ${iconClassName}`,
-                containerClassName: `flex w-full h-full justify-center items-center`
-              }
-            )
-          }
-        )
-      }
-    ) });
+                containerClassName: `flex w-full h-full justify-center items-center`,
+              }),
+        }),
+      }),
+    });
   }
-  return /* @__PURE__ */ jsx(Fragment, { children: to ? /* @__PURE__ */ jsx(NavLink, { to, children: /* @__PURE__ */ jsx(ButtonInsides, {}) }) : /* @__PURE__ */ jsx(ButtonInsides, {}) });
+  return /* @__PURE__ */ jsx(Fragment, {
+    children: to
+      ? /* @__PURE__ */ jsx(NavLink, {
+          to,
+          children: /* @__PURE__ */ jsx(ButtonInsides, {}),
+        })
+      : /* @__PURE__ */ jsx(ButtonInsides, {}),
+  });
 }
 const Box = React.forwardRef(
-  ({
-    children,
-    onClick,
-    onKeyDown,
-    style = {},
-    className = "",
-    onMouseEnter,
-    onMouseLeave
-  }, ref) => {
-    return /* @__PURE__ */ jsx(
-      "div",
-      {
-        role: "button",
-        tabIndex: 0,
-        className: ` ${className}`,
-        style: { ...style },
-        onClick,
-        onKeyDown,
-        onMouseEnter,
-        onMouseLeave,
-        ref,
-        children
-      }
-    );
+  (
+    {
+      children,
+      onClick,
+      onKeyDown,
+      style = {},
+      className = "",
+      onMouseEnter,
+      onMouseLeave,
+    },
+    ref
+  ) => {
+    return /* @__PURE__ */ jsx("div", {
+      role: "button",
+      tabIndex: 0,
+      className: ` ${className}`,
+      style: { ...style },
+      onClick,
+      onKeyDown,
+      onMouseEnter,
+      onMouseLeave,
+      ref,
+      children,
+    });
   }
 );
 Box.displayName = "Box";
@@ -2663,22 +2833,26 @@ const borderList = [
   "border-950-sm",
   "border-950-md",
   "border-950-lg",
-  "border-950-xl"
+  "border-950-xl",
 ];
 function BorderExamples({
   startIndex = 0,
   endIndex = 10,
-  textColor = "text-col-100"
+  textColor = "text-col-100",
 }) {
   const filteredColorKeys = borderList.slice(startIndex, endIndex + 1);
-  return /* @__PURE__ */ jsx(Fragment, { children: filteredColorKeys.map((border) => /* @__PURE__ */ jsx(
-    StyleExampleBox,
-    {
-      className: `${border} ${textColor}`,
-      text: `className='${border}'`
-    },
-    border
-  )) });
+  return /* @__PURE__ */ jsx(Fragment, {
+    children: filteredColorKeys.map((border) =>
+      /* @__PURE__ */ jsx(
+        StyleExampleBox,
+        {
+          className: `${border} ${textColor}`,
+          text: `className='${border}'`,
+        },
+        border
+      )
+    ),
+  });
 }
 function TransformBg({ value }) {
   const parts = value.split(" ");
@@ -2724,23 +2898,20 @@ function Image({
     right: r,
     zIndex,
     borderRadius,
-    boxShadow: shadow
+    boxShadow: shadow,
   };
   const [imgSrc, setImgSrc] = useState(src);
   const handleError = () => {
     setImgSrc(fallbackImage);
   };
-  return /* @__PURE__ */ jsx(
-    "img",
-    {
-      src: imgSrc,
-      alt,
-      onError: handleError,
-      style: imageStyle,
-      ...props,
-      className: `${objectFit} ${rounded} ${shadow} ${className}`
-    }
-  );
+  return /* @__PURE__ */ jsx("img", {
+    src: imgSrc,
+    alt,
+    onError: handleError,
+    style: imageStyle,
+    ...props,
+    className: `${objectFit} ${rounded} ${shadow} ${className}`,
+  });
 }
 function Heading({
   text,
@@ -2749,7 +2920,7 @@ function Heading({
   shadow = "boldTextGlow",
   className,
   isCursive = true,
-  color = "text-col-900"
+  color = "text-col-900",
 }) {
   const style = {};
   if (noOfLines) {
@@ -2759,8 +2930,14 @@ function Heading({
     style.WebkitLineClamp = noOfLines;
     style.WebkitBoxOrient = "vertical";
   }
-  const textClassName = isCursive ? `font-cursive ${layout} ${color} ${shadow} ${className}` : `${layout} ${color} ${shadow} ${className}`;
-  return /* @__PURE__ */ jsx("h1", { className: `${layout} ${shadow} ${textClassName}`, style, children: text });
+  const textClassName = isCursive
+    ? `font-cursive ${layout} ${color} ${shadow} ${className}`
+    : `${layout} ${color} ${shadow} ${className}`;
+  return /* @__PURE__ */ jsx("h1", {
+    className: `${layout} ${shadow} ${textClassName}`,
+    style,
+    children: text,
+  });
 }
 const sizeClasses = {
   xs: "w-full h-1/3 md:w-64 md:h-1/2",
@@ -2768,7 +2945,7 @@ const sizeClasses = {
   md: "w-full h-1/2 md:w-1/3 md:h-45vh",
   lg: "w-full h-2/3 md:w-1/2 md:h-2/3",
   xl: "w-full h-5/6 md:w-2/3 md:h-2/3",
-  full: "w-full h-full"
+  full: "w-full h-full",
 };
 function Alert({
   isAlertOpen,
@@ -2787,107 +2964,105 @@ function Alert({
   alertDimensions,
   className,
   alertImage,
-  imageClassName = "w-75% h-auto sm:w-60%"
+  imageClassName = "w-75% h-auto sm:w-60%",
 }) {
   const sizeClass = size ? sizeClasses[size] || void 0 : "";
-  if (!isAlertOpen)
-    return null;
+  if (!isAlertOpen) return null;
   const backdropVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1 }
+    visible: { opacity: 1 },
   };
   const modalVariants = {
     hidden: { y: "-100vh", opacity: 0 },
-    visible: { y: "0", opacity: 1, transition: { delay: 0.5 } }
+    visible: { y: "0", opacity: 1, transition: { delay: 0.5 } },
   };
   const modalExitVariants = {
-    exit: { y: "-100vh", opacity: 0, transition: { duration: 0.5 } }
+    exit: { y: "-100vh", opacity: 0, transition: { duration: 0.5 } },
   };
-  return /* @__PURE__ */ jsx(
-    motion.div,
-    {
-      className: `fixed inset-0 overflow-hidden defaultOverlayBlur defaultOverlayColor flex justify-center items-center rounded-none`,
-      variants: backdropVariants,
+  return /* @__PURE__ */ jsx(motion.div, {
+    className: `fixed inset-0 overflow-hidden defaultOverlayBlur defaultOverlayColor flex justify-center items-center rounded-none`,
+    variants: backdropVariants,
+    initial: "hidden",
+    animate: "visible",
+    exit: "hidden",
+    style: { zIndex: 1e3 },
+    children: /* @__PURE__ */ jsx(motion.div, {
+      className: `bg-radial4 shadowNarrowNormal ${sizeClass} ${alertDimensions} ${className}`,
+      variants: { ...modalVariants, ...modalExitVariants },
       initial: "hidden",
       animate: "visible",
-      exit: "hidden",
-      style: { zIndex: 1e3 },
-      children: /* @__PURE__ */ jsx(
-        motion.div,
-        {
-          className: `bg-radial4 shadowNarrowNormal ${sizeClass} ${alertDimensions} ${className}`,
-          variants: { ...modalVariants, ...modalExitVariants },
-          initial: "hidden",
-          animate: "visible",
-          exit: "exit",
-          children: /* @__PURE__ */ jsxs(VStack, { className: "w-full h-full justify-between ", children: [
-            /* @__PURE__ */ jsx(HStack, { className: "w-full items-center bg-col-990 rounded-b-none p-[1vh] gap-2 md:gap-[1vw]", children: /* @__PURE__ */ jsx(
-              Heading,
-              {
-                color: "text-col-400",
-                shadow: "textFog",
-                text: title,
-                layout: "text-insane-normal"
-              }
-            ) }),
-            /* @__PURE__ */ jsx(
-              HStack,
-              {
-                className: `w-full h-full justify-between text-col-900 `,
-                gap: "gap-[0px]",
-                children: /* @__PURE__ */ jsxs(VStackFull, { className: "h-full justify-center p-[1vh] items-center", children: [
-                  /* @__PURE__ */ jsxs(
-                    Flex,
-                    {
-                      className: `w-full h-full justify-center items-center flex-grow-1 gap-[1vh] ${bodyWidth} ${flexDirection} ${bodyClassName} `,
-                      children: [
-                        alertImage && /* @__PURE__ */ jsx(Box, { className: imageClassName, children: /* @__PURE__ */ jsx(
-                          Image,
-                          {
-                            src: alertImage,
-                            alt: "alert image",
-                            className: "w-full h-full"
-                          }
-                        ) }),
-                        /* @__PURE__ */ jsx(Text, { className: `${bodyTextSize} lightTextShadow`, children: body })
-                      ]
-                    }
-                  ),
-                  /* @__PURE__ */ jsxs(HStack, { className: "justify-end gap-[2vw] p-[1vh]", children: [
-                    /* @__PURE__ */ jsx(
-                      Button,
-                      {
-                        ref: cancelRef,
-                        onClick: onClose,
-                        buttonText: cancelButtonText
-                      }
-                    ),
-                    /* @__PURE__ */ jsx(
-                      Button,
-                      {
-                        onClick: onConfirmClick,
-                        type: "negative",
-                        buttonText: confirmButtonText
-                      }
-                    )
-                  ] })
-                ] })
-              }
-            )
-          ] })
-        }
-      )
-    }
-  );
+      exit: "exit",
+      children: /* @__PURE__ */ jsxs(VStack, {
+        className: "w-full h-full justify-between ",
+        children: [
+          /* @__PURE__ */ jsx(HStack, {
+            className:
+              "w-full items-center bg-col-990 rounded-b-none p-[1vh] gap-2 md:gap-[1vw]",
+            children: /* @__PURE__ */ jsx(Heading, {
+              color: "text-col-400",
+              shadow: "textFog",
+              text: title,
+              layout: "text-insane-normal",
+            }),
+          }),
+          /* @__PURE__ */ jsx(HStack, {
+            className: `w-full h-full justify-between text-col-900 `,
+            gap: "gap-[0px]",
+            children: /* @__PURE__ */ jsxs(VStackFull, {
+              className: "h-full justify-center p-[1vh] items-center",
+              children: [
+                /* @__PURE__ */ jsxs(Flex, {
+                  className: `w-full h-full justify-center items-center flex-grow-1 gap-[1vh] ${bodyWidth} ${flexDirection} ${bodyClassName} `,
+                  children: [
+                    alertImage &&
+                      /* @__PURE__ */ jsx(Box, {
+                        className: imageClassName,
+                        children: /* @__PURE__ */ jsx(Image, {
+                          src: alertImage,
+                          alt: "alert image",
+                          className: "w-full h-full",
+                        }),
+                      }),
+                    /* @__PURE__ */ jsx(Text, {
+                      className: `${bodyTextSize} lightTextShadow`,
+                      children: body,
+                    }),
+                  ],
+                }),
+                /* @__PURE__ */ jsxs(HStack, {
+                  className: "justify-end gap-[2vw] p-[1vh]",
+                  children: [
+                    /* @__PURE__ */ jsx(Button, {
+                      ref: cancelRef,
+                      onClick: onClose,
+                      buttonText: cancelButtonText,
+                    }),
+                    /* @__PURE__ */ jsx(Button, {
+                      onClick: onConfirmClick,
+                      type: "negative",
+                      buttonText: confirmButtonText,
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          }),
+        ],
+      }),
+    }),
+  });
 }
 const Avatar = ({
   name,
   rounded = "rounded-full",
   src = "/images/icons/profileIcon.png",
-  size
+  size,
 }) => {
   const getInitials = (name2) => {
-    return name2.split(" ").map((word) => word[0]).join("");
+    return name2
+      .split(" ")
+      .map((word) => word[0])
+      .join("");
   };
   const sizeClasses2 = {
     xxs: "h-[2.5vh] w-[2.5vh]",
@@ -2896,23 +3071,24 @@ const Avatar = ({
     md: "h-[4vh] w-[4vh]",
     lg: "h-[5vh] w-[5vh]",
     xl: "h-[6.5vh] w-[6.5vh]",
-    xxl: "h-[7vh] w-[7vh]"
+    xxl: "h-[7vh] w-[7vh]",
   };
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      className: `${rounded} overflow-hidden flex-shrink-0 ${sizeClasses2[size || "sm"]} border-[1.5px] border-solid border-col-400 shadowNarrowNormal flex items-center justify-center text-col-400 bg-col-900`,
-      children: src ? /* @__PURE__ */ jsx(
-        Image,
-        {
+  return /* @__PURE__ */ jsx("div", {
+    className: `${rounded} overflow-hidden flex-shrink-0 ${
+      sizeClasses2[size || "sm"]
+    } border-[1.5px] border-solid border-col-400 shadowNarrowNormal flex items-center justify-center text-col-400 bg-col-900`,
+    children: src
+      ? /* @__PURE__ */ jsx(Image, {
           src: src || "/fallbackAvatar.png",
           alt: name || "",
           fallbackImage: defaultAvatar,
-          rounded
-        }
-      ) : /* @__PURE__ */ jsx("span", { className: "text-col-100", children: name ? getInitials(name) : "N/A" })
-    }
-  );
+          rounded,
+        })
+      : /* @__PURE__ */ jsx("span", {
+          className: "text-col-100",
+          children: name ? getInitials(name) : "N/A",
+        }),
+  });
 };
 function BackgroundImageContainer({
   image,
@@ -2928,37 +3104,32 @@ function BackgroundImageContainer({
   shadow = "shadowNarrowNormal",
   showOverlay = true,
   bgOverlayColor = "bg-col-920",
-  bgOverlayGradient = "bg-darkenPurpleGrad",
+  bgOverlayGradient = "bg-darkenvioletGrad",
   overlayBlur = "backdrop-blur-[2px]",
   overlayStyles,
   children,
   rounded,
-  p = "p-[1vh]"
+  p = "p-[1vh]",
 }) {
-  return /* @__PURE__ */ jsxs(
-    Box,
-    {
-      className: `relative ${w} ${h} ${shadow} ${containerClassName} ${rounded}`,
-      style,
-      children: [
-        /* @__PURE__ */ jsx(
-          Image,
-          {
-            src: image ? image : imageFallback,
-            alt,
-            className: `${objectFit} ${objectPosition} w-full h-full ${rounded} ${imageClassName}`
-          }
-        ),
-        showOverlay && /* @__PURE__ */ jsx(
-          Flex,
-          {
-            className: `absolute top-0 left-0 w-full h-full ${overlayBlur} ${rounded} ${bgOverlayColor} ${bgOverlayGradient} ${p} ${overlayStyles} `,
-            children: /* @__PURE__ */ jsx(Flex, { className: `w-full h-full ${innerContainerStyles}`, children })
-          }
-        )
-      ]
-    }
-  );
+  return /* @__PURE__ */ jsxs(Box, {
+    className: `relative ${w} ${h} ${shadow} ${containerClassName} ${rounded}`,
+    style,
+    children: [
+      /* @__PURE__ */ jsx(Image, {
+        src: image ? image : imageFallback,
+        alt,
+        className: `${objectFit} ${objectPosition} w-full h-full ${rounded} ${imageClassName}`,
+      }),
+      showOverlay &&
+        /* @__PURE__ */ jsx(Flex, {
+          className: `absolute top-0 left-0 w-full h-full ${overlayBlur} ${rounded} ${bgOverlayColor} ${bgOverlayGradient} ${p} ${overlayStyles} `,
+          children: /* @__PURE__ */ jsx(Flex, {
+            className: `w-full h-full ${innerContainerStyles}`,
+            children,
+          }),
+        }),
+    ],
+  });
 }
 function Badge({
   className = "",
@@ -2971,7 +3142,14 @@ function Badge({
 }) {
   const baseClasses = `px-[1vh] py-[0.1vh] text-xs-tight font-semibold`;
   const badgeClasses = `shadowNarrowNormal ${baseClasses} ${rounded}  ${bgColor} ${textColor} ${className}`;
-  return /* @__PURE__ */ jsx("div", { className: badgeClasses, style, ...props, children: /* @__PURE__ */ jsx(Text, { children: label == null ? void 0 : label.toUpperCase() }) });
+  return /* @__PURE__ */ jsx("div", {
+    className: badgeClasses,
+    style,
+    ...props,
+    children: /* @__PURE__ */ jsx(Text, {
+      children: label == null ? void 0 : label.toUpperCase(),
+    }),
+  });
 }
 function Checkbox({
   label,
@@ -2984,14 +3162,16 @@ function Checkbox({
   bgColor = "transparent",
   checkedBg = "bg-col-950 insetShadowMd hover:insetShadowLg",
   checkedColor = "text-col-100",
-  hoveredBg = `hover:cursor-pointer ${isChecked ? "checkedBg" : "hover:bg-transparent"} transition duration-300 ease-in-out`,
+  hoveredBg = `hover:cursor-pointer ${
+    isChecked ? "checkedBg" : "hover:bg-transparent"
+  } transition duration-300 ease-in-out`,
   hoveredColor = "hover:text-col-900 transition-300",
   disabledBg = "bg-col-850 hover:bg-col-860 transition-300",
   disabledColor = "text-col-160 hover:text-col-180",
   p = "pl-[0.5vh] pr-[0.2vh] py-[0px]",
   className = "",
   containerWidth = "w-full",
-  onDisabledClick
+  onDisabledClick,
 }) {
   const [checked, setIsChecked] = useState(isChecked);
   const [isHovered, setIsHovered] = useState(false);
@@ -3016,19 +3196,21 @@ function Checkbox({
     backgroundColor = hoveredBg;
     textColorClass = hoveredColor;
   }
-  return /* @__PURE__ */ jsxs(
-    HStack,
-    {
-      className: `items-center  gap-[0.5vh] ${p} ${backgroundColor} ${textColorClass} ${boxShadowClass} ${containerWidth} ${className}`,
-      onMouseEnter: () => !isDisabled && setIsHovered(true),
-      onMouseLeave: () => !isDisabled && setIsHovered(false),
-      onClick: isDisabled ? onDisabledClick : handleCheckboxChange,
-      children: [
-        /* @__PURE__ */ jsx(Box, { className: checkboxSize, children: checked ? /* @__PURE__ */ jsx(MdCheckBox, {}) : /* @__PURE__ */ jsx(MdOutlineCheckBoxOutlineBlank, {}) }),
-        /* @__PURE__ */ jsx(Text, { className: textSize, children: label })
-      ]
-    }
-  );
+  return /* @__PURE__ */ jsxs(HStack, {
+    className: `items-center  gap-[0.5vh] ${p} ${backgroundColor} ${textColorClass} ${boxShadowClass} ${containerWidth} ${className}`,
+    onMouseEnter: () => !isDisabled && setIsHovered(true),
+    onMouseLeave: () => !isDisabled && setIsHovered(false),
+    onClick: isDisabled ? onDisabledClick : handleCheckboxChange,
+    children: [
+      /* @__PURE__ */ jsx(Box, {
+        className: checkboxSize,
+        children: checked
+          ? /* @__PURE__ */ jsx(MdCheckBox, {})
+          : /* @__PURE__ */ jsx(MdOutlineCheckBoxOutlineBlank, {}),
+      }),
+      /* @__PURE__ */ jsx(Text, { className: textSize, children: label }),
+    ],
+  });
 }
 const Portal = ({ children }) => {
   const containerRef = useRef(null);
@@ -3067,57 +3249,66 @@ function CloseButton({
   onClose,
   className,
   iconClassName = "text-[2.5vh]",
-  type = "smallNormal"
+  type = "smallNormal",
 }) {
-  return /* @__PURE__ */ jsx(
-    IconButton,
-    {
-      label: "close",
-      icon: CloseIcon,
-      type,
-      onClick: (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        onClose();
-      },
-      containerClassName: `z-10 ${className}`,
-      tooltipPlacement: "left",
-      iconClassName
-    }
-  );
+  return /* @__PURE__ */ jsx(IconButton, {
+    label: "close",
+    icon: CloseIcon,
+    type,
+    onClick: (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      onClose();
+    },
+    containerClassName: `z-10 ${className}`,
+    tooltipPlacement: "left",
+    iconClassName,
+  });
 }
-function CloseTextButton({
-  onClose,
-  className,
-  type
-}) {
-  return /* @__PURE__ */ jsx(
-    Button,
-    {
-      onClick: (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        onClose();
-      },
-      type,
-      className: `${className}`,
-      buttonText: "Close"
-    }
-  );
+function CloseTextButton({ onClose, className, type }) {
+  return /* @__PURE__ */ jsx(Button, {
+    onClick: (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      onClose();
+    },
+    type,
+    className: `${className}`,
+    buttonText: "Close",
+  });
 }
 function DrawerContent({
   showTopButton,
   showBottomButton,
   drawerBg,
   setDrawerOpen,
-  children
+  children,
 }) {
   const bottomPadding = showBottomButton ? "pb-[6vh]" : "pb-0";
-  return /* @__PURE__ */ jsxs(Flex, { className: "w-full h-full relative", children: [
-    showTopButton && /* @__PURE__ */ jsx(Box, { className: "absolute top-[1vh] right-[1vh]", children: /* @__PURE__ */ jsx(CloseButton, { onClose: () => setDrawerOpen(false) }) }),
-    showBottomButton && /* @__PURE__ */ jsx(Flex, { className: "w-full h-[6vh] bg-darkGrayBack rounded-t-none border-t-2 border-col-850 justify-center fixed bottom-0 left-0 items-center", children: /* @__PURE__ */ jsx(CloseTextButton, { onClose: () => setDrawerOpen(false) }) }),
-    /* @__PURE__ */ jsx(Flex, { className: `w-full h-full ${bottomPadding} ${drawerBg}`, children })
-  ] });
+  return /* @__PURE__ */ jsxs(Flex, {
+    className: "w-full h-full relative",
+    children: [
+      showTopButton &&
+        /* @__PURE__ */ jsx(Box, {
+          className: "absolute top-[1vh] right-[1vh]",
+          children: /* @__PURE__ */ jsx(CloseButton, {
+            onClose: () => setDrawerOpen(false),
+          }),
+        }),
+      showBottomButton &&
+        /* @__PURE__ */ jsx(Flex, {
+          className:
+            "w-full h-[6vh] bg-darkGrayBack rounded-t-none border-t-2 border-col-850 justify-center fixed bottom-0 left-0 items-center",
+          children: /* @__PURE__ */ jsx(CloseTextButton, {
+            onClose: () => setDrawerOpen(false),
+          }),
+        }),
+      /* @__PURE__ */ jsx(Flex, {
+        className: `w-full h-full ${bottomPadding} ${drawerBg}`,
+        children,
+      }),
+    ],
+  });
 }
 function DrawerWithButton({
   className = "",
@@ -3177,7 +3368,7 @@ function DrawerWithButton({
         default:
           return { x: "100%", y: void 0, transition };
       }
-    }
+    },
   };
   const drawerPositionClass = (direction) => {
     switch (direction) {
@@ -3202,82 +3393,82 @@ function DrawerWithButton({
     }
   };
   useEscapeKey$1(() => setDrawerOpen(false));
-  return /* @__PURE__ */ jsxs(Fragment, { children: [
-    Icon2 && /* @__PURE__ */ jsx(
-      IconButton,
-      {
-        icon: Icon2,
-        label,
-        onClick: () => setDrawerOpen(true),
-        type: buttonType,
-        tooltipPlacement: buttonTooltipPlacement
-      }
-    ),
-    /* @__PURE__ */ jsx(Portal$1, { children: /* @__PURE__ */ jsx(AnimatePresence, { children: isDrawerOpen && /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx(
-        motion.div,
-        {
-          className: `fixed inset-0 ${overlayColor} ${overlayBlur} z-40`,
-          onClick: () => setDrawerOpen(false),
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          exit: { opacity: 0 }
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        motion.div,
-        {
-          className: `fixed ${drawerPositionClass(
-            slideDirection
-          )} shadowNarrowNormal z-50 ${drawerHeight} ${className} ${drawerWidth}`,
-          style,
-          variants,
-          transition: {
-            type: "spring",
-            stiffness: 300,
-            damping: 30
-          },
-          custom: slideDirection,
-          initial: "closed",
-          animate: "open",
-          exit: "closed",
-          ...props,
-          children: /* @__PURE__ */ jsx(
-            DrawerContent,
-            {
-              showTopButton,
-              showBottomButton,
-              setDrawerOpen,
-              drawerBg,
-              children
-            }
-          )
-        }
-      )
-    ] }) }) })
-  ] });
+  return /* @__PURE__ */ jsxs(Fragment, {
+    children: [
+      Icon2 &&
+        /* @__PURE__ */ jsx(IconButton, {
+          icon: Icon2,
+          label,
+          onClick: () => setDrawerOpen(true),
+          type: buttonType,
+          tooltipPlacement: buttonTooltipPlacement,
+        }),
+      /* @__PURE__ */ jsx(Portal$1, {
+        children: /* @__PURE__ */ jsx(AnimatePresence, {
+          children:
+            isDrawerOpen &&
+            /* @__PURE__ */ jsxs(Fragment, {
+              children: [
+                /* @__PURE__ */ jsx(motion.div, {
+                  className: `fixed inset-0 ${overlayColor} ${overlayBlur} z-40`,
+                  onClick: () => setDrawerOpen(false),
+                  initial: { opacity: 0 },
+                  animate: { opacity: 1 },
+                  exit: { opacity: 0 },
+                }),
+                /* @__PURE__ */ jsx(motion.div, {
+                  className: `fixed ${drawerPositionClass(
+                    slideDirection
+                  )} shadowNarrowNormal z-50 ${drawerHeight} ${className} ${drawerWidth}`,
+                  style,
+                  variants,
+                  transition: {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 30,
+                  },
+                  custom: slideDirection,
+                  initial: "closed",
+                  animate: "open",
+                  exit: "closed",
+                  ...props,
+                  children: /* @__PURE__ */ jsx(DrawerContent, {
+                    showTopButton,
+                    showBottomButton,
+                    setDrawerOpen,
+                    drawerBg,
+                    children,
+                  }),
+                }),
+              ],
+            }),
+        }),
+      }),
+    ],
+  });
 }
-function HStackFull({
-  children,
-  className,
-  gap,
-  onClick
-}) {
-  return /* @__PURE__ */ jsx(HStack, { className: `w-full ${gap} ${className}`, onClick, children });
+function HStackFull({ children, className, gap, onClick }) {
+  return /* @__PURE__ */ jsx(HStack, {
+    className: `w-full ${gap} ${className}`,
+    onClick,
+    children,
+  });
 }
 const Input = React.forwardRef(
-  ({ className = "", style, defaultValue, autoFocus = false, ...props }, ref) => {
-    return /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(
-      "input",
-      {
+  (
+    { className = "", style, defaultValue, autoFocus = false, ...props },
+    ref
+  ) => {
+    return /* @__PURE__ */ jsx(Fragment, {
+      children: /* @__PURE__ */ jsx("input", {
         defaultValue,
         autoFocus,
         ref,
         className: `inputStyles ${className}`,
         style,
-        ...props
-      }
-    ) });
+        ...props,
+      }),
+    });
   }
 );
 Input.displayName = "Input";
@@ -3296,17 +3487,24 @@ const Calendar = ({ selectedDate, onSelect }) => {
   const today = /* @__PURE__ */ new Date();
   today.setHours(0, 0, 0, 0);
   const weekDays = ["S", "M", "T", "W", "T", "F", "S"];
-  const days = weekDays.map((day, index) => /* @__PURE__ */ jsx(
-    "div",
-    {
-      className: "p-[0.1vh] text-center font-semibold text-col-300 w-[3vh] h-[2.5vh] flex-shrink-0 flex justify-center items-center",
-      children: day
-    },
-    index
-  ));
+  const days = weekDays.map((day, index) =>
+    /* @__PURE__ */ jsx(
+      "div",
+      {
+        className:
+          "p-[0.1vh] text-center font-semibold text-col-300 w-[3vh] h-[2.5vh] flex-shrink-0 flex justify-center items-center",
+        children: day,
+      },
+      index
+    )
+  );
   for (let i = 0; i < startDay; i++) {
     days.push(
-      /* @__PURE__ */ jsx("div", { className: "p-2 border border-transparent" }, `empty-${i}`)
+      /* @__PURE__ */ jsx(
+        "div",
+        { className: "p-2 border border-transparent" },
+        `empty-${i}`
+      )
     );
   }
   for (let day = 1; day <= daysInMonth; day++) {
@@ -3317,32 +3515,32 @@ const Calendar = ({ selectedDate, onSelect }) => {
     );
     const isPast = dayDate < today;
     days.push(
-      /* @__PURE__ */ jsx(Flex, { className: "w-[2.3vh] md:w-[3vh] md:h-[2.5vh] flex-shrink-0 flex justify-center items-center", children: /* @__PURE__ */ jsx(
-        "button",
-        {
-          disabled: isPast,
-          className: `py-[0.1vh] px-[0.4vh] w-full h-full text-center flex justify-center  ${isPast ? "text-col-140 hover:bg-transparent cursor-not-allowed" : "hover:bg-col-200 hover:text-col-900 hover:shadowNarrowNormal"}`,
-          onClick: () => !isPast && onSelect(dayDate),
-          children: day
-        },
-        day
-      ) })
+      /* @__PURE__ */ jsx(Flex, {
+        className:
+          "w-[2.3vh] md:w-[3vh] md:h-[2.5vh] flex-shrink-0 flex justify-center items-center",
+        children: /* @__PURE__ */ jsx(
+          "button",
+          {
+            disabled: isPast,
+            className: `py-[0.1vh] px-[0.4vh] w-full h-full text-center flex justify-center  ${
+              isPast
+                ? "text-col-140 hover:bg-transparent cursor-not-allowed"
+                : "hover:bg-col-200 hover:text-col-900 hover:shadowNarrowNormal"
+            }`,
+            onClick: () => !isPast && onSelect(dayDate),
+            children: day,
+          },
+          day
+        ),
+      })
     );
   }
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      className: `w-[24vh] grid grid-cols-7 gap-y-[0.7vh] gap-x-[1.5vh] px-[1.5vh] justify-center items-center textShadow`,
-      children: days
-    }
-  );
+  return /* @__PURE__ */ jsx("div", {
+    className: `w-[24vh] grid grid-cols-7 gap-y-[0.7vh] gap-x-[1.5vh] px-[1.5vh] justify-center items-center textShadow`,
+    children: days,
+  });
 };
-function DatePicker({
-  isEditDate,
-  setIsEditDate,
-  setIsEditTime,
-  dueDate
-}) {
+function DatePicker({ isEditDate, setIsEditDate, setIsEditTime, dueDate }) {
   const [selectedDate, setSelectedDate] = useState(dueDate);
   const handleDateSelect = (date) => {
     setSelectedDate(date);
@@ -3360,7 +3558,7 @@ function DatePicker({
   };
   const monthYearFormat = selectedDate.toLocaleString("default", {
     month: "long",
-    year: "numeric"
+    year: "numeric",
   });
   const goToToday = () => {
     setSelectedDate(/* @__PURE__ */ new Date());
@@ -3368,110 +3566,122 @@ function DatePicker({
   };
   useEscapeKey$1(() => setIsEditDate(false));
   const zIndex = isEditDate ? "z-20" : "z-0";
-  return /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-    /* @__PURE__ */ jsxs(Box, { className: "relative", children: [
-      /* @__PURE__ */ jsx(
-        Icon,
-        {
-          icon: CalendarIcon,
-          containerClassName: "absolute top-[0.8vh] right-[1.1vh] text-col-900 hover:cursor-pointer",
-          iconClassName: "text-[2.3vh]",
-          onClick: () => {
-            setIsEditDate(!isEditDate);
-            setIsEditTime(false);
-          }
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        "input",
-        {
-          type: "text",
-          readOnly: true,
-          value: selectedDate.toISOString().substring(0, 10),
-          className: `form-input w-[18vh] lg:w-[25vh] font-semibold inputStyles cursor-pointer`,
-          onClick: () => {
-            setIsEditDate(!isEditDate);
-            setIsEditTime(false);
-          }
-        }
-      )
-    ] }),
-    isEditDate && /* @__PURE__ */ jsx(Transition, { children: /* @__PURE__ */ jsxs(VStack, { className: `${DateTimePickerStyles} left-0 ${zIndex}`, children: [
-      /* @__PURE__ */ jsxs(FlexFull, { className: "justify-between mb-[0.5vh] items-center", children: [
-        /* @__PURE__ */ jsx(
-          IconButton,
-          {
-            type: "smallNormal",
-            icon: ArrowLeftIcon,
-            onClick: goToPreviousMonth
-          }
-        ),
-        /* @__PURE__ */ jsx(Text, { className: `${DateTimePickerLabelStyles}`, children: monthYearFormat }),
-        /* @__PURE__ */ jsx(
-          IconButton,
-          {
-            type: "smallNormal",
-            icon: ArrowRightIcon,
-            onClick: goToNextMonth
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsx(Calendar, { selectedDate, onSelect: handleDateSelect }),
-      /* @__PURE__ */ jsxs(HStackFull, { className: "justify-between", children: [
-        /* @__PURE__ */ jsx(
-          Button,
-          {
-            type: "unstyled",
-            onClick: goToToday,
-            className: `text-[1.6vh] leading-[1.6vh] h-[2.5vh] px-[0.5vh] bg-col-700 hover:bg-col-600 flex items-center shadowNarrowNormal textShadowtransition-400`,
-            buttonText: "Today"
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          Button,
-          {
-            type: "smallNormal",
-            onClick: () => setIsEditDate(false),
-            iconLeft: CloseIcon,
-            buttonText: "Close"
-          }
-        )
-      ] })
-    ] }) })
-  ] });
+  return /* @__PURE__ */ jsxs("div", {
+    className: "relative",
+    children: [
+      /* @__PURE__ */ jsxs(Box, {
+        className: "relative",
+        children: [
+          /* @__PURE__ */ jsx(Icon, {
+            icon: CalendarIcon,
+            containerClassName:
+              "absolute top-[0.8vh] right-[1.1vh] text-col-900 hover:cursor-pointer",
+            iconClassName: "text-[2.3vh]",
+            onClick: () => {
+              setIsEditDate(!isEditDate);
+              setIsEditTime(false);
+            },
+          }),
+          /* @__PURE__ */ jsx("input", {
+            type: "text",
+            readOnly: true,
+            value: selectedDate.toISOString().substring(0, 10),
+            className: `form-input w-[18vh] lg:w-[25vh] font-semibold inputStyles cursor-pointer`,
+            onClick: () => {
+              setIsEditDate(!isEditDate);
+              setIsEditTime(false);
+            },
+          }),
+        ],
+      }),
+      isEditDate &&
+        /* @__PURE__ */ jsx(Transition, {
+          children: /* @__PURE__ */ jsxs(VStack, {
+            className: `${DateTimePickerStyles} left-0 ${zIndex}`,
+            children: [
+              /* @__PURE__ */ jsxs(FlexFull, {
+                className: "justify-between mb-[0.5vh] items-center",
+                children: [
+                  /* @__PURE__ */ jsx(IconButton, {
+                    type: "smallNormal",
+                    icon: ArrowLeftIcon,
+                    onClick: goToPreviousMonth,
+                  }),
+                  /* @__PURE__ */ jsx(Text, {
+                    className: `${DateTimePickerLabelStyles}`,
+                    children: monthYearFormat,
+                  }),
+                  /* @__PURE__ */ jsx(IconButton, {
+                    type: "smallNormal",
+                    icon: ArrowRightIcon,
+                    onClick: goToNextMonth,
+                  }),
+                ],
+              }),
+              /* @__PURE__ */ jsx(Calendar, {
+                selectedDate,
+                onSelect: handleDateSelect,
+              }),
+              /* @__PURE__ */ jsxs(HStackFull, {
+                className: "justify-between",
+                children: [
+                  /* @__PURE__ */ jsx(Button, {
+                    type: "unstyled",
+                    onClick: goToToday,
+                    className: `text-[1.6vh] leading-[1.6vh] h-[2.5vh] px-[0.5vh] bg-col-700 hover:bg-col-600 flex items-center shadowNarrowNormal textShadowtransition-400`,
+                    buttonText: "Today",
+                  }),
+                  /* @__PURE__ */ jsx(Button, {
+                    type: "smallNormal",
+                    onClick: () => setIsEditDate(false),
+                    iconLeft: CloseIcon,
+                    buttonText: "Close",
+                  }),
+                ],
+              }),
+            ],
+          }),
+        }),
+    ],
+  });
 }
-const ScrollableSelector = ({
-  items,
-  onSelect,
-  selectedItem,
-  label
-}) => {
-  return /* @__PURE__ */ jsxs(VStack, { className: "w-35%", gap: "gap-[0.5vh]", children: [
-    /* @__PURE__ */ jsx(Text, { className: `${DateTimePickerLabelStyles}`, children: label }),
-    /* @__PURE__ */ jsx(
-      VStackFull,
-      {
+const ScrollableSelector = ({ items, onSelect, selectedItem, label }) => {
+  return /* @__PURE__ */ jsxs(VStack, {
+    className: "w-35%",
+    gap: "gap-[0.5vh]",
+    children: [
+      /* @__PURE__ */ jsx(Text, {
+        className: `${DateTimePickerLabelStyles}`,
+        children: label,
+      }),
+      /* @__PURE__ */ jsx(VStackFull, {
         className: `overflow-auto h-[23vh] max-h-[25vh] py-[1vh] items-start insetShadowMd bg-100-diagonal3op75`,
         gap: "gap-[0.7vh]",
-        children: items.map((item) => /* @__PURE__ */ jsx(
-          "button",
-          {
-            onClick: () => onSelect(item),
-            className: ` px-[0.4vh] ${item === selectedItem ? "bg-col-200 text-col-900 transition-300" : "hover:bg-col-200 hover:text-col-900"}`,
-            children: String(item < 10 ? `0${item}` : item)
-          },
-          item
-        ))
-      }
-    )
-  ] });
+        children: items.map((item) =>
+          /* @__PURE__ */ jsx(
+            "button",
+            {
+              onClick: () => onSelect(item),
+              className: ` px-[0.4vh] ${
+                item === selectedItem
+                  ? "bg-col-200 text-col-900 transition-300"
+                  : "hover:bg-col-200 hover:text-col-900"
+              }`,
+              children: String(item < 10 ? `0${item}` : item),
+            },
+            item
+          )
+        ),
+      }),
+    ],
+  });
 };
 const TimePicker = ({
   selectedTime,
   onSelectTime,
   isEditTime,
   setIsEditDate,
-  setIsEditTime
+  setIsEditTime,
 }) => {
   const [hour, setHour] = useState(selectedTime.getHours());
   const [minute, setMinute] = useState(selectedTime.getMinutes());
@@ -3484,112 +3694,121 @@ const TimePicker = ({
   }, [hour, minute, isPM, onSelectTime, selectedTime]);
   const toggleAmPm = () => setIsPM(!isPM);
   useEscapeKey$1(() => setIsEditTime(false));
-  return /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-    /* @__PURE__ */ jsxs(Box, { className: "relative", children: [
-      /* @__PURE__ */ jsx(
-        Icon,
-        {
-          icon: ClockIcon,
-          containerClassName: "absolute top-[0.8vh] right-[1.1vh] text-col-900 hover:cursor-pointer",
-          onClick: () => {
-            setIsEditTime(!isEditTime);
-            setIsEditDate(false);
-          }
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        "input",
-        {
-          type: "text",
-          readOnly: true,
-          value: `${hour % 12 === 0 ? 12 : hour % 12}:${minute < 10 ? `0${minute}` : minute} ${isPM ? "PM" : "AM"}`,
-          className: `form-input inputStyles font-semibold w-[18vh] lg:w-[25vh] cursor-pointer`,
-          onClick: () => {
-            setIsEditTime(!isEditTime);
-            setIsEditDate(false);
-          }
-        }
-      )
-    ] }),
-    isEditTime && /* @__PURE__ */ jsx(Transition, { children: /* @__PURE__ */ jsx(VStack, { className: `${DateTimePickerStyles} right-0 ${zIndex}`, children: /* @__PURE__ */ jsxs(HStackFull, { className: "justify-evenly items-stretch", children: [
-      /* @__PURE__ */ jsx(
-        ScrollableSelector,
-        {
-          label: "hour",
-          items: Array.from({ length: 12 }, (_, i) => i + 1),
-          onSelect: setHour,
-          selectedItem: hour % 12 === 0 ? 12 : hour % 12
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        ScrollableSelector,
-        {
-          label: "min",
-          items: Array.from({ length: 60 }, (_, i) => i),
-          onSelect: setMinute,
-          selectedItem: minute
-        }
-      ),
-      /* @__PURE__ */ jsxs(VStack, { className: "w-20% pt-[4.5vh] pl-[1vh] h-[27vh] justify-between items-end", children: [
-        /* @__PURE__ */ jsxs(VStack, { className: "pr-[1.5vh]", children: [
-          /* @__PURE__ */ jsx(
-            "button",
-            {
-              onClick: toggleAmPm,
-              className: `w-full px-[0.7vh] ${isPM ? "bg-transparent text-col-100 hover:bg-col-200 hover:text-col-900 transition-300" : "bg-col-200 text-col-900 hover:bg-col-200 hover:text-col-900"}`,
-              children: "am"
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            "button",
-            {
-              onClick: toggleAmPm,
-              className: `w-full px-[0.5vh] ${!isPM ? "bg-transparent text-col-100 hover:bg-col-200 hover:text-col-900 transition-300" : "bg-col-200 text-col-900 hover:bg-col-200 hover:text-col-900"}`,
-              children: "pm"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsx(
-          CloseButton,
-          {
-            type: "smallNormal",
-            onClose: () => setIsEditTime(false)
-          }
-        )
-      ] })
-    ] }) }) })
-  ] });
+  return /* @__PURE__ */ jsxs("div", {
+    className: "relative",
+    children: [
+      /* @__PURE__ */ jsxs(Box, {
+        className: "relative",
+        children: [
+          /* @__PURE__ */ jsx(Icon, {
+            icon: ClockIcon,
+            containerClassName:
+              "absolute top-[0.8vh] right-[1.1vh] text-col-900 hover:cursor-pointer",
+            onClick: () => {
+              setIsEditTime(!isEditTime);
+              setIsEditDate(false);
+            },
+          }),
+          /* @__PURE__ */ jsx("input", {
+            type: "text",
+            readOnly: true,
+            value: `${hour % 12 === 0 ? 12 : hour % 12}:${
+              minute < 10 ? `0${minute}` : minute
+            } ${isPM ? "PM" : "AM"}`,
+            className: `form-input inputStyles font-semibold w-[18vh] lg:w-[25vh] cursor-pointer`,
+            onClick: () => {
+              setIsEditTime(!isEditTime);
+              setIsEditDate(false);
+            },
+          }),
+        ],
+      }),
+      isEditTime &&
+        /* @__PURE__ */ jsx(Transition, {
+          children: /* @__PURE__ */ jsx(VStack, {
+            className: `${DateTimePickerStyles} right-0 ${zIndex}`,
+            children: /* @__PURE__ */ jsxs(HStackFull, {
+              className: "justify-evenly items-stretch",
+              children: [
+                /* @__PURE__ */ jsx(ScrollableSelector, {
+                  label: "hour",
+                  items: Array.from({ length: 12 }, (_, i) => i + 1),
+                  onSelect: setHour,
+                  selectedItem: hour % 12 === 0 ? 12 : hour % 12,
+                }),
+                /* @__PURE__ */ jsx(ScrollableSelector, {
+                  label: "min",
+                  items: Array.from({ length: 60 }, (_, i) => i),
+                  onSelect: setMinute,
+                  selectedItem: minute,
+                }),
+                /* @__PURE__ */ jsxs(VStack, {
+                  className:
+                    "w-20% pt-[4.5vh] pl-[1vh] h-[27vh] justify-between items-end",
+                  children: [
+                    /* @__PURE__ */ jsxs(VStack, {
+                      className: "pr-[1.5vh]",
+                      children: [
+                        /* @__PURE__ */ jsx("button", {
+                          onClick: toggleAmPm,
+                          className: `w-full px-[0.7vh] ${
+                            isPM
+                              ? "bg-transparent text-col-100 hover:bg-col-200 hover:text-col-900 transition-300"
+                              : "bg-col-200 text-col-900 hover:bg-col-200 hover:text-col-900"
+                          }`,
+                          children: "am",
+                        }),
+                        /* @__PURE__ */ jsx("button", {
+                          onClick: toggleAmPm,
+                          className: `w-full px-[0.5vh] ${
+                            !isPM
+                              ? "bg-transparent text-col-100 hover:bg-col-200 hover:text-col-900 transition-300"
+                              : "bg-col-200 text-col-900 hover:bg-col-200 hover:text-col-900"
+                          }`,
+                          children: "pm",
+                        }),
+                      ],
+                    }),
+                    /* @__PURE__ */ jsx(CloseButton, {
+                      type: "smallNormal",
+                      onClose: () => setIsEditTime(false),
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          }),
+        }),
+    ],
+  });
 };
 const TimePicker$1 = TimePicker;
-function InputDateTime({
-  dueDate,
-  containerHeight
-}) {
+function InputDateTime({ dueDate, containerHeight }) {
   const [isEditDate, setIsEditDate] = useState(false);
   const [isEditTime, setIsEditTime] = useState(false);
-  const height = containerHeight ? containerHeight : isEditDate || isEditTime ? "min-h-[38vh]" : "";
-  return /* @__PURE__ */ jsxs(HStackFull, { className: `justify-evenly ${height}`, children: [
-    /* @__PURE__ */ jsx(
-      DatePicker,
-      {
+  const height = containerHeight
+    ? containerHeight
+    : isEditDate || isEditTime
+    ? "min-h-[38vh]"
+    : "";
+  return /* @__PURE__ */ jsxs(HStackFull, {
+    className: `justify-evenly ${height}`,
+    children: [
+      /* @__PURE__ */ jsx(DatePicker, {
         isEditDate,
         setIsEditDate,
         setIsEditTime,
-        dueDate: dueDate ? dueDate : /* @__PURE__ */ new Date()
-      }
-    ),
-    /* @__PURE__ */ jsx(
-      TimePicker$1,
-      {
+        dueDate: dueDate ? dueDate : /* @__PURE__ */ new Date(),
+      }),
+      /* @__PURE__ */ jsx(TimePicker$1, {
         selectedTime: /* @__PURE__ */ new Date(),
-        onSelectTime: () => {
-        },
+        onSelectTime: () => {},
         setIsEditDate,
         isEditTime,
-        setIsEditTime
-      }
-    )
-  ] });
+        setIsEditTime,
+      }),
+    ],
+  });
 }
 function ValidatedInput({
   defaultValue = "",
@@ -3599,7 +3818,7 @@ function ValidatedInput({
   isRequired = false,
   name = "",
   id = "",
-  placeholder = ""
+  placeholder = "",
 }) {
   const [inputValue, setInputValue] = useState(defaultValue);
   const isInvalid = inputValue.length < min || inputValue.length > max;
@@ -3609,10 +3828,11 @@ function ValidatedInput({
   };
   const fieldTooShort = inputValue.length < min;
   const fieldTooLong = inputValue.length > max;
-  return /* @__PURE__ */ jsxs(VStack, { className: "w-full flex flex-col space-y-0", gap: "gap-[0.5vh]", children: [
-    /* @__PURE__ */ jsx(
-      Input$1,
-      {
+  return /* @__PURE__ */ jsxs(VStack, {
+    className: "w-full flex flex-col space-y-0",
+    gap: "gap-[0.5vh]",
+    children: [
+      /* @__PURE__ */ jsx(Input$1, {
         autoFocus,
         value: inputValue,
         type: "text",
@@ -3620,33 +3840,37 @@ function ValidatedInput({
         id,
         onChange: handleInputChange,
         placeholder,
-        required: isRequired
-      }
-    ),
-    /* @__PURE__ */ jsxs(
-      "div",
-      {
+        required: isRequired,
+      }),
+      /* @__PURE__ */ jsxs("div", {
         className: `flex space-x-1 w-full pl-[0.5vh] text-xs-tight lightTextShadow font-semibold`,
         children: [
-          /* @__PURE__ */ jsxs("span", { children: [
-            inputValue.length,
-            " / ",
-            max,
-            " chars -"
-          ] }),
-          /* @__PURE__ */ jsxs("div", { children: [
-            isInvalid && fieldTooLong && /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx("span", { className: "text-red-700", children: "input is too long" }) }),
-            isInvalid && fieldTooShort && /* @__PURE__ */ jsxs("span", { children: [
-              " min ",
-              min,
-              " chars."
-            ] }),
-            !isInvalid && /* @__PURE__ */ jsx("span", { children: "validated input" })
-          ] })
-        ]
-      }
-    )
-  ] });
+          /* @__PURE__ */ jsxs("span", {
+            children: [inputValue.length, " / ", max, " chars -"],
+          }),
+          /* @__PURE__ */ jsxs("div", {
+            children: [
+              isInvalid &&
+                fieldTooLong &&
+                /* @__PURE__ */ jsx(Fragment, {
+                  children: /* @__PURE__ */ jsx("span", {
+                    className: "text-red-700",
+                    children: "input is too long",
+                  }),
+                }),
+              isInvalid &&
+                fieldTooShort &&
+                /* @__PURE__ */ jsxs("span", {
+                  children: [" min ", min, " chars."],
+                }),
+              !isInvalid &&
+                /* @__PURE__ */ jsx("span", { children: "validated input" }),
+            ],
+          }),
+        ],
+      }),
+    ],
+  });
 }
 function InputVStack({
   labelColor,
@@ -3667,40 +3891,35 @@ function InputVStack({
   defaultValue,
   labelShadow,
   type,
-  onChange
+  onChange,
 }) {
-  return /* @__PURE__ */ jsxs(
-    VStack,
-    {
-      className: ` leading-1rem w-full ${className}`,
-      align: "start",
-      style,
-      gap: "gap-[0.5vh]",
-      children: [
-        labelSize === "small" ? /* @__PURE__ */ jsx(
-          Heading,
-          {
+  return /* @__PURE__ */ jsxs(VStack, {
+    className: ` leading-1rem w-full ${className}`,
+    align: "start",
+    style,
+    gap: "gap-[0.5vh]",
+    children: [
+      labelSize === "small"
+        ? /* @__PURE__ */ jsx(Heading, {
             isCursive: labelIsCursive,
             color: labelColor,
             className: `${labelClassName}`,
             layout: "text-md-tighter",
             shadow: labelShadow,
-            text: label
-          }
-        ) : /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(
-          Heading,
-          {
-            isCursive: labelIsCursive,
-            color: labelColor,
-            className: ` ${labelClassName}`,
-            shadow: labelShadow,
-            layout: "text-md-tighter md:text-lg-tighter",
-            text: label
-          }
-        ) }),
-        isValidated && validationMax ? /* @__PURE__ */ jsx(
-          ValidatedInput,
-          {
+            text: label,
+          })
+        : /* @__PURE__ */ jsx(Fragment, {
+            children: /* @__PURE__ */ jsx(Heading, {
+              isCursive: labelIsCursive,
+              color: labelColor,
+              className: ` ${labelClassName}`,
+              shadow: labelShadow,
+              layout: "text-md-tighter md:text-lg-tighter",
+              text: label,
+            }),
+          }),
+      isValidated && validationMax
+        ? /* @__PURE__ */ jsx(ValidatedInput, {
             autoFocus,
             isRequired,
             min: validationMin,
@@ -3708,11 +3927,9 @@ function InputVStack({
             name,
             placeholder,
             defaultValue,
-            onChange
-          }
-        ) : /* @__PURE__ */ jsx(
-          Input$1,
-          {
+            onChange,
+          })
+        : /* @__PURE__ */ jsx(Input$1, {
             autoFocus,
             required: isRequired,
             name,
@@ -3720,34 +3937,56 @@ function InputVStack({
             value,
             defaultValue,
             type,
-            onChange
-          }
-        )
-      ]
-    }
-  );
+            onChange,
+          }),
+    ],
+  });
 }
 function ModalContent({
   children,
   setModalOpen,
   showTopClose = true,
   showBottomClose = true,
-  footerClassName = "bg-col-600"
+  footerClassName = "bg-col-600",
 }) {
   const paddingBottom = showBottomClose ? "pb-[5vh]" : "pb-0";
-  return /* @__PURE__ */ jsxs(Flex, { className: "w-full h-full relative ", children: [
-    showTopClose && /* @__PURE__ */ jsx(Box, { className: "absolute top-[1vh] right-[1vh]", children: /* @__PURE__ */ jsx(CloseButton, { onClose: () => setModalOpen(false) }) }),
-    /* @__PURE__ */ jsxs(Flex, { className: `w-full h-full justify-between ${paddingBottom}`, children: [
-      /* @__PURE__ */ jsx(Flex, { className: "h-full w-full flex-1 ", children: /* @__PURE__ */ jsx(Box, { className: "w-full h-full rounded-b-none", children: /* @__PURE__ */ jsx(Box, { className: `w-full h-full`, children: /* @__PURE__ */ jsx(Flex, { className: "w-full h-full", children }) }) }) }),
-      showBottomClose && /* @__PURE__ */ jsx(
-        Flex,
-        {
-          className: `w-full h-[5vh] justify-center rounded-t-none absolute bottom-0 left-0 ${footerClassName}`,
-          children: /* @__PURE__ */ jsx(CloseTextButton, { onClose: () => setModalOpen(false) })
-        }
-      )
-    ] })
-  ] });
+  return /* @__PURE__ */ jsxs(Flex, {
+    className: "w-full h-full relative ",
+    children: [
+      showTopClose &&
+        /* @__PURE__ */ jsx(Box, {
+          className: "absolute top-[1vh] right-[1vh]",
+          children: /* @__PURE__ */ jsx(CloseButton, {
+            onClose: () => setModalOpen(false),
+          }),
+        }),
+      /* @__PURE__ */ jsxs(Flex, {
+        className: `w-full h-full justify-between ${paddingBottom}`,
+        children: [
+          /* @__PURE__ */ jsx(Flex, {
+            className: "h-full w-full flex-1 ",
+            children: /* @__PURE__ */ jsx(Box, {
+              className: "w-full h-full rounded-b-none",
+              children: /* @__PURE__ */ jsx(Box, {
+                className: `w-full h-full`,
+                children: /* @__PURE__ */ jsx(Flex, {
+                  className: "w-full h-full",
+                  children,
+                }),
+              }),
+            }),
+          }),
+          showBottomClose &&
+            /* @__PURE__ */ jsx(Flex, {
+              className: `w-full h-[5vh] justify-center rounded-t-none absolute bottom-0 left-0 ${footerClassName}`,
+              children: /* @__PURE__ */ jsx(CloseTextButton, {
+                onClose: () => setModalOpen(false),
+              }),
+            }),
+        ],
+      }),
+    ],
+  });
 }
 function ModalWithButton({
   className = "",
@@ -3763,129 +4002,136 @@ function ModalWithButton({
   footerClassName,
   buttonText,
   iconLeft,
-  iconRight
+  iconRight,
 }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const variants = {
     open: {
       scale: 1,
       opacity: 1,
-      transition: { type: "spring", stiffness: 300, damping: 30 }
+      transition: { type: "spring", stiffness: 300, damping: 30 },
     },
     closed: {
       scale: 0,
       opacity: 0,
-      transition: { type: "spring", stiffness: 300, damping: 30 }
-    }
+      transition: { type: "spring", stiffness: 300, damping: 30 },
+    },
   };
   useEscapeKey$1(() => setModalOpen(false));
-  return /* @__PURE__ */ jsxs(Fragment, { children: [
-    " ",
-    buttonText && iconLeft ? /* @__PURE__ */ jsx(
-      Button,
-      {
-        buttonText,
-        onClick: () => setModalOpen(true),
-        iconLeft: Icon2
-      }
-    ) : buttonText && iconRight ? /* @__PURE__ */ jsx(
-      Button,
-      {
-        buttonText,
-        onClick: () => setModalOpen(true),
-        iconRight: Icon2
-      }
-    ) : buttonText ? /* @__PURE__ */ jsx(Button, { buttonText, onClick: () => setModalOpen(true) }) : null,
-    Icon2 && /* @__PURE__ */ jsx(
-      IconButton,
-      {
-        icon: Icon2,
-        label,
-        onClick: () => setModalOpen(true)
-      }
-    ),
-    /* @__PURE__ */ jsx(Portal$1, { children: /* @__PURE__ */ jsx(AnimatePresence, { children: isModalOpen && /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx(
-        motion.div,
-        {
-          className: `fixed inset-0 w-screen h-screen ${overlayColor} ${overlayBlur}`,
-          onClick: () => setModalOpen(false),
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          exit: { opacity: 0 },
-          style: { maxHeight: "100svh", zIndex: 60 }
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        motion.div,
-        {
-          className: `fixed inset-0 m-auto z-50 rounded-none ${modalSize} ${className}`,
-          style: { ...style, maxHeight: "100svh", zIndex: 100 },
-          variants,
-          initial: "closed",
-          animate: "open",
-          exit: "closed",
-          children: /* @__PURE__ */ jsx(
-            ModalContent,
-            {
-              setModalOpen,
-              showBottomClose,
-              showTopClose,
-              footerClassName,
-              children
-            }
-          )
-        }
-      )
-    ] }) }) })
-  ] });
+  return /* @__PURE__ */ jsxs(Fragment, {
+    children: [
+      " ",
+      buttonText && iconLeft
+        ? /* @__PURE__ */ jsx(Button, {
+            buttonText,
+            onClick: () => setModalOpen(true),
+            iconLeft: Icon2,
+          })
+        : buttonText && iconRight
+        ? /* @__PURE__ */ jsx(Button, {
+            buttonText,
+            onClick: () => setModalOpen(true),
+            iconRight: Icon2,
+          })
+        : buttonText
+        ? /* @__PURE__ */ jsx(Button, {
+            buttonText,
+            onClick: () => setModalOpen(true),
+          })
+        : null,
+      Icon2 &&
+        /* @__PURE__ */ jsx(IconButton, {
+          icon: Icon2,
+          label,
+          onClick: () => setModalOpen(true),
+        }),
+      /* @__PURE__ */ jsx(Portal$1, {
+        children: /* @__PURE__ */ jsx(AnimatePresence, {
+          children:
+            isModalOpen &&
+            /* @__PURE__ */ jsxs(Fragment, {
+              children: [
+                /* @__PURE__ */ jsx(motion.div, {
+                  className: `fixed inset-0 w-screen h-screen ${overlayColor} ${overlayBlur}`,
+                  onClick: () => setModalOpen(false),
+                  initial: { opacity: 0 },
+                  animate: { opacity: 1 },
+                  exit: { opacity: 0 },
+                  style: { maxHeight: "100svh", zIndex: 60 },
+                }),
+                /* @__PURE__ */ jsx(motion.div, {
+                  className: `fixed inset-0 m-auto z-50 rounded-none ${modalSize} ${className}`,
+                  style: { ...style, maxHeight: "100svh", zIndex: 100 },
+                  variants,
+                  initial: "closed",
+                  animate: "open",
+                  exit: "closed",
+                  children: /* @__PURE__ */ jsx(ModalContent, {
+                    setModalOpen,
+                    showBottomClose,
+                    showTopClose,
+                    footerClassName,
+                    children,
+                  }),
+                }),
+              ],
+            }),
+        }),
+      }),
+    ],
+  });
 }
 function PasswordInput({
   name = "password",
   id = "password",
-  confirm = false
+  confirm = false,
 }) {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-  return /* @__PURE__ */ jsxs(VStack, { gap: "gap-0", align: "start", className: `w-full`, children: [
-    confirm ? /* @__PURE__ */ jsx(
-      Heading,
-      {
-        layout: "text-md-normal md:text-xl-normal",
-        text: "Confirm Password",
-        className: "text-xl-tighter text-stroke-6-900 lightTextShadow"
-      }
-    ) : /* @__PURE__ */ jsx(
-      Heading,
-      {
-        layout: "text-md-normal md:text-xl-normal",
-        text: "Password",
-        className: "text-xl-tighter text-stroke-6-900 lightTextShadow"
-      }
-    ),
-    /* @__PURE__ */ jsxs(HStack, { className: "w-full relative", gap: "gap-0", children: [
-      /* @__PURE__ */ jsx(Box, { className: "relative w-full", children: /* @__PURE__ */ jsx(
-        Input$1,
-        {
-          type: show ? "text" : "password",
-          placeholder: "password",
-          id,
-          name: confirm ? "confirmPassword" : name,
-          required: true
-        }
-      ) }),
-      /* @__PURE__ */ jsx(Box, { className: "absolute right-[1vh] top-[0.2vh]", children: /* @__PURE__ */ jsx(
-        IconButton,
-        {
-          type: "unstyled",
-          iconClassName: "text-[2.5vh]",
-          label: "show/hide",
-          icon: show ? FaEyeSlash : FaEye,
-          onClick: handleClick
-        }
-      ) })
-    ] })
-  ] });
+  return /* @__PURE__ */ jsxs(VStack, {
+    gap: "gap-0",
+    align: "start",
+    className: `w-full`,
+    children: [
+      confirm
+        ? /* @__PURE__ */ jsx(Heading, {
+            layout: "text-md-normal md:text-xl-normal",
+            text: "Confirm Password",
+            className: "text-xl-tighter text-stroke-6-900 lightTextShadow",
+          })
+        : /* @__PURE__ */ jsx(Heading, {
+            layout: "text-md-normal md:text-xl-normal",
+            text: "Password",
+            className: "text-xl-tighter text-stroke-6-900 lightTextShadow",
+          }),
+      /* @__PURE__ */ jsxs(HStack, {
+        className: "w-full relative",
+        gap: "gap-0",
+        children: [
+          /* @__PURE__ */ jsx(Box, {
+            className: "relative w-full",
+            children: /* @__PURE__ */ jsx(Input$1, {
+              type: show ? "text" : "password",
+              placeholder: "password",
+              id,
+              name: confirm ? "confirmPassword" : name,
+              required: true,
+            }),
+          }),
+          /* @__PURE__ */ jsx(Box, {
+            className: "absolute right-[1vh] top-[0.2vh]",
+            children: /* @__PURE__ */ jsx(IconButton, {
+              type: "unstyled",
+              iconClassName: "text-[2.5vh]",
+              label: "show/hide",
+              icon: show ? FaEyeSlash : FaEye,
+              onClick: handleClick,
+            }),
+          }),
+        ],
+      }),
+    ],
+  });
 }
 const placementClasses = {
   top: "bottom-full mb-2 left-1/2 transform -translate-x-1/2",
@@ -3896,7 +4142,7 @@ const placementClasses = {
   bottomRight: "top-full mt-2 right-0",
   left: "right-full mr-2 top-1/2 transform -translate-y-1/2",
   right: "left-full ml-2 top-1/2 transform -translate-y-1/2",
-  center: "fixed inset-0 flex justify-center items-center"
+  center: "fixed inset-0 flex justify-center items-center",
 };
 function Popover({
   trigger,
@@ -3904,14 +4150,14 @@ function Popover({
   w = "w-fit max-w-[375px] sm:max-w-[500px]",
   h = "h-fit",
   placement = "topRight",
-  heading
+  heading,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const popoverRef = useRef(null);
   const isCenter = placement === "center";
   const centerVariants = {
     hidden: { scale: 0, opacity: 0, transition: { duration: 0.5 } },
-    visible: { scale: 1, opacity: 1, transition: { duration: 0.5 } }
+    visible: { scale: 1, opacity: 1, transition: { duration: 0.5 } },
   };
   const togglePopover = () => {
     setIsOpen(!isOpen);
@@ -3943,64 +4189,62 @@ function Popover({
       togglePopover();
     }
   };
-  return /* @__PURE__ */ jsxs(
-    "div",
-    {
-      className: `relative inline-block ${isCenter ? "w-full h-full" : ""}`,
-      ref: popoverRef,
-      children: [
-        /* @__PURE__ */ jsx(
-          "div",
-          {
-            role: "button",
-            tabIndex: 0,
-            onClick: togglePopover,
-            onKeyDown: handleKeyDown,
-            children: trigger
-          }
-        ),
-        /* @__PURE__ */ jsx(AnimatePresence, { children: isOpen && /* @__PURE__ */ jsx(
-          motion.div,
-          {
+  return /* @__PURE__ */ jsxs("div", {
+    className: `relative inline-block ${isCenter ? "w-full h-full" : ""}`,
+    ref: popoverRef,
+    children: [
+      /* @__PURE__ */ jsx("div", {
+        role: "button",
+        tabIndex: 0,
+        onClick: togglePopover,
+        onKeyDown: handleKeyDown,
+        children: trigger,
+      }),
+      /* @__PURE__ */ jsx(AnimatePresence, {
+        children:
+          isOpen &&
+          /* @__PURE__ */ jsx(motion.div, {
             initial: "hidden",
             animate: "visible",
             exit: "hidden",
             variants: centerVariants,
             className: `absolute z-10 shadowNarrowLoose ${w} ${h} min-w-[300px] ${placementClasses[placement]}`,
-            children: /* @__PURE__ */ jsx(
-              Flex,
-              {
-                className: `w-full h-full shadow3DMd relative bg-col-300 bg-darkenGrad`,
-                children: /* @__PURE__ */ jsxs(
-                  VStack,
-                  {
-                    className: `w-full h-full justify-start items-center shadowNarrowNormal gap-[0px]`,
+            children: /* @__PURE__ */ jsx(Flex, {
+              className: `w-full h-full shadow3DMd relative bg-col-300 bg-darkenGrad`,
+              children: /* @__PURE__ */ jsxs(VStack, {
+                className: `w-full h-full justify-start items-center shadowNarrowNormal gap-[0px]`,
+                children: [
+                  /* @__PURE__ */ jsxs(HStack, {
+                    className:
+                      " w-full justify-between rounded-b-none bg-col-700 p-[0.7vh] pl-[1vh] border-b-[0.1vh] border-col-125",
                     children: [
-                      /* @__PURE__ */ jsxs(HStack, { className: " w-full justify-between rounded-b-none bg-col-700 p-[0.7vh] pl-[1vh] border-b-[0.1vh] border-col-125", children: [
-                        " ",
-                        /* @__PURE__ */ jsx(
-                          Heading,
-                          {
-                            layout: "text-lg-tight",
-                            color: "text-col-100",
-                            shadow: "textShadow",
-                            noOfLines: 1,
-                            text: heading ? heading : ""
-                          }
-                        ),
-                        /* @__PURE__ */ jsx(Box, { className: "absolute top-[0.5vh] right-[1vh]", children: /* @__PURE__ */ jsx(CloseButton, { onClose: () => setIsOpen(false) }) })
-                      ] }),
-                      /* @__PURE__ */ jsx(Flex, { className: "w-full p-[1vh] max-h-[45vh] overflow-y-auto", children: content })
-                    ]
-                  }
-                )
-              }
-            )
-          }
-        ) })
-      ]
-    }
-  );
+                      " ",
+                      /* @__PURE__ */ jsx(Heading, {
+                        layout: "text-lg-tight",
+                        color: "text-col-100",
+                        shadow: "textShadow",
+                        noOfLines: 1,
+                        text: heading ? heading : "",
+                      }),
+                      /* @__PURE__ */ jsx(Box, {
+                        className: "absolute top-[0.5vh] right-[1vh]",
+                        children: /* @__PURE__ */ jsx(CloseButton, {
+                          onClose: () => setIsOpen(false),
+                        }),
+                      }),
+                    ],
+                  }),
+                  /* @__PURE__ */ jsx(Flex, {
+                    className: "w-full p-[1vh] max-h-[45vh] overflow-y-auto",
+                    children: content,
+                  }),
+                ],
+              }),
+            }),
+          }),
+      }),
+    ],
+  });
 }
 function GetFromLink() {
   const query = new URLSearchParams(useLocation().search);
@@ -4015,14 +4259,16 @@ function ScrollingSelector({
   selectedOnTop = true,
   bg = "bg-col-500",
   border,
-  showClose = true
+  showClose = true,
 }) {
   const [selected, setSelected] = useState(selectedOption || void 0);
   function handleStatusSelect(option) {
     setSelected(option);
     setExternalSelection ? setExternalSelection(option) : null;
   }
-  const selectedOnTopOptions = selected ? [selected, ...options.filter((option) => option !== selected)] : options;
+  const selectedOnTopOptions = selected
+    ? [selected, ...options.filter((option) => option !== selected)]
+    : options;
   const mapSelections = selectedOnTop ? selectedOnTopOptions : options;
   const handleButtonStyle = ({ option }) => {
     if (option === selected) {
@@ -4031,48 +4277,64 @@ function ScrollingSelector({
       return `bg-col-950 text-col-100 font-[400] hover:bg-col-600 hover:text-col-900 transition-500`;
     }
   };
-  return /* @__PURE__ */ jsx(FlexFull, { className: `${bg} ${border}`, children: /* @__PURE__ */ jsxs(VStackFull, { className: heading ? `px-[2vh] p-[1vh]` : "p-[0.5vh]", children: [
-    heading && /* @__PURE__ */ jsx(FlexFull, { className: "h-fit", children: /* @__PURE__ */ jsx(
-      Heading,
-      {
-        text: heading,
-        layout: "text-xxl-looser",
-        shadow: "textShadow",
-        color: "text-col-100"
-      }
-    ) }),
-    /* @__PURE__ */ jsx(
-      FlexFull,
-      {
-        className: `h-full max-h-full overflow-y-auto justify-center insetOverlay border-980-md`,
-        children: /* @__PURE__ */ jsx(VStackFull, { className: `h-fit px-[2vh] py-[1vh]`, gap: "gap-[0.5vh]", children: mapSelections.map((option) => /* @__PURE__ */ jsxs(
-          FlexFull,
-          {
-            className: `${handleButtonStyle({
-              option
-            })} justify-between shadowNarrowLoose items-center px-[1vh]`,
-            onClick: () => handleStatusSelect(option),
-            children: [
-              /* @__PURE__ */ jsxs(Text, { className: "text-md-looser", children: [
-                option,
-                " "
-              ] }),
-              option === selected && /* @__PURE__ */ jsx(Text, { className: "text-[1.3vh] leading-[1.5vh] text-col-100 textShadow px-[1vh] bg-col-700 metallicEdgesSm h-fit", children: "current" })
-            ]
-          },
-          option
-        )) })
-      }
-    ),
-    showClose && /* @__PURE__ */ jsx(FlexFull, { className: "justify-center items-center", children: /* @__PURE__ */ jsx(
-      Button,
-      {
-        to: String(GetFromLink()),
-        buttonText: "Save & Close",
-        type: "smallNormal"
-      }
-    ) })
-  ] }) });
+  return /* @__PURE__ */ jsx(FlexFull, {
+    className: `${bg} ${border}`,
+    children: /* @__PURE__ */ jsxs(VStackFull, {
+      className: heading ? `px-[2vh] p-[1vh]` : "p-[0.5vh]",
+      children: [
+        heading &&
+          /* @__PURE__ */ jsx(FlexFull, {
+            className: "h-fit",
+            children: /* @__PURE__ */ jsx(Heading, {
+              text: heading,
+              layout: "text-xxl-looser",
+              shadow: "textShadow",
+              color: "text-col-100",
+            }),
+          }),
+        /* @__PURE__ */ jsx(FlexFull, {
+          className: `h-full max-h-full overflow-y-auto justify-center insetOverlay border-980-md`,
+          children: /* @__PURE__ */ jsx(VStackFull, {
+            className: `h-fit px-[2vh] py-[1vh]`,
+            gap: "gap-[0.5vh]",
+            children: mapSelections.map((option) =>
+              /* @__PURE__ */ jsxs(
+                FlexFull,
+                {
+                  className: `${handleButtonStyle({
+                    option,
+                  })} justify-between shadowNarrowLoose items-center px-[1vh]`,
+                  onClick: () => handleStatusSelect(option),
+                  children: [
+                    /* @__PURE__ */ jsxs(Text, {
+                      className: "text-md-looser",
+                      children: [option, " "],
+                    }),
+                    option === selected &&
+                      /* @__PURE__ */ jsx(Text, {
+                        className:
+                          "text-[1.3vh] leading-[1.5vh] text-col-100 textShadow px-[1vh] bg-col-700 metallicEdgesSm h-fit",
+                        children: "current",
+                      }),
+                  ],
+                },
+                option
+              )
+            ),
+          }),
+        }),
+        showClose &&
+          /* @__PURE__ */ jsx(FlexFull, {
+            className: "justify-center items-center",
+            children: /* @__PURE__ */ jsx(Button, {
+              to: String(GetFromLink()),
+              buttonText: "Save & Close",
+              type: "smallNormal",
+            }),
+          }),
+      ],
+    }),
+  });
 }
 function TextArea({
   className = "",
@@ -4084,16 +4346,13 @@ function TextArea({
   autoFocus = false,
   ...props
 }) {
-  return /* @__PURE__ */ jsx(
-    "textarea",
-    {
-      defaultValue,
-      autoFocus,
-      className: `w-full ${resize} ${textAreaHeight} ${textAreaWidth} textareaStyles ${className} `,
-      style,
-      ...props
-    }
-  );
+  return /* @__PURE__ */ jsx("textarea", {
+    defaultValue,
+    autoFocus,
+    className: `w-full ${resize} ${textAreaHeight} ${textAreaWidth} textareaStyles ${className} `,
+    style,
+    ...props,
+  });
 }
 function TextAreaVStack({
   label,
@@ -4111,51 +4370,43 @@ function TextAreaVStack({
   labelColor,
   labelSize = "normal",
   labelIsCursive = true,
-  onChange
+  onChange,
 }) {
-  return /* @__PURE__ */ jsxs(
-    VStack,
-    {
-      className: `w-full ${className}`,
-      align: "start",
-      style,
-      gap: "gap-[0.5vh]",
-      children: [
-        labelSize === "small" ? /* @__PURE__ */ jsx(
-          Heading,
-          {
+  return /* @__PURE__ */ jsxs(VStack, {
+    className: `w-full ${className}`,
+    align: "start",
+    style,
+    gap: "gap-[0.5vh]",
+    children: [
+      labelSize === "small"
+        ? /* @__PURE__ */ jsx(Heading, {
             isCursive: labelIsCursive,
             color: labelColor,
             className: `${labelClassName}`,
             layout: "text-md-tighter",
-            text: label
-          }
-        ) : /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(
-          Heading,
-          {
-            isCursive: labelIsCursive,
-            color: labelColor,
-            className: ` ${labelClassName}`,
-            layout: "text-md-tighter md:text-lg-tighter",
-            text: label
-          }
-        ) }),
-        /* @__PURE__ */ jsx(
-          TextArea,
-          {
-            autoFocus,
-            textAreaHeight,
-            name,
-            placeholder,
-            value,
-            defaultValue,
-            onChange,
-            className: `${textAreaWidth} ${textAreaHeight} ${textAreaClassName}`
-          }
-        )
-      ]
-    }
-  );
+            text: label,
+          })
+        : /* @__PURE__ */ jsx(Fragment, {
+            children: /* @__PURE__ */ jsx(Heading, {
+              isCursive: labelIsCursive,
+              color: labelColor,
+              className: ` ${labelClassName}`,
+              layout: "text-md-tighter md:text-lg-tighter",
+              text: label,
+            }),
+          }),
+      /* @__PURE__ */ jsx(TextArea, {
+        autoFocus,
+        textAreaHeight,
+        name,
+        placeholder,
+        value,
+        defaultValue,
+        onChange,
+        className: `${textAreaWidth} ${textAreaHeight} ${textAreaClassName}`,
+      }),
+    ],
+  });
 }
 const useToast = () => {
   const [isToastVisible, setIsToastVisible] = useState(false);
@@ -4169,7 +4420,7 @@ const useToast = () => {
 };
 const toastVariants = {
   visible: { opacity: 1, transition: { duration: 0.5 } },
-  hidden: { opacity: 0, transition: { duration: 0.5 } }
+  hidden: { opacity: 0, transition: { duration: 0.5 } },
 };
 function Toast({
   noOfLines = 4,
@@ -4182,7 +4433,7 @@ function Toast({
   containerClassName = "",
   bg = "bg-100-linear6op75 shadowBroadNormal",
   contentClassName = "justify-center items-center p-[4vh]",
-  textClassName = "text-col-100 text-lg-normal "
+  textClassName = "text-col-100 text-lg-normal ",
 }) {
   const [show, setShow] = useState(isVisible);
   useEffect(() => {
@@ -4208,90 +4459,94 @@ function Toast({
     "center-bottom": "bottom-10 left-1/2 transform -translate-x-1/2",
     "center-left": "top-1/2 left-10 transform -translate-y-1/2",
     "center-top": "top-20 left-1/2 transform -translate-x-1/2",
-    "center-center": "top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+    "center-center":
+      "top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2",
   };
   const positionClass = positionClasses[position] || "bottom-5 right-5";
-  return /* @__PURE__ */ jsx(
-    motion.div,
-    {
-      className: `fixed ${positionClass} z-20 ${bg} ${toastSize} ${containerClassName}`,
-      initial: "hidden",
-      animate: "visible",
-      exit: "hidden",
-      variants: toastVariants,
-      children: /* @__PURE__ */ jsx(Flex, { className: `w-full h-full ${contentClassName}`, children: /* @__PURE__ */ jsx(Text, { noOfLines, className: `${textClassName}`, children: message }) })
-    }
-  );
+  return /* @__PURE__ */ jsx(motion.div, {
+    className: `fixed ${positionClass} z-20 ${bg} ${toastSize} ${containerClassName}`,
+    initial: "hidden",
+    animate: "visible",
+    exit: "hidden",
+    variants: toastVariants,
+    children: /* @__PURE__ */ jsx(Flex, {
+      className: `w-full h-full ${contentClassName}`,
+      children: /* @__PURE__ */ jsx(Text, {
+        noOfLines,
+        className: `${textClassName}`,
+        children: message,
+      }),
+    }),
+  });
 }
-function TransitionExample({
-  transitionType,
-  isOpen,
-  closeTransition
-}) {
+function TransitionExample({ transitionType, isOpen, closeTransition }) {
   useEscapeKey$1(() => closeTransition());
   console.log("IsOpen: ", isOpen);
-  return /* @__PURE__ */ jsx(Fragment, { children: isOpen && /* @__PURE__ */ jsxs(
-    FlexFull,
-    {
-      className: "w-full h-full justify-center items-center bg-linear4op75 defaultOverlayBlur absolute top-0 left-0 z-20",
-      onClick: () => closeTransition(),
-      children: [
-        /* @__PURE__ */ jsx(Transition, { type: transitionType, duration: 0.6, delay: 0.3, children: /* @__PURE__ */ jsx(VStack, { className: "p-[3vh] bg-600-linear6op75 text-col-100 shadowWideLooser", children: /* @__PURE__ */ jsxs(Text, { className: "text-xl-looser", children: [
-          'transition type = "',
-          transitionType,
-          '"'
-        ] }) }) }),
-        /* @__PURE__ */ jsx(FlexFull, { className: "fixed bottom-0 left-0 h-[6vh] justify-center items-center", children: /* @__PURE__ */ jsx(Button, { buttonText: "close", onClick: () => closeTransition() }) })
-      ]
-    }
-  ) });
+  return /* @__PURE__ */ jsx(Fragment, {
+    children:
+      isOpen &&
+      /* @__PURE__ */ jsxs(FlexFull, {
+        className:
+          "w-full h-full justify-center items-center bg-linear4op75 defaultOverlayBlur absolute top-0 left-0 z-20",
+        onClick: () => closeTransition(),
+        children: [
+          /* @__PURE__ */ jsx(Transition, {
+            type: transitionType,
+            duration: 0.6,
+            delay: 0.3,
+            children: /* @__PURE__ */ jsx(VStack, {
+              className:
+                "p-[3vh] bg-600-linear6op75 text-col-100 shadowWideLooser",
+              children: /* @__PURE__ */ jsxs(Text, {
+                className: "text-xl-looser",
+                children: ['transition type = "', transitionType, '"'],
+              }),
+            }),
+          }),
+          /* @__PURE__ */ jsx(FlexFull, {
+            className:
+              "fixed bottom-0 left-0 h-[6vh] justify-center items-center",
+            children: /* @__PURE__ */ jsx(Button, {
+              buttonText: "close",
+              onClick: () => closeTransition(),
+            }),
+          }),
+        ],
+      }),
+  });
 }
 function TagBadge({
   tag,
   color = "text-col-900",
   onClick,
   index,
-  className = ""
+  className = "",
 }) {
-  return /* @__PURE__ */ jsx(
-    Flex,
-    {
-      className: `pl-[0.3vh] w-fit h-fit shadowNarrowNormal ${className}  bg-col-300`,
-      children: /* @__PURE__ */ jsxs(
-        HStack,
-        {
-          className: `w-full h-fit justify-between items-center gap-[0.1vh] py-[0px]`,
-          children: [
-            /* @__PURE__ */ jsx(
-              Text,
-              {
-                className: `text-md-tighter lowercase ${color} lightTextShadow font-semibold`,
-                children: tag
-              }
-            ),
-            onClick && /* @__PURE__ */ jsx(
-              IconButton,
-              {
-                type: "unstyled",
-                containerClassName: "p-[0px] h-fit w-fit",
-                iconClassName: "text-[2.2vh] p-[0px]",
-                icon: CloseIcon,
-                label: "remove",
-                tooltipPlacement: "left",
-                onClick: typeof index !== "undefined" ? () => onClick(index) : void 0
-              }
-            )
-          ]
-        }
-      )
-    }
-  );
+  return /* @__PURE__ */ jsx(Flex, {
+    className: `pl-[0.3vh] w-fit h-fit shadowNarrowNormal ${className}  bg-col-300`,
+    children: /* @__PURE__ */ jsxs(HStack, {
+      className: `w-full h-fit justify-between items-center gap-[0.1vh] py-[0px]`,
+      children: [
+        /* @__PURE__ */ jsx(Text, {
+          className: `text-md-tighter lowercase ${color} lightTextShadow font-semibold`,
+          children: tag,
+        }),
+        onClick &&
+          /* @__PURE__ */ jsx(IconButton, {
+            type: "unstyled",
+            containerClassName: "p-[0px] h-fit w-fit",
+            iconClassName: "text-[2.2vh] p-[0px]",
+            icon: CloseIcon,
+            label: "remove",
+            tooltipPlacement: "left",
+            onClick:
+              typeof index !== "undefined" ? () => onClick(index) : void 0,
+          }),
+      ],
+    }),
+  });
 }
-function TagsInput({
-  onTagsChange,
-  tags,
-  wrapHeight = "h-full max-h-[15vh]"
-}) {
+function TagsInput({ onTagsChange, tags, wrapHeight = "h-full max-h-[15vh]" }) {
   const [inputValue, setInputValue] = useState("");
   const [localTags, setLocalTags] = useState(tags);
   useEffect(() => {
@@ -4328,53 +4583,59 @@ function TagsInput({
     setLocalTags(newTags);
     onTagsChange(newTags);
   };
-  return /* @__PURE__ */ jsx(VStack, { className: `w-full`, children: /* @__PURE__ */ jsxs(VStack, { className: `w-full h-full text-gray-100 gap-[1vh]`, align: "start", children: [
-    /* @__PURE__ */ jsxs(HStack, { className: "w-full items-center", children: [
-      /* @__PURE__ */ jsx(
-        Input$1,
-        {
-          value: inputValue,
-          placeholder: "Add tags",
-          onKeyDown: handleInputKeyDown,
-          onChange: handleInputChange
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        Button,
-        {
-          width: "w-fit",
-          onClick: handleAddTag,
-          buttonText: "Add",
-          type: "smallNormal"
-        }
-      )
-    ] }),
-    /* @__PURE__ */ jsx(
-      Flex,
-      {
-        className: `w-full overflow-y-auto overflow-x-hidden insetShadowMd inputStyles ${wrapHeight}`,
-        children: /* @__PURE__ */ jsxs(
-          Wrap,
-          {
+  return /* @__PURE__ */ jsx(VStack, {
+    className: `w-full`,
+    children: /* @__PURE__ */ jsxs(VStack, {
+      className: `w-full h-full text-gray-100 gap-[1vh]`,
+      align: "start",
+      children: [
+        /* @__PURE__ */ jsxs(HStack, {
+          className: "w-full items-center",
+          children: [
+            /* @__PURE__ */ jsx(Input$1, {
+              value: inputValue,
+              placeholder: "Add tags",
+              onKeyDown: handleInputKeyDown,
+              onChange: handleInputChange,
+            }),
+            /* @__PURE__ */ jsx(Button, {
+              width: "w-fit",
+              onClick: handleAddTag,
+              buttonText: "Add",
+              type: "smallNormal",
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsx(Flex, {
+          className: `w-full overflow-y-auto overflow-x-hidden insetShadowMd inputStyles ${wrapHeight}`,
+          children: /* @__PURE__ */ jsxs(Wrap, {
             className: `w-full h-full gap-x-[1vh] gap-y-[1vh] justify-start p-[1vh]`,
             children: [
-              localTags.length === 0 && /* @__PURE__ */ jsx(Flex, { className: `text-sm h-fit w-fit textShadow`, children: /* @__PURE__ */ jsx(Heading, { text: "There are currently no tags." }) }),
-              localTags.map((tag, index) => /* @__PURE__ */ jsx(
-                TagBadge,
-                {
-                  tag,
-                  onClick: removeTag,
-                  index,
-                  bgColor: "bg-col-200"
-                },
-                index
-              ))
-            ]
-          }
-        )
-      }
-    )
-  ] }) });
+              localTags.length === 0 &&
+                /* @__PURE__ */ jsx(Flex, {
+                  className: `text-sm h-fit w-fit textShadow`,
+                  children: /* @__PURE__ */ jsx(Heading, {
+                    text: "There are currently no tags.",
+                  }),
+                }),
+              localTags.map((tag, index) =>
+                /* @__PURE__ */ jsx(
+                  TagBadge,
+                  {
+                    tag,
+                    onClick: removeTag,
+                    index,
+                    bgColor: "bg-col-200",
+                  },
+                  index
+                )
+              ),
+            ],
+          }),
+        }),
+      ],
+    }),
+  });
 }
 function Parallax({
   dimensions = "w-[50vh] h-[50vh]",
@@ -4392,48 +4653,72 @@ function Parallax({
   overlayImage,
   overlayImagePositioning = "",
   overlayImageDimensions = "",
-  overlayImageClassName
+  overlayImageClassName,
 }) {
-  return /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsxs(Flex, { className: "relative", children: [
-    overlayImage && /* @__PURE__ */ jsx(
-      Image,
-      {
-        alt: overlayImage,
-        src: overlayImage,
-        className: `absolute ${overlayImagePositioning} ${overlayImageDimensions} ${overlayImageClassName}`
-      }
-    ),
-    /* @__PURE__ */ jsx(
-      Box,
-      {
-        className: `${dimensions} border-970-md overflow-y-scroll ${bgAttachment} ${bgImage} ${bgFit} ${bgPosition} bg-no-repeat shadowWideLoose 
+  return /* @__PURE__ */ jsx(Fragment, {
+    children: /* @__PURE__ */ jsxs(Flex, {
+      className: "relative",
+      children: [
+        overlayImage &&
+          /* @__PURE__ */ jsx(Image, {
+            alt: overlayImage,
+            src: overlayImage,
+            className: `absolute ${overlayImagePositioning} ${overlayImageDimensions} ${overlayImageClassName}`,
+          }),
+        /* @__PURE__ */ jsx(Box, {
+          className: `${dimensions} border-970-md overflow-y-scroll ${bgAttachment} ${bgImage} ${bgFit} ${bgPosition} bg-no-repeat shadowWideLoose 
         `,
-        children: !imageOnly && /* @__PURE__ */ jsx(Box, { className: imageMargin, children: /* @__PURE__ */ jsxs(
-          VStackFull,
-          {
-            className: `${scrollBackground} text-col-100 shadow3DSm`,
-            align: "items-start",
-            children: [
-              /* @__PURE__ */ jsx(VStackFull, { children: title && /* @__PURE__ */ jsxs(HStackFull, { className: "justify-between items-center rounded-none p-[1vh] bg-col-960", children: [
-                /* @__PURE__ */ jsx(Box, { className: "text-xl-tight font-cursive textShadow", children: title }),
-                showIcon && /* @__PURE__ */ jsx(Icon, { icon: CgScrollV, iconClassName: "text-[3vh]" })
-              ] }) }),
-              /* @__PURE__ */ jsxs(VStackFull, { className: "px-[1vh] pb-[1vh]", children: [
-                tagline && /* @__PURE__ */ jsx(FlexFull, { className: "italic text-lg textShadow", children: tagline }),
-                children && children
-              ] })
-            ]
-          }
-        ) })
-      }
-    )
-  ] }) });
+          children:
+            !imageOnly &&
+            /* @__PURE__ */ jsx(Box, {
+              className: imageMargin,
+              children: /* @__PURE__ */ jsxs(VStackFull, {
+                className: `${scrollBackground} text-col-100 shadow3DSm`,
+                align: "items-start",
+                children: [
+                  /* @__PURE__ */ jsx(VStackFull, {
+                    children:
+                      title &&
+                      /* @__PURE__ */ jsxs(HStackFull, {
+                        className:
+                          "justify-between items-center rounded-none p-[1vh] bg-col-960",
+                        children: [
+                          /* @__PURE__ */ jsx(Box, {
+                            className: "text-xl-tight font-cursive textShadow",
+                            children: title,
+                          }),
+                          showIcon &&
+                            /* @__PURE__ */ jsx(Icon, {
+                              icon: CgScrollV,
+                              iconClassName: "text-[3vh]",
+                            }),
+                        ],
+                      }),
+                  }),
+                  /* @__PURE__ */ jsxs(VStackFull, {
+                    className: "px-[1vh] pb-[1vh]",
+                    children: [
+                      tagline &&
+                        /* @__PURE__ */ jsx(FlexFull, {
+                          className: "italic text-lg textShadow",
+                          children: tagline,
+                        }),
+                      children && children,
+                    ],
+                  }),
+                ],
+              }),
+            }),
+        }),
+      ],
+    }),
+  });
 }
 function Accordion({
   title,
   children,
   titleStyles = "bg-100-linear6op75 hover:bg-100-linear6op50 transition-400 text-col-100 textShadow",
-  contentStyles = "bg-col-990 text-col-100 textShadow"
+  contentStyles = "bg-col-990 text-col-100 textShadow",
 }) {
   var _a;
   const [isOpen, setIsOpen] = useState(false);
@@ -4446,57 +4731,48 @@ function Accordion({
       setMaxHeight("0px");
     }
   }, [isOpen, (_a = contentRef.current) == null ? void 0 : _a.scrollHeight]);
-  return /* @__PURE__ */ jsxs(
-    VStackFull,
-    {
-      className: "overflow-hidden rounded-none",
-      gap: "gap-[0px]",
-      align: "items-start",
-      children: [
-        /* @__PURE__ */ jsx(
-          "button",
-          {
-            className: `w-full text-left px-[1.5vh] py-[1vh] ${titleStyles} transition-300 rounded-none`,
-            onClick: () => setIsOpen(!isOpen),
-            children: /* @__PURE__ */ jsxs(HStackFull, { className: "rounded-none justify-between", children: [
-              /* @__PURE__ */ jsx(Text, { className: "text-md-tight", children: title }),
-              /* @__PURE__ */ jsx(
-                Icon,
-                {
-                  icon: isOpen ? BiChevronUp : BiChevronDown,
-                  iconClassName: "text-[3vh]"
-                }
-              )
-            ] })
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "div",
-          {
-            ref: contentRef,
-            style: { maxHeight },
-            className: `transition-500 rounded-none ${isOpen ? "overflow-visible" : "overflow-hidden"} w-full`,
-            children: /* @__PURE__ */ jsx(
-              "div",
-              {
-                className: `px-[2vh] py-[1vh] w-full ${contentStyles} rounded-none`,
-                children
-              }
-            )
-          }
-        )
-      ]
-    }
-  );
+  return /* @__PURE__ */ jsxs(VStackFull, {
+    className: "overflow-hidden rounded-none",
+    gap: "gap-[0px]",
+    align: "items-start",
+    children: [
+      /* @__PURE__ */ jsx("button", {
+        className: `w-full text-left px-[1.5vh] py-[1vh] ${titleStyles} transition-300 rounded-none`,
+        onClick: () => setIsOpen(!isOpen),
+        children: /* @__PURE__ */ jsxs(HStackFull, {
+          className: "rounded-none justify-between",
+          children: [
+            /* @__PURE__ */ jsx(Text, {
+              className: "text-md-tight",
+              children: title,
+            }),
+            /* @__PURE__ */ jsx(Icon, {
+              icon: isOpen ? BiChevronUp : BiChevronDown,
+              iconClassName: "text-[3vh]",
+            }),
+          ],
+        }),
+      }),
+      /* @__PURE__ */ jsx("div", {
+        ref: contentRef,
+        style: { maxHeight },
+        className: `transition-500 rounded-none ${
+          isOpen ? "overflow-visible" : "overflow-hidden"
+        } w-full`,
+        children: /* @__PURE__ */ jsx("div", {
+          className: `px-[2vh] py-[1vh] w-full ${contentStyles} rounded-none`,
+          children,
+        }),
+      }),
+    ],
+  });
 }
 function ComponentExamples() {
   const onConfirm = () => {
     console.log("confirmed");
     setIsAlertOpen(false);
   };
-  const [externalSelected, setExternalSelection] = useState(
-    "optionSix"
-  );
+  const [externalSelected, setExternalSelection] = useState("optionSix");
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const cancelRef = useRef(null);
   const openAlert = () => {
@@ -4510,19 +4786,26 @@ function ComponentExamples() {
     children,
     className,
     bg = "bg-100-diagonal2op25 ",
-    headerText
+    headerText,
   }) {
-    return /* @__PURE__ */ jsxs(
-      VStack,
-      {
-        gap: "gap-[0px]",
-        className: `h-fit ${bg} shadowNarrowLoose max-w-[90vw] ${className}`,
-        children: [
-          headerText && /* @__PURE__ */ jsx(FlexFull, { className: "px-[1vh] py-[0.5vh] bg-100-linear6op75 rounded-b-none", children: /* @__PURE__ */ jsx(Text, { className: "font-semibold text-col-100 textShadow", children: headerText }) }),
-          /* @__PURE__ */ jsx(FlexFull, { className: "px-[1vh] py-[0.5vh] ", children })
-        ]
-      }
-    );
+    return /* @__PURE__ */ jsxs(VStack, {
+      gap: "gap-[0px]",
+      className: `h-fit ${bg} shadowNarrowLoose max-w-[90vw] ${className}`,
+      children: [
+        headerText &&
+          /* @__PURE__ */ jsx(FlexFull, {
+            className: "px-[1vh] py-[0.5vh] bg-100-linear6op75 rounded-b-none",
+            children: /* @__PURE__ */ jsx(Text, {
+              className: "font-semibold text-col-100 textShadow",
+              children: headerText,
+            }),
+          }),
+        /* @__PURE__ */ jsx(FlexFull, {
+          className: "px-[1vh] py-[0.5vh] ",
+          children,
+        }),
+      ],
+    });
   }
   const [enteredTags, setEnteredTags] = useState([]);
   const [toastPosition, setToastPosition] = useState("center-center");
@@ -4536,208 +4819,400 @@ function ComponentExamples() {
   const handleTagsChange = (newTags) => {
     setEnteredTags(newTags);
   };
-  return /* @__PURE__ */ jsxs(Flex, { className: "w-full justify-around items-center", children: [
-    /* @__PURE__ */ jsxs(Wrap, { className: "w-full items-center justify-around gap-[3vh]", children: [
-      /* @__PURE__ */ jsx(Button, { buttonText: "Main Nav Demo", to: "/design/main-nav-demo" }),
-      /* @__PURE__ */ jsx(Button, { buttonText: "Alert", onClick: openAlert }),
-      /* @__PURE__ */ jsx(
-        Button,
-        {
-          to: "/design/animate-on-scroll",
-          buttonText: "Animate on Scroll Duration"
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        Button,
-        {
-          to: "/design/animate-on-scroll-spring",
-          buttonText: "Animation on Snap Scroll Spring"
-        }
-      ),
-      " ",
-      /* @__PURE__ */ jsx(
-        Button,
-        {
-          to: "/design/infinite-scroll-demo",
-          buttonText: "Infinite Scroll"
-        }
-      ),
-      /* @__PURE__ */ jsx(Button, { to: "/design/masonry-grid-demo", buttonText: "Masonry Grid" }),
-      /* @__PURE__ */ jsx(
-        Popover,
-        {
-          trigger: /* @__PURE__ */ jsx(Button, { buttonText: "Popover" }),
-          content: /* @__PURE__ */ jsx(Flex, { children: "I am the content" }),
-          heading: "Popover Heading"
-        }
-      ),
-      /* @__PURE__ */ jsx(ModalWithButton, { buttonText: "Modal", children: /* @__PURE__ */ jsx(FlexFull, { className: "h-full bg-col-700 justify-center items-center rounded-b-none", children: /* @__PURE__ */ jsx(Text, { className: "text-mega-normal text-col-100 textShadow", children: "This is a lovely Modal!" }) }) }),
-      /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Avatar", children: /* @__PURE__ */ jsx(Avatar, { src: "/images/fallbackAvatar.png", size: "xxl" }) }),
-      /* @__PURE__ */ jsx(
-        BackgroundImageContainer,
-        {
-          w: "w-[15vh]",
-          image: "/images/fallbackAvatar.png",
-          containerClassName: "shadowNarrowTight",
-          children: /* @__PURE__ */ jsx(Text, { className: "font-bold text-col-100 textFog", children: "Background Image" })
-        }
-      ),
-      /* @__PURE__ */ jsx(Badge, { label: "Badge" }),
-      /* @__PURE__ */ jsx(ComponentContainer, { children: /* @__PURE__ */ jsxs(VStack, { children: [
-        /* @__PURE__ */ jsx(Checkbox, { label: "Checkbox" }),
-        /* @__PURE__ */ jsx(Checkbox, { label: "Disabled", isDisabled: true }),
-        /* @__PURE__ */ jsx(Checkbox, { label: "Checked", isChecked: true })
-      ] }) }),
-      /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Date Time Picker", children: /* @__PURE__ */ jsx(InputDateTime, { containerHeight: "h-[38vh]" }) }),
-      /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Drawer", children: /* @__PURE__ */ jsx(VStackFull, { children: drawerTypes.map((type) => /* @__PURE__ */ jsxs(HStackFull, { className: "justify-between", children: [
-        /* @__PURE__ */ jsx(Text, { children: type }),
-        /* @__PURE__ */ jsx(
-          DrawerWithButton,
-          {
-            icon: BiMenu,
-            buttonType: "smallNormal",
-            slideDirection: type,
-            children: /* @__PURE__ */ jsx(FlexFull, { className: "h-full justify-center items-center", children: /* @__PURE__ */ jsx(Text, { className: "text-xxl-loose text-col-100 textShadow", children: type }) })
-          }
-        )
-      ] }, type)) }) }),
-      /* @__PURE__ */ jsxs(VStack, { gap: "gap-[2vh]", children: [
-        " ",
-        /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Input", children: /* @__PURE__ */ jsx(Box, { className: "w-[25vh]", children: /* @__PURE__ */ jsx(Input$1, {}) }) }),
-        /* @__PURE__ */ jsx(ComponentContainer, { headerText: "TextArea", children: /* @__PURE__ */ jsx(Box, { className: "w-[25vh]", children: /* @__PURE__ */ jsx(TextArea, {}) }) })
-      ] }),
-      /* @__PURE__ */ jsxs(VStack, { gap: "gap-[2vh]", children: [
-        " ",
-        /* @__PURE__ */ jsx(ComponentContainer, { headerText: "InputVStack", children: /* @__PURE__ */ jsx(Box, { className: "w-[25vh]", children: /* @__PURE__ */ jsx(InputVStack, { label: "Input Label" }) }) }),
-        /* @__PURE__ */ jsx(ComponentContainer, { headerText: "TextAreaVStack", children: /* @__PURE__ */ jsx(Box, { className: "w-[25vh]", children: /* @__PURE__ */ jsx(TextAreaVStack, { label: "Text Area Label" }) }) })
-      ] }),
-      /* @__PURE__ */ jsxs(VStack, { gap: "gap-[2vh]", children: [
-        /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Password Input", className: "w-[40vh]", children: /* @__PURE__ */ jsx(PasswordInput, {}) }),
-        /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Validated Input", className: "w-[30vh]", children: /* @__PURE__ */ jsx(FlexFull, { className: "justify-center", children: /* @__PURE__ */ jsx(ValidatedInput, { max: 10 }) }) })
-      ] }),
-      /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Tags Input", className: "w-[30vh]", children: /* @__PURE__ */ jsx(FlexFull, { className: "justify-center", children: /* @__PURE__ */ jsx(TagsInput, { tags: enteredTags, onTagsChange: handleTagsChange }) }) }),
-      /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Select Menu", className: "w-[30vh]", children: /* @__PURE__ */ jsxs(VStackFull, { children: [
-        /* @__PURE__ */ jsxs(HStackFull, { children: [
-          /* @__PURE__ */ jsx(Text, { className: "font-bold", children: "Selected:" }),
-          /* @__PURE__ */ jsx(Text, { children: externalSelected })
-        ] }),
-        /* @__PURE__ */ jsx(FlexFull, { className: "justify-center h-[30vh]", children: /* @__PURE__ */ jsx(
-          ScrollingSelector,
-          {
-            setExternalSelection,
-            selectedOption: externalSelected,
-            selectedOnTop: false,
-            showClose: false,
-            options: [
-              "option one",
-              "optionTwo",
-              "optionThree",
-              "optionFour",
-              "optionFive",
-              "optionSix",
-              "optionSeven",
-              "optionEight",
-              "optionNine",
-              "optionTen"
-            ]
-          }
-        ) })
-      ] }) }),
-      /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Toast", className: "w-[30vh]", children: /* @__PURE__ */ jsx(FlexFull, { className: "justify-center", children: /* @__PURE__ */ jsx(VStack, { children: toastPositions.map((position) => /* @__PURE__ */ jsx(
-        Button,
-        {
-          width: "w-[23vh]",
-          type: "smallNormal",
-          buttonText: position,
-          onClick: () => {
-            setToastPosition(position);
-            showToast();
-          }
-        },
-        position
-      )) }) }) }),
-      /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Tooltip", className: "", children: /* @__PURE__ */ jsx(FlexFull, { className: "justify-center", children: /* @__PURE__ */ jsx(Wrap, { className: "w-full justify-around gap-[3vh] p-[2vh] lg:w-[60vw] xxl:w-[50vw]", children: tooltipPlacements.map((placement) => /* @__PURE__ */ jsx(
-        Tooltip,
-        {
-          placement,
-          label: placement,
-          bg: "bg-col-800",
-          children: /* @__PURE__ */ jsx(Flex, { className: "justify-center bg-300-diagonal1op25 w-[23vh] shadowNarrowNormal", children: /* @__PURE__ */ jsx(Text, { className: "text-lg-tight", children: placement }) })
-        },
-        placement
-      )) }) }) }),
-      /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Transition", className: "", children: /* @__PURE__ */ jsx(FlexFull, { className: "justify-center", children: /* @__PURE__ */ jsx(Wrap, { className: "w-full justify-around gap-[1.5vh] p-[2vh] lg:w-[60vw] xxl:w-[50vw]", children: transitionTypes.map((type) => /* @__PURE__ */ jsx(
-        Button,
-        {
-          buttonText: type,
-          type: "smallNormal",
-          onClick: () => handleTransitionClick(type)
-        },
-        type
-      )) }) }) }),
-      /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Parallax with Image", children: /* @__PURE__ */ jsx(Parallax, { imageOnly: true }) }),
-      /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Parallax with Text", children: /* @__PURE__ */ jsx(
-        Parallax,
-        {
-          title: "The Melody of Raindrops",
-          tagline: "Unveiling the Serenade of the Skies",
-          children: /* @__PURE__ */ jsxs(VStackFull, { children: [
-            /* @__PURE__ */ jsx("p", { children: "In the heart of nature's symphony, raindrops compose a timeless melody, a soothing serenade that whispers to the soul. This ethereal music, born from the heavens, dances upon rooftops and windows, creating a rhythm that resonates with the heartbeat of the earth. Each drop, a note; together, they orchestrate the symphony of the rain, a sound so pure it cleanses the air and rejuvenates life." }),
-            /* @__PURE__ */ jsx("p", { children: "Amidst the cascade of silver threads, the world transforms. Streets glisten under the embrace of the rain, and the air fills with the fresh scent of petrichor, the earth's perfume released upon receiving the sky's affection. Trees and flowers bask in the nourishing touch, their leaves shimmering with droplets that catch the faint light, turning every view into a masterpiece of sparkling jewels." }),
-            /* @__PURE__ */ jsx("p", { children: "But beyond its beauty and melody, rain symbolizes renewal and growth. It teaches us the art of letting go, washing away the remnants of yesterday, and nurturing the seeds of tomorrow. In its presence, we find moments of reflection, an invitation to pause and revel in the simple joys of life. The rain, with its gentle persistence, reminds us of nature's cycles, the ebb and flow of life, and the preciousness of every drop in the vast ocean of existence." })
-          ] })
-        }
-      ) }),
-      /* @__PURE__ */ jsx(ComponentContainer, { headerText: "Accordion", children: /* @__PURE__ */ jsxs(VStack, { gap: "gap-[0px]", className: "w-[40vh] h-[40vh]", children: [
-        /* @__PURE__ */ jsx(Accordion, { title: "Accordion Element One", children: /* @__PURE__ */ jsx("p", { children: "This is the epic content of element one." }) }),
-        /* @__PURE__ */ jsx(Accordion, { title: "Accordion Element Two ", children: /* @__PURE__ */ jsx(
-          InputVStack,
-          {
-            label: "This accordion has an input field",
-            labelIsCursive: false,
-            labelColor: "text-col-100",
-            labelShadow: "textShadow",
-            labelSize: "small"
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Accordion, { title: "Accordion Element Three", children: /* @__PURE__ */ jsx(Text, { className: "text-lg-tight", children: "😄🦄" }) })
-      ] }) })
-    ] }),
-    isToastVisible && /* @__PURE__ */ jsx(
-      Toast,
-      {
-        message: `I am so toasty - ${toastPosition}`,
-        isVisible: isToastVisible,
-        duration: 5e3,
-        onClose: hideToast,
-        position: toastPosition
-      }
-    ),
-    isAlertOpen && /* @__PURE__ */ jsx(
-      Alert,
-      {
-        isAlertOpen,
-        title: "You sure?",
-        body: `Please confirm this important thing?`,
-        confirmButtonText: "Yes!",
-        cancelButtonText: "Cancel",
-        alertDimensions: "h-50% w-90% md:w-[60vh]",
-        bodyClassName: "justify-evenly py-[2vh]",
-        onClose: closeAlert,
-        cancelRef,
-        onConfirmClick: () => onConfirm(),
-        bodyTextSize: "text-[2.5vh]"
-      }
-    ),
-    isTransitionOpen && /* @__PURE__ */ jsx(
-      TransitionExample,
-      {
-        isOpen: isTransitionOpen,
-        closeTransition: () => setIsTransitionOpen(false),
-        transitionType
-      }
-    )
-  ] });
+  return /* @__PURE__ */ jsxs(Flex, {
+    className: "w-full justify-around items-center",
+    children: [
+      /* @__PURE__ */ jsxs(Wrap, {
+        className: "w-full items-center justify-around gap-[3vh]",
+        children: [
+          /* @__PURE__ */ jsx(Button, {
+            buttonText: "Main Nav Demo",
+            to: "/design/main-nav-demo",
+          }),
+          /* @__PURE__ */ jsx(Button, {
+            buttonText: "Alert",
+            onClick: openAlert,
+          }),
+          /* @__PURE__ */ jsx(Button, {
+            to: "/design/animate-on-scroll",
+            buttonText: "Animate on Scroll Duration",
+          }),
+          /* @__PURE__ */ jsx(Button, {
+            to: "/design/animate-on-scroll-spring",
+            buttonText: "Animation on Snap Scroll Spring",
+          }),
+          " ",
+          /* @__PURE__ */ jsx(Button, {
+            to: "/design/infinite-scroll-demo",
+            buttonText: "Infinite Scroll",
+          }),
+          /* @__PURE__ */ jsx(Button, {
+            to: "/design/masonry-grid-demo",
+            buttonText: "Masonry Grid",
+          }),
+          /* @__PURE__ */ jsx(Popover, {
+            trigger: /* @__PURE__ */ jsx(Button, { buttonText: "Popover" }),
+            content: /* @__PURE__ */ jsx(Flex, {
+              children: "I am the content",
+            }),
+            heading: "Popover Heading",
+          }),
+          /* @__PURE__ */ jsx(ModalWithButton, {
+            buttonText: "Modal",
+            children: /* @__PURE__ */ jsx(FlexFull, {
+              className:
+                "h-full bg-col-700 justify-center items-center rounded-b-none",
+              children: /* @__PURE__ */ jsx(Text, {
+                className: "text-mega-normal text-col-100 textShadow",
+                children: "This is a lovely Modal!",
+              }),
+            }),
+          }),
+          /* @__PURE__ */ jsx(ComponentContainer, {
+            headerText: "Avatar",
+            children: /* @__PURE__ */ jsx(Avatar, {
+              src: "/images/fallbackAvatar.png",
+              size: "xxl",
+            }),
+          }),
+          /* @__PURE__ */ jsx(BackgroundImageContainer, {
+            w: "w-[15vh]",
+            image: "/images/fallbackAvatar.png",
+            containerClassName: "shadowNarrowTight",
+            children: /* @__PURE__ */ jsx(Text, {
+              className: "font-bold text-col-100 textFog",
+              children: "Background Image",
+            }),
+          }),
+          /* @__PURE__ */ jsx(Badge, { label: "Badge" }),
+          /* @__PURE__ */ jsx(ComponentContainer, {
+            children: /* @__PURE__ */ jsxs(VStack, {
+              children: [
+                /* @__PURE__ */ jsx(Checkbox, { label: "Checkbox" }),
+                /* @__PURE__ */ jsx(Checkbox, {
+                  label: "Disabled",
+                  isDisabled: true,
+                }),
+                /* @__PURE__ */ jsx(Checkbox, {
+                  label: "Checked",
+                  isChecked: true,
+                }),
+              ],
+            }),
+          }),
+          /* @__PURE__ */ jsx(ComponentContainer, {
+            headerText: "Date Time Picker",
+            children: /* @__PURE__ */ jsx(InputDateTime, {
+              containerHeight: "h-[38vh]",
+            }),
+          }),
+          /* @__PURE__ */ jsx(ComponentContainer, {
+            headerText: "Drawer",
+            children: /* @__PURE__ */ jsx(VStackFull, {
+              children: drawerTypes.map((type) =>
+                /* @__PURE__ */ jsxs(
+                  HStackFull,
+                  {
+                    className: "justify-between",
+                    children: [
+                      /* @__PURE__ */ jsx(Text, { children: type }),
+                      /* @__PURE__ */ jsx(DrawerWithButton, {
+                        icon: BiMenu,
+                        buttonType: "smallNormal",
+                        slideDirection: type,
+                        children: /* @__PURE__ */ jsx(FlexFull, {
+                          className: "h-full justify-center items-center",
+                          children: /* @__PURE__ */ jsx(Text, {
+                            className: "text-xxl-loose text-col-100 textShadow",
+                            children: type,
+                          }),
+                        }),
+                      }),
+                    ],
+                  },
+                  type
+                )
+              ),
+            }),
+          }),
+          /* @__PURE__ */ jsxs(VStack, {
+            gap: "gap-[2vh]",
+            children: [
+              " ",
+              /* @__PURE__ */ jsx(ComponentContainer, {
+                headerText: "Input",
+                children: /* @__PURE__ */ jsx(Box, {
+                  className: "w-[25vh]",
+                  children: /* @__PURE__ */ jsx(Input$1, {}),
+                }),
+              }),
+              /* @__PURE__ */ jsx(ComponentContainer, {
+                headerText: "TextArea",
+                children: /* @__PURE__ */ jsx(Box, {
+                  className: "w-[25vh]",
+                  children: /* @__PURE__ */ jsx(TextArea, {}),
+                }),
+              }),
+            ],
+          }),
+          /* @__PURE__ */ jsxs(VStack, {
+            gap: "gap-[2vh]",
+            children: [
+              " ",
+              /* @__PURE__ */ jsx(ComponentContainer, {
+                headerText: "InputVStack",
+                children: /* @__PURE__ */ jsx(Box, {
+                  className: "w-[25vh]",
+                  children: /* @__PURE__ */ jsx(InputVStack, {
+                    label: "Input Label",
+                  }),
+                }),
+              }),
+              /* @__PURE__ */ jsx(ComponentContainer, {
+                headerText: "TextAreaVStack",
+                children: /* @__PURE__ */ jsx(Box, {
+                  className: "w-[25vh]",
+                  children: /* @__PURE__ */ jsx(TextAreaVStack, {
+                    label: "Text Area Label",
+                  }),
+                }),
+              }),
+            ],
+          }),
+          /* @__PURE__ */ jsxs(VStack, {
+            gap: "gap-[2vh]",
+            children: [
+              /* @__PURE__ */ jsx(ComponentContainer, {
+                headerText: "Password Input",
+                className: "w-[40vh]",
+                children: /* @__PURE__ */ jsx(PasswordInput, {}),
+              }),
+              /* @__PURE__ */ jsx(ComponentContainer, {
+                headerText: "Validated Input",
+                className: "w-[30vh]",
+                children: /* @__PURE__ */ jsx(FlexFull, {
+                  className: "justify-center",
+                  children: /* @__PURE__ */ jsx(ValidatedInput, { max: 10 }),
+                }),
+              }),
+            ],
+          }),
+          /* @__PURE__ */ jsx(ComponentContainer, {
+            headerText: "Tags Input",
+            className: "w-[30vh]",
+            children: /* @__PURE__ */ jsx(FlexFull, {
+              className: "justify-center",
+              children: /* @__PURE__ */ jsx(TagsInput, {
+                tags: enteredTags,
+                onTagsChange: handleTagsChange,
+              }),
+            }),
+          }),
+          /* @__PURE__ */ jsx(ComponentContainer, {
+            headerText: "Select Menu",
+            className: "w-[30vh]",
+            children: /* @__PURE__ */ jsxs(VStackFull, {
+              children: [
+                /* @__PURE__ */ jsxs(HStackFull, {
+                  children: [
+                    /* @__PURE__ */ jsx(Text, {
+                      className: "font-bold",
+                      children: "Selected:",
+                    }),
+                    /* @__PURE__ */ jsx(Text, { children: externalSelected }),
+                  ],
+                }),
+                /* @__PURE__ */ jsx(FlexFull, {
+                  className: "justify-center h-[30vh]",
+                  children: /* @__PURE__ */ jsx(ScrollingSelector, {
+                    setExternalSelection,
+                    selectedOption: externalSelected,
+                    selectedOnTop: false,
+                    showClose: false,
+                    options: [
+                      "option one",
+                      "optionTwo",
+                      "optionThree",
+                      "optionFour",
+                      "optionFive",
+                      "optionSix",
+                      "optionSeven",
+                      "optionEight",
+                      "optionNine",
+                      "optionTen",
+                    ],
+                  }),
+                }),
+              ],
+            }),
+          }),
+          /* @__PURE__ */ jsx(ComponentContainer, {
+            headerText: "Toast",
+            className: "w-[30vh]",
+            children: /* @__PURE__ */ jsx(FlexFull, {
+              className: "justify-center",
+              children: /* @__PURE__ */ jsx(VStack, {
+                children: toastPositions.map((position) =>
+                  /* @__PURE__ */ jsx(
+                    Button,
+                    {
+                      width: "w-[23vh]",
+                      type: "smallNormal",
+                      buttonText: position,
+                      onClick: () => {
+                        setToastPosition(position);
+                        showToast();
+                      },
+                    },
+                    position
+                  )
+                ),
+              }),
+            }),
+          }),
+          /* @__PURE__ */ jsx(ComponentContainer, {
+            headerText: "Tooltip",
+            className: "",
+            children: /* @__PURE__ */ jsx(FlexFull, {
+              className: "justify-center",
+              children: /* @__PURE__ */ jsx(Wrap, {
+                className:
+                  "w-full justify-around gap-[3vh] p-[2vh] lg:w-[60vw] xxl:w-[50vw]",
+                children: tooltipPlacements.map((placement) =>
+                  /* @__PURE__ */ jsx(
+                    Tooltip,
+                    {
+                      placement,
+                      label: placement,
+                      bg: "bg-col-800",
+                      children: /* @__PURE__ */ jsx(Flex, {
+                        className:
+                          "justify-center bg-300-diagonal1op25 w-[23vh] shadowNarrowNormal",
+                        children: /* @__PURE__ */ jsx(Text, {
+                          className: "text-lg-tight",
+                          children: placement,
+                        }),
+                      }),
+                    },
+                    placement
+                  )
+                ),
+              }),
+            }),
+          }),
+          /* @__PURE__ */ jsx(ComponentContainer, {
+            headerText: "Transition",
+            className: "",
+            children: /* @__PURE__ */ jsx(FlexFull, {
+              className: "justify-center",
+              children: /* @__PURE__ */ jsx(Wrap, {
+                className:
+                  "w-full justify-around gap-[1.5vh] p-[2vh] lg:w-[60vw] xxl:w-[50vw]",
+                children: transitionTypes.map((type) =>
+                  /* @__PURE__ */ jsx(
+                    Button,
+                    {
+                      buttonText: type,
+                      type: "smallNormal",
+                      onClick: () => handleTransitionClick(type),
+                    },
+                    type
+                  )
+                ),
+              }),
+            }),
+          }),
+          /* @__PURE__ */ jsx(ComponentContainer, {
+            headerText: "Parallax with Image",
+            children: /* @__PURE__ */ jsx(Parallax, { imageOnly: true }),
+          }),
+          /* @__PURE__ */ jsx(ComponentContainer, {
+            headerText: "Parallax with Text",
+            children: /* @__PURE__ */ jsx(Parallax, {
+              title: "The Melody of Raindrops",
+              tagline: "Unveiling the Serenade of the Skies",
+              children: /* @__PURE__ */ jsxs(VStackFull, {
+                children: [
+                  /* @__PURE__ */ jsx("p", {
+                    children:
+                      "In the heart of nature's symphony, raindrops compose a timeless melody, a soothing serenade that whispers to the soul. This ethereal music, born from the heavens, dances upon rooftops and windows, creating a rhythm that resonates with the heartbeat of the earth. Each drop, a note; together, they orchestrate the symphony of the rain, a sound so pure it cleanses the air and rejuvenates life.",
+                  }),
+                  /* @__PURE__ */ jsx("p", {
+                    children:
+                      "Amidst the cascade of silver threads, the world transforms. Streets glisten under the embrace of the rain, and the air fills with the fresh scent of petrichor, the earth's perfume released upon receiving the sky's affection. Trees and flowers bask in the nourishing touch, their leaves shimmering with droplets that catch the faint light, turning every view into a masterpiece of sparkling jewels.",
+                  }),
+                  /* @__PURE__ */ jsx("p", {
+                    children:
+                      "But beyond its beauty and melody, rain symbolizes renewal and growth. It teaches us the art of letting go, washing away the remnants of yesterday, and nurturing the seeds of tomorrow. In its presence, we find moments of reflection, an invitation to pause and revel in the simple joys of life. The rain, with its gentle persistence, reminds us of nature's cycles, the ebb and flow of life, and the preciousness of every drop in the vast ocean of existence.",
+                  }),
+                ],
+              }),
+            }),
+          }),
+          /* @__PURE__ */ jsx(ComponentContainer, {
+            headerText: "Accordion",
+            children: /* @__PURE__ */ jsxs(VStack, {
+              gap: "gap-[0px]",
+              className: "w-[40vh] h-[40vh]",
+              children: [
+                /* @__PURE__ */ jsx(Accordion, {
+                  title: "Accordion Element One",
+                  children: /* @__PURE__ */ jsx("p", {
+                    children: "This is the epic content of element one.",
+                  }),
+                }),
+                /* @__PURE__ */ jsx(Accordion, {
+                  title: "Accordion Element Two ",
+                  children: /* @__PURE__ */ jsx(InputVStack, {
+                    label: "This accordion has an input field",
+                    labelIsCursive: false,
+                    labelColor: "text-col-100",
+                    labelShadow: "textShadow",
+                    labelSize: "small",
+                  }),
+                }),
+                /* @__PURE__ */ jsx(Accordion, {
+                  title: "Accordion Element Three",
+                  children: /* @__PURE__ */ jsx(Text, {
+                    className: "text-lg-tight",
+                    children: "😄🦄",
+                  }),
+                }),
+              ],
+            }),
+          }),
+        ],
+      }),
+      isToastVisible &&
+        /* @__PURE__ */ jsx(Toast, {
+          message: `I am so toasty - ${toastPosition}`,
+          isVisible: isToastVisible,
+          duration: 5e3,
+          onClose: hideToast,
+          position: toastPosition,
+        }),
+      isAlertOpen &&
+        /* @__PURE__ */ jsx(Alert, {
+          isAlertOpen,
+          title: "You sure?",
+          body: `Please confirm this important thing?`,
+          confirmButtonText: "Yes!",
+          cancelButtonText: "Cancel",
+          alertDimensions: "h-50% w-90% md:w-[60vh]",
+          bodyClassName: "justify-evenly py-[2vh]",
+          onClose: closeAlert,
+          cancelRef,
+          onConfirmClick: () => onConfirm(),
+          bodyTextSize: "text-[2.5vh]",
+        }),
+      isTransitionOpen &&
+        /* @__PURE__ */ jsx(TransitionExample, {
+          isOpen: isTransitionOpen,
+          closeTransition: () => setIsTransitionOpen(false),
+          transitionType,
+        }),
+    ],
+  });
 }
 function MatchesHash({ linkName }) {
   const hash = useLocation().hash;
@@ -4750,518 +5225,857 @@ function CustomNavLink({
   inactiveStyles = "",
   useHash,
   useActive,
-  className
+  className,
 }) {
   const hash = useLocation().hash;
   console.log(hash);
-  return /* @__PURE__ */ jsx(Box, { className, children: /* @__PURE__ */ jsx(
-    NavLink,
-    {
+  return /* @__PURE__ */ jsx(Box, {
+    className,
+    children: /* @__PURE__ */ jsx(NavLink, {
       to,
-      className: useActive ? ({ isActive }) => isActive ? activeStyles : inactiveStyles : useHash ? MatchesHash({ linkName: to }) ? activeStyles : inactiveStyles : void 0,
-      children: linkText
-    }
-  ) });
+      className: useActive
+        ? ({ isActive }) => (isActive ? activeStyles : inactiveStyles)
+        : useHash
+        ? MatchesHash({ linkName: to })
+          ? activeStyles
+          : inactiveStyles
+        : void 0,
+      children: linkText,
+    }),
+  });
 }
-function StyleExampleBox({
-  className,
-  text
-}) {
-  return /* @__PURE__ */ jsx(Flex, { className: `px-[1vh] py-[0.5vh] ${className}`, children: text });
+function StyleExampleBox({ className, text }) {
+  return /* @__PURE__ */ jsx(Flex, {
+    className: `px-[1vh] py-[0.5vh] ${className}`,
+    children: text,
+  });
 }
-function StyledExampleWrap({
-  bg = "bg-col-700",
-  children
-}) {
-  return /* @__PURE__ */ jsx(
-    Wrap,
-    {
-      className: `${bg} px-[1vh] py-[2vh] shadowNarrowNormal gap-y-[2vh] gap-x-[3vh] w-full justify-around`,
-      children
-    }
-  );
+function StyledExampleWrap({ bg = "bg-col-700", children }) {
+  return /* @__PURE__ */ jsx(Wrap, {
+    className: `${bg} px-[1vh] py-[2vh] shadowNarrowNormal gap-y-[2vh] gap-x-[3vh] w-full justify-around`,
+    children,
+  });
 }
 function Design() {
-  function TestBox2({
-    bg,
-    children,
-    w = "w-[16vh]"
-  }) {
-    const isLightFont = bg.startsWith("bg-col-9") || bg.startsWith("bg-col-800") || bg.startsWith("bg-col-700") || bg.startsWith("bg-col-600") || bg.startsWith("bg-col-5");
-    const isDarkFont = bg.startsWith("bg-col-1") || bg.startsWith("bg-col-2") || bg.startsWith("bg-col-3") || bg.startsWith("bg-col-4");
-    const fontColor = isLightFont ? `text-col-100  text-stroke-4-900 textShadow` : isDarkFont ? `text-col-900  text-stroke-4-900 lightTextShadow` : `text-col-100 textShadow`;
-    return /* @__PURE__ */ jsx(
-      Flex,
-      {
-        className: `h-[5vh] ${w} font-bold ${bg} shadowNarrowNormal ${fontColor} justify-center items-center`,
-        children: /* @__PURE__ */ jsx(Text, { children })
-      }
-    );
+  function TestBox2({ bg, children, w = "w-[16vh]" }) {
+    const isLightFont =
+      bg.startsWith("bg-col-9") ||
+      bg.startsWith("bg-col-800") ||
+      bg.startsWith("bg-col-700") ||
+      bg.startsWith("bg-col-600") ||
+      bg.startsWith("bg-col-5");
+    const isDarkFont =
+      bg.startsWith("bg-col-1") ||
+      bg.startsWith("bg-col-2") ||
+      bg.startsWith("bg-col-3") ||
+      bg.startsWith("bg-col-4");
+    const fontColor = isLightFont
+      ? `text-col-100  text-stroke-4-900 textShadow`
+      : isDarkFont
+      ? `text-col-900  text-stroke-4-900 lightTextShadow`
+      : `text-col-100 textShadow`;
+    return /* @__PURE__ */ jsx(Flex, {
+      className: `h-[5vh] ${w} font-bold ${bg} shadowNarrowNormal ${fontColor} justify-center items-center`,
+      children: /* @__PURE__ */ jsx(Text, { children }),
+    });
   }
   function SectionHeading({ id, heading }) {
-    return /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx("div", { id, className: "h-[5.5vh] xl:h-[3.5vh] text-transparent", children: "This" }),
-      /* @__PURE__ */ jsx(Flex, { className: "w-full justify-center pt-[2vh] pb-[1vh]", children: /* @__PURE__ */ jsx(
-        Heading,
-        {
-          color: "text-white text-stroke-9-100",
-          shadow: "textFog",
-          text: heading,
-          layout: "text-insane-loose",
-          className: "px-[2vh]"
-        }
-      ) })
-    ] });
+    return /* @__PURE__ */ jsxs(Fragment, {
+      children: [
+        /* @__PURE__ */ jsx("div", {
+          id,
+          className: "h-[5.5vh] xl:h-[3.5vh] text-transparent",
+          children: "This",
+        }),
+        /* @__PURE__ */ jsx(Flex, {
+          className: "w-full justify-center pt-[2vh] pb-[1vh]",
+          children: /* @__PURE__ */ jsx(Heading, {
+            color: "text-white text-stroke-9-100",
+            shadow: "textFog",
+            text: heading,
+            layout: "text-insane-loose",
+            className: "px-[2vh]",
+          }),
+        }),
+      ],
+    });
   }
   const activeStyles = "textGlow";
   const inactiveStyles = "text-shadow";
-  return /* @__PURE__ */ jsx(Transition, { className: "w-full h-full justify-center overflow-y-auto", children: /* @__PURE__ */ jsxs(FlexFull, { className: "h-full overflow-y-auto justify-center", children: [
-    /* @__PURE__ */ jsx(FlexFull, { className: "fixed top-0 left-0 p-[1vh] bg-col-200 z-10 shadowWideLooser", children: /* @__PURE__ */ jsxs(Wrap, { className: "w-full gap-x-[5vh] gap-y-[1vh] justify-around", children: [
-      /* @__PURE__ */ jsx(IconButton, { icon: HomeIcon, type: "smallNormal", to: "/" }),
-      /* @__PURE__ */ jsx(
-        CustomNavLink,
-        {
-          to: "#colorscheme",
-          linkText: "Colors",
-          activeStyles,
-          inactiveStyles,
-          useHash: true
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        CustomNavLink,
-        {
-          to: "#rgb",
-          linkText: "RBG",
-          activeStyles,
-          inactiveStyles,
-          useHash: true
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        CustomNavLink,
-        {
-          to: "#gradients",
-          linkText: "Gradients",
-          activeStyles,
-          inactiveStyles,
-          useHash: true
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        CustomNavLink,
-        {
-          to: "#complexbackgrounds",
-          linkText: "Complex Backgrounds",
-          activeStyles,
-          inactiveStyles,
-          useHash: true
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        CustomNavLink,
-        {
-          to: "#buttons",
-          linkText: "Buttons",
-          activeStyles,
-          inactiveStyles,
-          useHash: true
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        CustomNavLink,
-        {
-          to: "#transitions",
-          linkText: "Transitions",
-          activeStyles,
-          inactiveStyles,
-          useHash: true
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        CustomNavLink,
-        {
-          to: "#shadow",
-          linkText: "Shadows",
-          activeStyles,
-          inactiveStyles,
-          useHash: true
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        CustomNavLink,
-        {
-          to: "#borders",
-          linkText: "Borders",
-          activeStyles,
-          inactiveStyles,
-          useHash: true
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        CustomNavLink,
-        {
-          to: "#text",
-          linkText: "Text",
-          activeStyles,
-          inactiveStyles,
-          useHash: true
-        }
-      ),
-      /* @__PURE__ */ jsx(
-        CustomNavLink,
-        {
-          to: "#components",
-          linkText: "Components",
-          activeStyles,
-          inactiveStyles,
-          useHash: true
-        }
-      )
-    ] }) }),
-    /* @__PURE__ */ jsxs(
-      VStackFull,
-      {
-        className: "h-fit px-[2vh] pt-[5.5vh] xl:pt-[3.5vh] pb-[2vh]",
-        gap: "gap-[2vh]",
-        children: [
-          /* @__PURE__ */ jsxs(VStackFull, { gap: "gap-[1vh]", children: [
-            /* @__PURE__ */ jsx(SectionHeading, { id: "colorscheme", heading: "Color Scheme" }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { bg: "bg-white", children: allColors.map((color, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: color, children: [
-              " ",
-              color
-            ] }, index)) }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: colors100.map((color, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: color, children: [
-              " ",
-              color
-            ] }, index)) }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: colors200.map((color, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: color, children: [
-              " ",
-              color
-            ] }, index)) }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: colors300.map((color, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: color, children: [
-              " ",
-              color
-            ] }, index)) }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: colors400.map((color, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: color, children: [
-              " ",
-              color
-            ] }, index)) }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: colors500.map((color, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: color, children: [
-              " ",
-              color
-            ] }, index)) }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: colors600.map((color, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: color, children: [
-              " ",
-              color
-            ] }, index)) }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { bg: "bg-col-500", children: colors700.map((color, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: color, children: [
-              " ",
-              color
-            ] }, index)) }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { bg: "bg-col-500", children: colors800.map((color, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: color, children: [
-              " ",
-              color
-            ] }, index)) }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { bg: "bg-col-500", children: colors900.map((color, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: color, children: [
-              " ",
-              color
-            ] }, index)) }),
-            /* @__PURE__ */ jsx(SectionHeading, { id: "rgb", heading: "RBG Equivalents" }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { bg: "bg-white", children: allColorsRGB.map(
-              (color, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: color.code, w: "w-[30vh]", children: [
-                " ",
-                color.rgb
-              ] }, index)
-            ) })
-          ] }),
-          /* @__PURE__ */ jsxs(VStackFull, { className: "h-fit", gap: "gap-[2vh]", children: [
-            /* @__PURE__ */ jsx(SectionHeading, { id: "gradients", heading: "Gradients & Opacities" }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { bg: "bg-white", children: gradients.map((gradient, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: gradient, w: "w-[24vh]", children: [
-              " ",
-              gradient
-            ] }, index)) })
-          ] }),
-          /* @__PURE__ */ jsxs(VStackFull, { className: "h-fit", gap: "gap-[2vh]", children: [
-            /* @__PURE__ */ jsx(
-              SectionHeading,
-              {
-                id: "complexbackgrounds",
-                heading: "Complex Backgrounds"
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              Heading,
-              {
-                isCursive: false,
-                color: "text-col-100",
-                shadow: "textShadow",
-                layout: "text-lg-normal",
-                text: "col-100 gradient combinations"
-              }
-            ),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: Object.values(col100Bgs).map(
-              (background, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: background, w: "w-[24vh]", children: [
-                " ",
-                /* @__PURE__ */ jsx(TransformBg, { value: background })
-              ] }, index)
-            ) }),
-            /* @__PURE__ */ jsx(
-              Heading,
-              {
-                isCursive: false,
-                color: "text-col-100",
-                shadow: "textShadow",
-                layout: "text-lg-normal",
-                text: "col-100 gradient combinations"
-              }
-            ),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: Object.values(col200Bgs).map(
-              (background, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: background, w: "w-[24vh]", children: [
-                " ",
-                /* @__PURE__ */ jsx(TransformBg, { value: background })
-              ] }, index)
-            ) }),
-            /* @__PURE__ */ jsx(
-              Heading,
-              {
-                isCursive: false,
-                color: "text-col-100",
-                shadow: "textShadow",
-                layout: "text-lg-normal",
-                text: "col-200 gradient combinations"
-              }
-            ),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: Object.values(col300Bgs).map(
-              (background, index) => /* @__PURE__ */ jsxs(TestBox2, { bg: background, w: "w-[24vh]", children: [
-                " ",
-                /* @__PURE__ */ jsx(TransformBg, { value: background })
-              ] }, index)
-            ) }),
-            /* @__PURE__ */ jsx(
-              Heading,
-              {
-                isCursive: false,
-                color: "text-col-100",
-                shadow: "textShadow",
-                layout: "text-lg-normal",
-                text: "col-300 gradient combinations"
-              }
-            ),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: Object.values(col100Bgs).map(
-              (background, index) => /* @__PURE__ */ jsx(TestBox2, { bg: background, w: "w-[24vh]", children: /* @__PURE__ */ jsx(TransformBg, { value: background }) }, index)
-            ) }),
-            /* @__PURE__ */ jsx(
-              Heading,
-              {
-                isCursive: false,
-                color: "text-col-100",
-                shadow: "textShadow",
-                layout: "text-lg-normal",
-                text: "col-400 gradient combinations"
-              }
-            ),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: Object.values(col400Bgs).map(
-              (background, index) => /* @__PURE__ */ jsx(TestBox2, { bg: background, w: "w-[24vh]", children: /* @__PURE__ */ jsx(TransformBg, { value: background }) }, index)
-            ) }),
-            /* @__PURE__ */ jsx(
-              Heading,
-              {
-                isCursive: false,
-                color: "text-col-100",
-                shadow: "textShadow",
-                layout: "text-lg-normal",
-                text: "col-500 gradient combinations"
-              }
-            ),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: Object.values(col500Bgs).map(
-              (background, index) => /* @__PURE__ */ jsx(TestBox2, { bg: background, w: "w-[24vh]", children: /* @__PURE__ */ jsx(TransformBg, { value: background }) }, index)
-            ) }),
-            /* @__PURE__ */ jsx(
-              Heading,
-              {
-                isCursive: false,
-                color: "text-col-100",
-                shadow: "textShadow",
-                layout: "text-lg-normal",
-                text: "col-600 gradient combinations"
-              }
-            ),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: Object.values(col600Bgs).map(
-              (background, index) => /* @__PURE__ */ jsx(TestBox2, { bg: background, w: "w-[24vh]", children: /* @__PURE__ */ jsx(TransformBg, { value: background }) }, index)
-            ) }),
-            /* @__PURE__ */ jsx(
-              Heading,
-              {
-                isCursive: false,
-                color: "text-col-100",
-                shadow: "textShadow",
-                layout: "text-lg-normal",
-                text: "col-700 gradient combinations"
-              }
-            ),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { bg: "bg-col-500", children: Object.values(col700Bgs).map(
-              (background, index) => /* @__PURE__ */ jsx(TestBox2, { bg: background, w: "w-[24vh]", children: /* @__PURE__ */ jsx(TransformBg, { value: background }) }, index)
-            ) }),
-            /* @__PURE__ */ jsx(
-              Heading,
-              {
-                isCursive: false,
-                color: "text-col-100",
-                shadow: "textShadow",
-                layout: "text-lg-normal",
-                text: "col-800 gradient combinations"
-              }
-            ),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: Object.values(col800Bgs).map(
-              (background, index) => /* @__PURE__ */ jsx(TestBox2, { bg: background, w: "w-[24vh]", children: /* @__PURE__ */ jsx(TransformBg, { value: background }) }, index)
-            ) }),
-            /* @__PURE__ */ jsx(
-              Heading,
-              {
-                isCursive: false,
-                color: "text-col-100",
-                shadow: "textShadow",
-                layout: "text-lg-normal",
-                text: "col-900 gradient combinations"
-              }
-            ),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: Object.values(col900Bgs).map(
-              (background, index) => /* @__PURE__ */ jsx(TestBox2, { bg: background, w: "w-[24vh]", children: /* @__PURE__ */ jsx(TransformBg, { value: background }) }, index)
-            ) })
-          ] }),
-          /* @__PURE__ */ jsxs(VStackFull, { className: "w-90% pb-[3vh]", children: [
-            /* @__PURE__ */ jsx(SectionHeading, { id: "buttons", heading: "Buttons" }),
-            /* @__PURE__ */ jsxs(StyledExampleWrap, { bg: "bg-col-200", children: [
-              /* @__PURE__ */ jsx(Button, { buttonText: "Normal" }),
-              " ",
-              /* @__PURE__ */ jsx(Button, { type: "smallNormal", buttonText: "NormalButton" }),
-              /* @__PURE__ */ jsx(Button, { type: "negative", buttonText: "Negative" }),
-              /* @__PURE__ */ jsx(Button, { type: "smallNegative", buttonText: "Negative Small" }),
-              /* @__PURE__ */ jsx(Button, { type: "unstyled", buttonText: "Unstyled" }),
-              /* @__PURE__ */ jsx(Button, { type: "smallUnstyled", buttonText: "Unstyled Small" }),
-              /* @__PURE__ */ jsx(Button, { buttonText: "Normal Icon Left", iconLeft: GoSmiley }),
-              /* @__PURE__ */ jsx(
-                Button,
-                {
-                  buttonText: "Small Icon Right",
-                  iconRight: GoSmiley,
-                  type: "smallNormal"
-                }
-              ),
-              /* @__PURE__ */ jsx(
-                Button,
-                {
-                  buttonText: "Negative Icon Left",
-                  type: "negative",
-                  iconLeft: GoSmiley
-                }
-              ),
-              /* @__PURE__ */ jsx(
-                Button,
-                {
-                  buttonText: "Small Negative Icon Right",
-                  type: "smallNegative",
-                  iconRight: GoSmiley
-                }
-              ),
-              /* @__PURE__ */ jsx(IconButton, { icon: GoSmiley }),
-              " ",
-              /* @__PURE__ */ jsx(IconButton, { type: "smallNormal", icon: GoSmiley }),
-              /* @__PURE__ */ jsx(IconButton, { type: "negative", icon: GoSmiley }),
-              /* @__PURE__ */ jsx(IconButton, { type: "smallNegative", icon: GoSmiley }),
-              /* @__PURE__ */ jsx(IconButton, { type: "unstyled", icon: GoSmiley }),
-              /* @__PURE__ */ jsx(IconButton, { type: "smallUnstyled", icon: GoSmiley })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs(VStackFull, { children: [
-            /* @__PURE__ */ jsx(SectionHeading, { id: "transitions", heading: "Transitions" }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: transitions.map((transition) => /* @__PURE__ */ jsx(
-              StyleExampleBox,
-              {
-                className: "transition-300 bg-col-200 hover:bg-col-900\n              hover:text-col-100 shadowNarrowNormal",
-                text: `className='${transition}'`
-              },
-              transition
-            )) }),
-            /* @__PURE__ */ jsx(SectionHeading, { id: "shadow", heading: "Shadows" }),
-            /* @__PURE__ */ jsxs(VStackFull, { children: [
-              " ",
-              /* @__PURE__ */ jsx(StyledExampleWrap, { bg: "bg-col-100", children: shadowsLightBack.map((shadow) => /* @__PURE__ */ jsx(Box, { className: shadow, children: /* @__PURE__ */ jsx(Text, { className: "p-[1vh]", children: shadow }) }, shadow)) }),
-              /* @__PURE__ */ jsx(StyledExampleWrap, { bg: "bg-col-800", children: shadowsDarkBack.map((shadow) => /* @__PURE__ */ jsx(Box, { className: shadow, children: /* @__PURE__ */ jsx(Text, { className: "text-col-100 p-[1vh]", children: shadow }) }, shadow)) })
-            ] }),
-            /* @__PURE__ */ jsx(SectionHeading, { id: "borders", heading: "Borders" }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: /* @__PURE__ */ jsx(BorderExamples, { startIndex: 0, endIndex: 95 }) }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { bg: "bg-col-200", children: /* @__PURE__ */ jsx(
-              BorderExamples,
-              {
-                startIndex: 96,
-                endIndex: 215,
-                textColor: "text-col-900"
-              }
-            ) }),
-            /* @__PURE__ */ jsx(SectionHeading, { id: "text", heading: "Text" }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: textExamples.map((textExample, index) => /* @__PURE__ */ jsx(
-              Box,
-              {
-                className: "bg-col-500 h-fit text-col-100 shadowNarrowNormal px-[1vh]",
-                children: /* @__PURE__ */ jsx(Text, { className: `${textExample} `, children: textExample })
-              },
-              index
-            )) }),
-            /* @__PURE__ */ jsx(SectionHeading, { id: "", heading: "Text Shadow" }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: textShadows.map((shadow, index) => /* @__PURE__ */ jsx(
-              Box,
-              {
-                className: shadow === "textFog" ? "text-col-100 bg-col-200 shadowNarrowNormal p-[1vh]" : "text-col-900 bg-col-200 shadowNarrowNormal p-[1vh]",
-                children: /* @__PURE__ */ jsx(Text, { className: `${shadow} `, children: shadow })
-              },
-              index
-            )) }),
-            /* @__PURE__ */ jsx(SectionHeading, { id: "", heading: "Text Stroke" }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { children: textStrokeDarkBg.map((combo, index) => /* @__PURE__ */ jsx(Box, { className: "font-bold", children: /* @__PURE__ */ jsx(Text, { className: `${combo} text-xxl-normal text-col-700`, children: combo }) }, index)) }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { bg: "bg-col-300", children: textStrokeLightBg.map((combo, index) => /* @__PURE__ */ jsx(Box, { className: "font-bold", children: /* @__PURE__ */ jsx(Text, { className: `${combo} text-xxl-normal text-col-300`, children: combo }) }, index)) }),
-            /* @__PURE__ */ jsx(SectionHeading, { id: "components", heading: "Components" }),
-            /* @__PURE__ */ jsx(StyledExampleWrap, { bg: "bg-col-600", children: /* @__PURE__ */ jsx(ComponentExamples, {}) })
-          ] })
-        ]
-      }
-    )
-  ] }) });
+  return /* @__PURE__ */ jsx(Transition, {
+    className: "w-full h-full justify-center overflow-y-auto",
+    children: /* @__PURE__ */ jsxs(FlexFull, {
+      className: "h-full overflow-y-auto justify-center",
+      children: [
+        /* @__PURE__ */ jsx(FlexFull, {
+          className:
+            "fixed top-0 left-0 p-[1vh] bg-col-200 z-10 shadowWideLooser",
+          children: /* @__PURE__ */ jsxs(Wrap, {
+            className: "w-full gap-x-[5vh] gap-y-[1vh] justify-around",
+            children: [
+              /* @__PURE__ */ jsx(IconButton, {
+                icon: HomeIcon,
+                type: "smallNormal",
+                to: "/",
+              }),
+              /* @__PURE__ */ jsx(CustomNavLink, {
+                to: "#colorscheme",
+                linkText: "Colors",
+                activeStyles,
+                inactiveStyles,
+                useHash: true,
+              }),
+              /* @__PURE__ */ jsx(CustomNavLink, {
+                to: "#rgb",
+                linkText: "RBG",
+                activeStyles,
+                inactiveStyles,
+                useHash: true,
+              }),
+              /* @__PURE__ */ jsx(CustomNavLink, {
+                to: "#gradients",
+                linkText: "Gradients",
+                activeStyles,
+                inactiveStyles,
+                useHash: true,
+              }),
+              /* @__PURE__ */ jsx(CustomNavLink, {
+                to: "#complexbackgrounds",
+                linkText: "Complex Backgrounds",
+                activeStyles,
+                inactiveStyles,
+                useHash: true,
+              }),
+              /* @__PURE__ */ jsx(CustomNavLink, {
+                to: "#buttons",
+                linkText: "Buttons",
+                activeStyles,
+                inactiveStyles,
+                useHash: true,
+              }),
+              /* @__PURE__ */ jsx(CustomNavLink, {
+                to: "#transitions",
+                linkText: "Transitions",
+                activeStyles,
+                inactiveStyles,
+                useHash: true,
+              }),
+              /* @__PURE__ */ jsx(CustomNavLink, {
+                to: "#shadow",
+                linkText: "Shadows",
+                activeStyles,
+                inactiveStyles,
+                useHash: true,
+              }),
+              /* @__PURE__ */ jsx(CustomNavLink, {
+                to: "#borders",
+                linkText: "Borders",
+                activeStyles,
+                inactiveStyles,
+                useHash: true,
+              }),
+              /* @__PURE__ */ jsx(CustomNavLink, {
+                to: "#text",
+                linkText: "Text",
+                activeStyles,
+                inactiveStyles,
+                useHash: true,
+              }),
+              /* @__PURE__ */ jsx(CustomNavLink, {
+                to: "#components",
+                linkText: "Components",
+                activeStyles,
+                inactiveStyles,
+                useHash: true,
+              }),
+            ],
+          }),
+        }),
+        /* @__PURE__ */ jsxs(VStackFull, {
+          className: "h-fit px-[2vh] pt-[5.5vh] xl:pt-[3.5vh] pb-[2vh]",
+          gap: "gap-[2vh]",
+          children: [
+            /* @__PURE__ */ jsxs(VStackFull, {
+              gap: "gap-[1vh]",
+              children: [
+                /* @__PURE__ */ jsx(SectionHeading, {
+                  id: "colorscheme",
+                  heading: "Color Scheme",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  bg: "bg-white",
+                  children: allColors.map((color, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      { bg: color, children: [" ", color] },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: colors100.map((color, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      { bg: color, children: [" ", color] },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: colors200.map((color, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      { bg: color, children: [" ", color] },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: colors300.map((color, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      { bg: color, children: [" ", color] },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: colors400.map((color, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      { bg: color, children: [" ", color] },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: colors500.map((color, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      { bg: color, children: [" ", color] },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: colors600.map((color, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      { bg: color, children: [" ", color] },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  bg: "bg-col-500",
+                  children: colors700.map((color, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      { bg: color, children: [" ", color] },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  bg: "bg-col-500",
+                  children: colors800.map((color, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      { bg: color, children: [" ", color] },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  bg: "bg-col-500",
+                  children: colors900.map((color, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      { bg: color, children: [" ", color] },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(SectionHeading, {
+                  id: "rgb",
+                  heading: "RBG Equivalents",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  bg: "bg-white",
+                  children: allColorsRGB.map((color, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      {
+                        bg: color.code,
+                        w: "w-[30vh]",
+                        children: [" ", color.rgb],
+                      },
+                      index
+                    )
+                  ),
+                }),
+              ],
+            }),
+            /* @__PURE__ */ jsxs(VStackFull, {
+              className: "h-fit",
+              gap: "gap-[2vh]",
+              children: [
+                /* @__PURE__ */ jsx(SectionHeading, {
+                  id: "gradients",
+                  heading: "Gradients & Opacities",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  bg: "bg-white",
+                  children: gradients.map((gradient, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      {
+                        bg: gradient,
+                        w: "w-[24vh]",
+                        children: [" ", gradient],
+                      },
+                      index
+                    )
+                  ),
+                }),
+              ],
+            }),
+            /* @__PURE__ */ jsxs(VStackFull, {
+              className: "h-fit",
+              gap: "gap-[2vh]",
+              children: [
+                /* @__PURE__ */ jsx(SectionHeading, {
+                  id: "complexbackgrounds",
+                  heading: "Complex Backgrounds",
+                }),
+                /* @__PURE__ */ jsx(Heading, {
+                  isCursive: false,
+                  color: "text-col-100",
+                  shadow: "textShadow",
+                  layout: "text-lg-normal",
+                  text: "col-100 gradient combinations",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: Object.values(col100Bgs).map((background, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      {
+                        bg: background,
+                        w: "w-[24vh]",
+                        children: [
+                          " ",
+                          /* @__PURE__ */ jsx(TransformBg, {
+                            value: background,
+                          }),
+                        ],
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(Heading, {
+                  isCursive: false,
+                  color: "text-col-100",
+                  shadow: "textShadow",
+                  layout: "text-lg-normal",
+                  text: "col-100 gradient combinations",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: Object.values(col200Bgs).map((background, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      {
+                        bg: background,
+                        w: "w-[24vh]",
+                        children: [
+                          " ",
+                          /* @__PURE__ */ jsx(TransformBg, {
+                            value: background,
+                          }),
+                        ],
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(Heading, {
+                  isCursive: false,
+                  color: "text-col-100",
+                  shadow: "textShadow",
+                  layout: "text-lg-normal",
+                  text: "col-200 gradient combinations",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: Object.values(col300Bgs).map((background, index) =>
+                    /* @__PURE__ */ jsxs(
+                      TestBox2,
+                      {
+                        bg: background,
+                        w: "w-[24vh]",
+                        children: [
+                          " ",
+                          /* @__PURE__ */ jsx(TransformBg, {
+                            value: background,
+                          }),
+                        ],
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(Heading, {
+                  isCursive: false,
+                  color: "text-col-100",
+                  shadow: "textShadow",
+                  layout: "text-lg-normal",
+                  text: "col-300 gradient combinations",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: Object.values(col100Bgs).map((background, index) =>
+                    /* @__PURE__ */ jsx(
+                      TestBox2,
+                      {
+                        bg: background,
+                        w: "w-[24vh]",
+                        children: /* @__PURE__ */ jsx(TransformBg, {
+                          value: background,
+                        }),
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(Heading, {
+                  isCursive: false,
+                  color: "text-col-100",
+                  shadow: "textShadow",
+                  layout: "text-lg-normal",
+                  text: "col-400 gradient combinations",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: Object.values(col400Bgs).map((background, index) =>
+                    /* @__PURE__ */ jsx(
+                      TestBox2,
+                      {
+                        bg: background,
+                        w: "w-[24vh]",
+                        children: /* @__PURE__ */ jsx(TransformBg, {
+                          value: background,
+                        }),
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(Heading, {
+                  isCursive: false,
+                  color: "text-col-100",
+                  shadow: "textShadow",
+                  layout: "text-lg-normal",
+                  text: "col-500 gradient combinations",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: Object.values(col500Bgs).map((background, index) =>
+                    /* @__PURE__ */ jsx(
+                      TestBox2,
+                      {
+                        bg: background,
+                        w: "w-[24vh]",
+                        children: /* @__PURE__ */ jsx(TransformBg, {
+                          value: background,
+                        }),
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(Heading, {
+                  isCursive: false,
+                  color: "text-col-100",
+                  shadow: "textShadow",
+                  layout: "text-lg-normal",
+                  text: "col-600 gradient combinations",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: Object.values(col600Bgs).map((background, index) =>
+                    /* @__PURE__ */ jsx(
+                      TestBox2,
+                      {
+                        bg: background,
+                        w: "w-[24vh]",
+                        children: /* @__PURE__ */ jsx(TransformBg, {
+                          value: background,
+                        }),
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(Heading, {
+                  isCursive: false,
+                  color: "text-col-100",
+                  shadow: "textShadow",
+                  layout: "text-lg-normal",
+                  text: "col-700 gradient combinations",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  bg: "bg-col-500",
+                  children: Object.values(col700Bgs).map((background, index) =>
+                    /* @__PURE__ */ jsx(
+                      TestBox2,
+                      {
+                        bg: background,
+                        w: "w-[24vh]",
+                        children: /* @__PURE__ */ jsx(TransformBg, {
+                          value: background,
+                        }),
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(Heading, {
+                  isCursive: false,
+                  color: "text-col-100",
+                  shadow: "textShadow",
+                  layout: "text-lg-normal",
+                  text: "col-800 gradient combinations",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: Object.values(col800Bgs).map((background, index) =>
+                    /* @__PURE__ */ jsx(
+                      TestBox2,
+                      {
+                        bg: background,
+                        w: "w-[24vh]",
+                        children: /* @__PURE__ */ jsx(TransformBg, {
+                          value: background,
+                        }),
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(Heading, {
+                  isCursive: false,
+                  color: "text-col-100",
+                  shadow: "textShadow",
+                  layout: "text-lg-normal",
+                  text: "col-900 gradient combinations",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: Object.values(col900Bgs).map((background, index) =>
+                    /* @__PURE__ */ jsx(
+                      TestBox2,
+                      {
+                        bg: background,
+                        w: "w-[24vh]",
+                        children: /* @__PURE__ */ jsx(TransformBg, {
+                          value: background,
+                        }),
+                      },
+                      index
+                    )
+                  ),
+                }),
+              ],
+            }),
+            /* @__PURE__ */ jsxs(VStackFull, {
+              className: "w-90% pb-[3vh]",
+              children: [
+                /* @__PURE__ */ jsx(SectionHeading, {
+                  id: "buttons",
+                  heading: "Buttons",
+                }),
+                /* @__PURE__ */ jsxs(StyledExampleWrap, {
+                  bg: "bg-col-200",
+                  children: [
+                    /* @__PURE__ */ jsx(Button, { buttonText: "Normal" }),
+                    " ",
+                    /* @__PURE__ */ jsx(Button, {
+                      type: "smallNormal",
+                      buttonText: "NormalButton",
+                    }),
+                    /* @__PURE__ */ jsx(Button, {
+                      type: "negative",
+                      buttonText: "Negative",
+                    }),
+                    /* @__PURE__ */ jsx(Button, {
+                      type: "smallNegative",
+                      buttonText: "Negative Small",
+                    }),
+                    /* @__PURE__ */ jsx(Button, {
+                      type: "unstyled",
+                      buttonText: "Unstyled",
+                    }),
+                    /* @__PURE__ */ jsx(Button, {
+                      type: "smallUnstyled",
+                      buttonText: "Unstyled Small",
+                    }),
+                    /* @__PURE__ */ jsx(Button, {
+                      buttonText: "Normal Icon Left",
+                      iconLeft: GoSmiley,
+                    }),
+                    /* @__PURE__ */ jsx(Button, {
+                      buttonText: "Small Icon Right",
+                      iconRight: GoSmiley,
+                      type: "smallNormal",
+                    }),
+                    /* @__PURE__ */ jsx(Button, {
+                      buttonText: "Negative Icon Left",
+                      type: "negative",
+                      iconLeft: GoSmiley,
+                    }),
+                    /* @__PURE__ */ jsx(Button, {
+                      buttonText: "Small Negative Icon Right",
+                      type: "smallNegative",
+                      iconRight: GoSmiley,
+                    }),
+                    /* @__PURE__ */ jsx(IconButton, { icon: GoSmiley }),
+                    " ",
+                    /* @__PURE__ */ jsx(IconButton, {
+                      type: "smallNormal",
+                      icon: GoSmiley,
+                    }),
+                    /* @__PURE__ */ jsx(IconButton, {
+                      type: "negative",
+                      icon: GoSmiley,
+                    }),
+                    /* @__PURE__ */ jsx(IconButton, {
+                      type: "smallNegative",
+                      icon: GoSmiley,
+                    }),
+                    /* @__PURE__ */ jsx(IconButton, {
+                      type: "unstyled",
+                      icon: GoSmiley,
+                    }),
+                    /* @__PURE__ */ jsx(IconButton, {
+                      type: "smallUnstyled",
+                      icon: GoSmiley,
+                    }),
+                  ],
+                }),
+              ],
+            }),
+            /* @__PURE__ */ jsxs(VStackFull, {
+              children: [
+                /* @__PURE__ */ jsx(SectionHeading, {
+                  id: "transitions",
+                  heading: "Transitions",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: transitions.map((transition) =>
+                    /* @__PURE__ */ jsx(
+                      StyleExampleBox,
+                      {
+                        className:
+                          "transition-300 bg-col-200 hover:bg-col-900\n              hover:text-col-100 shadowNarrowNormal",
+                        text: `className='${transition}'`,
+                      },
+                      transition
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(SectionHeading, {
+                  id: "shadow",
+                  heading: "Shadows",
+                }),
+                /* @__PURE__ */ jsxs(VStackFull, {
+                  children: [
+                    " ",
+                    /* @__PURE__ */ jsx(StyledExampleWrap, {
+                      bg: "bg-col-100",
+                      children: shadowsLightBack.map((shadow) =>
+                        /* @__PURE__ */ jsx(
+                          Box,
+                          {
+                            className: shadow,
+                            children: /* @__PURE__ */ jsx(Text, {
+                              className: "p-[1vh]",
+                              children: shadow,
+                            }),
+                          },
+                          shadow
+                        )
+                      ),
+                    }),
+                    /* @__PURE__ */ jsx(StyledExampleWrap, {
+                      bg: "bg-col-800",
+                      children: shadowsDarkBack.map((shadow) =>
+                        /* @__PURE__ */ jsx(
+                          Box,
+                          {
+                            className: shadow,
+                            children: /* @__PURE__ */ jsx(Text, {
+                              className: "text-col-100 p-[1vh]",
+                              children: shadow,
+                            }),
+                          },
+                          shadow
+                        )
+                      ),
+                    }),
+                  ],
+                }),
+                /* @__PURE__ */ jsx(SectionHeading, {
+                  id: "borders",
+                  heading: "Borders",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: /* @__PURE__ */ jsx(BorderExamples, {
+                    startIndex: 0,
+                    endIndex: 95,
+                  }),
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  bg: "bg-col-200",
+                  children: /* @__PURE__ */ jsx(BorderExamples, {
+                    startIndex: 96,
+                    endIndex: 215,
+                    textColor: "text-col-900",
+                  }),
+                }),
+                /* @__PURE__ */ jsx(SectionHeading, {
+                  id: "text",
+                  heading: "Text",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: textExamples.map((textExample, index) =>
+                    /* @__PURE__ */ jsx(
+                      Box,
+                      {
+                        className:
+                          "bg-col-500 h-fit text-col-100 shadowNarrowNormal px-[1vh]",
+                        children: /* @__PURE__ */ jsx(Text, {
+                          className: `${textExample} `,
+                          children: textExample,
+                        }),
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(SectionHeading, {
+                  id: "",
+                  heading: "Text Shadow",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: textShadows.map((shadow, index) =>
+                    /* @__PURE__ */ jsx(
+                      Box,
+                      {
+                        className:
+                          shadow === "textFog"
+                            ? "text-col-100 bg-col-200 shadowNarrowNormal p-[1vh]"
+                            : "text-col-900 bg-col-200 shadowNarrowNormal p-[1vh]",
+                        children: /* @__PURE__ */ jsx(Text, {
+                          className: `${shadow} `,
+                          children: shadow,
+                        }),
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(SectionHeading, {
+                  id: "",
+                  heading: "Text Stroke",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  children: textStrokeDarkBg.map((combo, index) =>
+                    /* @__PURE__ */ jsx(
+                      Box,
+                      {
+                        className: "font-bold",
+                        children: /* @__PURE__ */ jsx(Text, {
+                          className: `${combo} text-xxl-normal text-col-700`,
+                          children: combo,
+                        }),
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  bg: "bg-col-300",
+                  children: textStrokeLightBg.map((combo, index) =>
+                    /* @__PURE__ */ jsx(
+                      Box,
+                      {
+                        className: "font-bold",
+                        children: /* @__PURE__ */ jsx(Text, {
+                          className: `${combo} text-xxl-normal text-col-300`,
+                          children: combo,
+                        }),
+                      },
+                      index
+                    )
+                  ),
+                }),
+                /* @__PURE__ */ jsx(SectionHeading, {
+                  id: "components",
+                  heading: "Components",
+                }),
+                /* @__PURE__ */ jsx(StyledExampleWrap, {
+                  bg: "bg-col-600",
+                  children: /* @__PURE__ */ jsx(ComponentExamples, {}),
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    }),
+  });
 }
-const route2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  StyleExampleBox,
-  StyledExampleWrap,
-  default: Design
-}, Symbol.toStringTag, { value: "Module" }));
-function SnapScrollContainer({
-  children,
-  className
-}) {
-  return /* @__PURE__ */ jsx(
-    Flex,
+const route2 = /* @__PURE__ */ Object.freeze(
+  /* @__PURE__ */ Object.defineProperty(
     {
-      className: `overflow-y-auto snap-y scroll-smooth snap-mandatory overflow-x-hidden ${className}`,
-      children: /* @__PURE__ */ jsx(VStackFull, { className: "h-fit", gap: "gap-[0px]", children })
-    }
-  );
+      __proto__: null,
+      StyleExampleBox,
+      StyledExampleWrap,
+      default: Design,
+    },
+    Symbol.toStringTag,
+    { value: "Module" }
+  )
+);
+function SnapScrollContainer({ children, className }) {
+  return /* @__PURE__ */ jsx(Flex, {
+    className: `overflow-y-auto snap-y scroll-smooth snap-mandatory overflow-x-hidden ${className}`,
+    children: /* @__PURE__ */ jsx(VStackFull, {
+      className: "h-fit",
+      gap: "gap-[0px]",
+      children,
+    }),
+  });
 }
-function SnapScrollPage({
-  children,
-  className,
-  id,
-  snapFrom = "base"
-}) {
-  const snapScrollClassName = snapFrom === "base" ? `snap-start snap-always overflow-x-hidden h-screen ${className}` : snapFrom === "sm" ? `sm:snap-start sm:snap-always overflow-x-hidden h-fit sm:h-screen ${className}` : snapFrom === "md" ? `md:snap-start md:snap-always overflow-x-hidden h-fit md:h-screen ${className}` : snapFrom === "lg" ? `lg:snap-start lg:snap-always overflow-x-hidden h-fit lg:h-screen ${className}` : snapFrom === "xl" ? `xl:snap-start xl:snap-always overflow-x-hidden h-fit xl:h-screen  ${className}` : snapFrom === "xxl" ? `xxl:snap-start xxl:snap-always overflow-x-hidden h-fit xxl:h-screen  ${className}` : snapFrom === "fullHD" ? `fullHD:snap-start fullHD:snap-always overflow-x-hidden h-fit fullHD:h-screen  ${className}` : snapFrom === "quadHD" ? `quadHD:snap-start quadHD:snap-always overflow-x-hidden h-fit quadHD:h-screen  ${className}` : snapFrom === "ultraHD" ? `ultraHD:snap-start ultraHD:snap-always overflow-x-hidden h-fit ultraHD:h-screen  ${className}` : `snap-start snap-always overflow-x-hidden  ${className}`;
-  return /* @__PURE__ */ jsx(
-    Flex,
-    {
-      className: `justify-center items-center ${snapScrollClassName} ${className}`,
-      id,
-      children
-    }
-  );
+function SnapScrollPage({ children, className, id, snapFrom = "base" }) {
+  const snapScrollClassName =
+    snapFrom === "base"
+      ? `snap-start snap-always overflow-x-hidden h-screen ${className}`
+      : snapFrom === "sm"
+      ? `sm:snap-start sm:snap-always overflow-x-hidden h-fit sm:h-screen ${className}`
+      : snapFrom === "md"
+      ? `md:snap-start md:snap-always overflow-x-hidden h-fit md:h-screen ${className}`
+      : snapFrom === "lg"
+      ? `lg:snap-start lg:snap-always overflow-x-hidden h-fit lg:h-screen ${className}`
+      : snapFrom === "xl"
+      ? `xl:snap-start xl:snap-always overflow-x-hidden h-fit xl:h-screen  ${className}`
+      : snapFrom === "xxl"
+      ? `xxl:snap-start xxl:snap-always overflow-x-hidden h-fit xxl:h-screen  ${className}`
+      : snapFrom === "fullHD"
+      ? `fullHD:snap-start fullHD:snap-always overflow-x-hidden h-fit fullHD:h-screen  ${className}`
+      : snapFrom === "quadHD"
+      ? `quadHD:snap-start quadHD:snap-always overflow-x-hidden h-fit quadHD:h-screen  ${className}`
+      : snapFrom === "ultraHD"
+      ? `ultraHD:snap-start ultraHD:snap-always overflow-x-hidden h-fit ultraHD:h-screen  ${className}`
+      : `snap-start snap-always overflow-x-hidden  ${className}`;
+  return /* @__PURE__ */ jsx(Flex, {
+    className: `justify-center items-center ${snapScrollClassName} ${className}`,
+    id,
+    children,
+  });
 }
 function NavContainer({
   className,
@@ -5270,16 +6084,20 @@ function NavContainer({
   h = "h-nav",
   isTop = false,
   isBottom = false,
-  alignment = "items-center justify-evenly"
+  alignment = "items-center justify-evenly",
 }) {
-  const locationStyle = isTop ? `top-0 rounded-none  ` : isBottom ? `bottom-0 rounded-b-none` : ``;
-  return /* @__PURE__ */ jsx(
-    Flex,
-    {
-      className: `fixed ${locationStyle} left-0 ${h} w-full z-50 items-center justify-center shadowNarrowNormal rounded-none ${className}`,
-      children: /* @__PURE__ */ jsx(HStackFull, { className: `h-full pr-[1vh] ${alignment} ${bg} rounded-none`, children })
-    }
-  );
+  const locationStyle = isTop
+    ? `top-0 rounded-none  `
+    : isBottom
+    ? `bottom-0 rounded-b-none`
+    : ``;
+  return /* @__PURE__ */ jsx(Flex, {
+    className: `fixed ${locationStyle} left-0 ${h} w-full z-50 items-center justify-center shadowNarrowNormal rounded-none ${className}`,
+    children: /* @__PURE__ */ jsx(HStackFull, {
+      className: `h-full pr-[1vh] ${alignment} ${bg} rounded-none`,
+      children,
+    }),
+  });
 }
 const AnimatedComponentSpring = ({
   children,
@@ -5294,19 +6112,19 @@ const AnimatedComponentSpring = ({
   stiffness = 100,
   delay = 0.2,
   className,
-  useSpring = true
+  useSpring = true,
 }) => {
   const getTransition = (isVisible2) => {
-    if (useSpring || damping !== void 0 && stiffness !== void 0) {
+    if (useSpring || (damping !== void 0 && stiffness !== void 0)) {
       return {
         type: "spring",
         damping,
         stiffness,
-        delay: isVisible2 ? delay : 0
+        delay: isVisible2 ? delay : 0,
       };
     } else {
       return {
-        delay: isVisible2 ? delay : 0
+        delay: isVisible2 ? delay : 0,
       };
     }
   };
@@ -5318,23 +6136,23 @@ const AnimatedComponentSpring = ({
       visible: {
         x: 0,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     slideInY: {
       hidden: { y: yOffset, opacity: 0 },
       visible: {
         y: 0,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     fadeIn: {
       hidden: { opacity: 0 },
       visible: {
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     fadeSlideUpperRight: {
       hidden: { x: xOffset, y: `-${yOffset}`, opacity: 0 },
@@ -5342,8 +6160,8 @@ const AnimatedComponentSpring = ({
         x: 0,
         y: 0,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     fadeSlideUpperLeft: {
       hidden: { x: `-${xOffset}`, y: `-${yOffset}`, opacity: 0 },
@@ -5351,8 +6169,8 @@ const AnimatedComponentSpring = ({
         x: 0,
         y: 0,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     fadeSlideLowerRight: {
       hidden: { x: xOffset, y: yOffset, opacity: 0 },
@@ -5360,8 +6178,8 @@ const AnimatedComponentSpring = ({
         x: 0,
         y: 0,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     fadeSlideLowerLeft: {
       hidden: { x: `-${xOffset}`, y: yOffset, opacity: 0 },
@@ -5369,48 +6187,48 @@ const AnimatedComponentSpring = ({
         x: 0,
         y: 0,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     flipUp: {
       hidden: { rotateX: 90, opacity: 0, transformOrigin: "center bottom" },
       visible: {
         rotateX: 0,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     flipDown: {
       hidden: { rotateX: -90, opacity: 0, transformOrigin: "center top" },
       visible: {
         rotateX: 0,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     flipRight: {
       hidden: { rotateY: 90, opacity: 0, transformOrigin: "left center" },
       visible: {
         rotateY: 0,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     flipLeft: {
       hidden: { rotateY: -90, opacity: 0, transformOrigin: "right center" },
       visible: {
         rotateY: 0,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     zoomIn: {
       hidden: { scale: zoomInFrom, opacity: 0 },
       visible: {
         scale: 1,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     zoomInUp: {
       hidden: { y: zoomOutYOffset, scale: zoomInFrom, opacity: 0 },
@@ -5418,8 +6236,8 @@ const AnimatedComponentSpring = ({
         y: 0,
         scale: 1,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     zoomInDown: {
       hidden: { y: `-${zoomOutYOffset}`, scale: zoomInFrom, opacity: 0 },
@@ -5427,8 +6245,8 @@ const AnimatedComponentSpring = ({
         y: 0,
         scale: 1,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     zoomInLeft: {
       hidden: { x: `-${xOffset}`, scale: zoomInFrom, opacity: 0 },
@@ -5436,8 +6254,8 @@ const AnimatedComponentSpring = ({
         x: 0,
         scale: 1,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     zoomInRight: {
       hidden: { x: xOffset, scale: zoomInFrom, opacity: 0 },
@@ -5445,16 +6263,16 @@ const AnimatedComponentSpring = ({
         x: 0,
         scale: 1,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     zoomOut: {
       hidden: { scale: zoomOutFrom, opacity: 0 },
       visible: {
         scale: 1,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     zoomOutUp: {
       hidden: { scale: zoomOutFrom, opacity: 0, y: zoomOutYOffset },
@@ -5462,8 +6280,8 @@ const AnimatedComponentSpring = ({
         y: 0,
         scale: 1,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     zoomOutDown: {
       hidden: { scale: zoomOutFrom, opacity: 0, y: `-${zoomOutYOffset}` },
@@ -5471,8 +6289,8 @@ const AnimatedComponentSpring = ({
         y: 0,
         scale: 1,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     zoomOutLeft: {
       hidden: { scale: zoomOutFrom, opacity: 0, x: `-${zoomOutXOffset}` },
@@ -5480,8 +6298,8 @@ const AnimatedComponentSpring = ({
         x: 0,
         scale: 1,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
+        transition: getTransition(isVisible),
+      },
     },
     zoomOutRight: {
       hidden: { scale: zoomOutFrom, opacity: 0, x: zoomOutXOffset },
@@ -5489,9 +6307,9 @@ const AnimatedComponentSpring = ({
         x: 0,
         scale: 1,
         opacity: 1,
-        transition: getTransition(isVisible)
-      }
-    }
+        transition: getTransition(isVisible),
+      },
+    },
   };
   useEffect(() => {
     const currentRef = ref.current;
@@ -5511,71 +6329,97 @@ const AnimatedComponentSpring = ({
     };
   }, []);
   const variants = animationVariants[animation];
-  return /* @__PURE__ */ jsx(
-    motion.div,
-    {
-      ref,
-      initial: "hidden",
-      animate: isVisible ? "visible" : "hidden",
-      variants,
-      className,
-      children
-    }
-  );
+  return /* @__PURE__ */ jsx(motion.div, {
+    ref,
+    initial: "hidden",
+    animate: isVisible ? "visible" : "hidden",
+    variants,
+    className,
+    children,
+  });
 };
 function AnimateOnScrollSpring() {
-  return /* @__PURE__ */ jsxs(SnapScrollContainer, { children: [
-    /* @__PURE__ */ jsxs(NavContainer, { bg: "bg-col-990", children: [
-      /* @__PURE__ */ jsx(Box, { className: "w-[6vw] absolute top-[0.7vh] left-[1vh]", children: /* @__PURE__ */ jsx(IconButton, { icon: ReturnPathIcon, to: "/design#components" }) }),
-      /* @__PURE__ */ jsx(FlexFull, { className: "justify-center pl-[6vh]", children: /* @__PURE__ */ jsx(Text, { className: "font-semibold text-md-tight md:text-xl-tight text-col-200", children: "Snap Scroll Animate-On-Scroll Spring" }) })
-    ] }),
-    /* @__PURE__ */ jsx(Flex, { className: "fixed top-[6vh] left-0 px-[1vh]", children: /* @__PURE__ */ jsxs(
-      VStack,
-      {
-        className: "h-[92vh] justify-around p-[1.5vh] bg-col-150 shadowWideLoose",
-        align: "items-start ",
+  return /* @__PURE__ */ jsxs(SnapScrollContainer, {
+    children: [
+      /* @__PURE__ */ jsxs(NavContainer, {
+        bg: "bg-col-990",
         children: [
-          " ",
-          AnimationTypes.map((animation, index) => /* @__PURE__ */ jsx(
-            CustomNavLink,
-            {
-              to: String(`#${animation}`),
-              useHash: true,
-              linkText: animation,
-              className: "text-sm-tight md:text-md-tight"
-            },
-            index
-          ))
-        ]
-      }
-    ) }),
-    AnimationTypes.map((animation, index) => /* @__PURE__ */ jsx(
-      SnapScrollPage,
-      {
-        className: "w-screen h-screen bg-col-300",
-        id: animation,
-        children: /* @__PURE__ */ jsx(FlexFull, { className: "justify-center pl-[20vh]", children: /* @__PURE__ */ jsx(
-          AnimatedComponentSpring,
+          /* @__PURE__ */ jsx(Box, {
+            className: "w-[6vw] absolute top-[0.7vh] left-[1vh]",
+            children: /* @__PURE__ */ jsx(IconButton, {
+              icon: ReturnPathIcon,
+              to: "/design#components",
+            }),
+          }),
+          /* @__PURE__ */ jsx(FlexFull, {
+            className: "justify-center pl-[6vh]",
+            children: /* @__PURE__ */ jsx(Text, {
+              className:
+                "font-semibold text-md-tight md:text-xl-tight text-col-200",
+              children: "Snap Scroll Animate-On-Scroll Spring",
+            }),
+          }),
+        ],
+      }),
+      /* @__PURE__ */ jsx(Flex, {
+        className: "fixed top-[6vh] left-0 px-[1vh]",
+        children: /* @__PURE__ */ jsxs(VStack, {
+          className:
+            "h-[92vh] justify-around p-[1.5vh] bg-col-150 shadowWideLoose",
+          align: "items-start ",
+          children: [
+            " ",
+            AnimationTypes.map((animation, index) =>
+              /* @__PURE__ */ jsx(
+                CustomNavLink,
+                {
+                  to: String(`#${animation}`),
+                  useHash: true,
+                  linkText: animation,
+                  className: "text-sm-tight md:text-md-tight",
+                },
+                index
+              )
+            ),
+          ],
+        }),
+      }),
+      AnimationTypes.map((animation, index) =>
+        /* @__PURE__ */ jsx(
+          SnapScrollPage,
           {
-            animation,
-            className: "bg-col-970 p-[1.5vh] text-col-100 shadowWideLoose",
-            delay: 0.4,
-            children: /* @__PURE__ */ jsxs("h1", { className: "text-sm-tight md:text-xl-tight font-bold textShadow", children: [
-              'animationName="',
-              animation,
-              '"'
-            ] })
-          }
-        ) })
-      },
-      index
-    ))
-  ] });
+            className: "w-screen h-screen bg-col-300",
+            id: animation,
+            children: /* @__PURE__ */ jsx(FlexFull, {
+              className: "justify-center pl-[20vh]",
+              children: /* @__PURE__ */ jsx(AnimatedComponentSpring, {
+                animation,
+                className: "bg-col-970 p-[1.5vh] text-col-100 shadowWideLoose",
+                delay: 0.4,
+                children: /* @__PURE__ */ jsxs("h1", {
+                  className:
+                    "text-sm-tight md:text-xl-tight font-bold textShadow",
+                  children: ['animationName="', animation, '"'],
+                }),
+              }),
+            }),
+          },
+          index
+        )
+      ),
+    ],
+  });
 }
-const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: AnimateOnScrollSpring
-}, Symbol.toStringTag, { value: "Module" }));
+const route3 = /* @__PURE__ */ Object.freeze(
+  /* @__PURE__ */ Object.defineProperty(
+    {
+      __proto__: null,
+      default: AnimateOnScrollSpring,
+    },
+    Symbol.toStringTag,
+    { value: "Module" }
+  )
+);
 const AnimatedComponent = ({
   children,
   animation = "slideInY",
@@ -5587,7 +6431,7 @@ const AnimatedComponent = ({
   zoomOutXOffset = "60vw",
   zoomOutYOffset = "40vh",
   delay = 0.2,
-  className
+  className,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
@@ -5599,9 +6443,9 @@ const AnimatedComponent = ({
         opacity: 1,
         transition: {
           duration,
-          delay: isVisible ? delay : 0
-        }
-      }
+          delay: isVisible ? delay : 0,
+        },
+      },
     },
     slideInY: {
       hidden: { y: yOffset, opacity: 0 },
@@ -5610,9 +6454,9 @@ const AnimatedComponent = ({
         opacity: 1,
         transition: {
           duration,
-          delay: isVisible ? delay : 0
-        }
-      }
+          delay: isVisible ? delay : 0,
+        },
+      },
     },
     fadeIn: {
       hidden: { opacity: 0 },
@@ -5620,9 +6464,9 @@ const AnimatedComponent = ({
         opacity: 1,
         transition: {
           duration,
-          delay: isVisible ? delay : 0
-        }
-      }
+          delay: isVisible ? delay : 0,
+        },
+      },
     },
     fadeSlideUpperRight: {
       hidden: { x: xOffset, y: `-${yOffset}`, opacity: 0 },
@@ -5632,9 +6476,9 @@ const AnimatedComponent = ({
         opacity: 1,
         transition: {
           duration,
-          delay: isVisible ? delay : 0
-        }
-      }
+          delay: isVisible ? delay : 0,
+        },
+      },
     },
     fadeSlideUpperLeft: {
       hidden: { x: `-${xOffset}`, y: `-${yOffset}`, opacity: 0 },
@@ -5644,9 +6488,9 @@ const AnimatedComponent = ({
         opacity: 1,
         transition: {
           duration,
-          delay: isVisible ? delay : 0
-        }
-      }
+          delay: isVisible ? delay : 0,
+        },
+      },
     },
     fadeSlideLowerRight: {
       hidden: { x: xOffset, y: yOffset, opacity: 0 },
@@ -5656,9 +6500,9 @@ const AnimatedComponent = ({
         opacity: 1,
         transition: {
           duration,
-          delay: isVisible ? delay : 0
-        }
-      }
+          delay: isVisible ? delay : 0,
+        },
+      },
     },
     fadeSlideLowerLeft: {
       hidden: { x: `-${xOffset}`, y: yOffset, opacity: 0 },
@@ -5668,49 +6512,49 @@ const AnimatedComponent = ({
         opacity: 1,
         transition: {
           duration,
-          delay: isVisible ? delay : 0
-        }
-      }
+          delay: isVisible ? delay : 0,
+        },
+      },
     },
     flipUp: {
       hidden: { rotateX: 90, opacity: 0, transformOrigin: "center bottom" },
       visible: {
         rotateX: 0,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     flipDown: {
       hidden: { rotateX: -90, opacity: 0, transformOrigin: "center top" },
       visible: {
         rotateX: 0,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     flipRight: {
       hidden: { rotateY: 90, opacity: 0, transformOrigin: "left center" },
       visible: {
         rotateY: 0,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     flipLeft: {
       hidden: { rotateY: -90, opacity: 0, transformOrigin: "right center" },
       visible: {
         rotateY: 0,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     zoomIn: {
       hidden: { scale: zoomInFrom, opacity: 0 },
       visible: {
         scale: 1,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     zoomInUp: {
       hidden: { y: zoomOutYOffset, scale: zoomInFrom, opacity: 0 },
@@ -5718,8 +6562,8 @@ const AnimatedComponent = ({
         y: 0,
         scale: 1,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     zoomInDown: {
       hidden: { y: `-${zoomOutYOffset}`, scale: zoomInFrom, opacity: 0 },
@@ -5727,8 +6571,8 @@ const AnimatedComponent = ({
         y: 0,
         scale: 1,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     zoomInLeft: {
       hidden: { x: `-${xOffset}`, scale: zoomInFrom, opacity: 0 },
@@ -5736,8 +6580,8 @@ const AnimatedComponent = ({
         x: 0,
         scale: 1,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     zoomInRight: {
       hidden: { x: xOffset, scale: zoomInFrom, opacity: 0 },
@@ -5745,16 +6589,16 @@ const AnimatedComponent = ({
         x: 0,
         scale: 1,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     zoomOut: {
       hidden: { scale: zoomOutFrom, opacity: 0 },
       visible: {
         scale: 1,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     zoomOutUp: {
       hidden: { scale: zoomOutFrom, opacity: 0, y: zoomOutYOffset },
@@ -5762,8 +6606,8 @@ const AnimatedComponent = ({
         y: 0,
         scale: 1,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     zoomOutDown: {
       hidden: { scale: zoomOutFrom, opacity: 0, y: `-${zoomOutYOffset}` },
@@ -5771,8 +6615,8 @@ const AnimatedComponent = ({
         y: 0,
         scale: 1,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     zoomOutLeft: {
       hidden: { scale: zoomOutFrom, opacity: 0, x: `-${zoomOutXOffset}` },
@@ -5780,8 +6624,8 @@ const AnimatedComponent = ({
         x: 0,
         scale: 1,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
     },
     zoomOutRight: {
       hidden: { scale: zoomOutFrom, opacity: 0, x: zoomOutXOffset },
@@ -5789,9 +6633,9 @@ const AnimatedComponent = ({
         x: 0,
         scale: 1,
         opacity: 1,
-        transition: { duration, delay: isVisible ? delay : 0 }
-      }
-    }
+        transition: { duration, delay: isVisible ? delay : 0 },
+      },
+    },
   };
   useEffect(() => {
     const currentRef = ref.current;
@@ -5811,140 +6655,183 @@ const AnimatedComponent = ({
     };
   }, []);
   const variants = animationVariants[animation];
-  return /* @__PURE__ */ jsx(
-    motion.div,
-    {
-      ref,
-      initial: "hidden",
-      animate: isVisible ? "visible" : "hidden",
-      variants,
-      className,
-      children
-    }
-  );
+  return /* @__PURE__ */ jsx(motion.div, {
+    ref,
+    initial: "hidden",
+    animate: isVisible ? "visible" : "hidden",
+    variants,
+    className,
+    children,
+  });
 };
 function AnimateOnScroll() {
-  return /* @__PURE__ */ jsxs(SnapScrollContainer, { children: [
-    /* @__PURE__ */ jsxs(NavContainer, { bg: "bg-col-990", children: [
-      /* @__PURE__ */ jsx(Box, { className: "w-[6vw] absolute top-[0.7vh] left-[1vh]", children: /* @__PURE__ */ jsx(IconButton, { icon: ReturnPathIcon, to: "/design#components" }) }),
-      /* @__PURE__ */ jsx(FlexFull, { className: "justify-center pl-[6vh]", children: /* @__PURE__ */ jsx(Text, { className: "font-semibold text-md-tight md:text-xl-tight text-col-200", children: "Snap Scroll Animate-On-Scroll Duration" }) })
-    ] }),
-    /* @__PURE__ */ jsx(Flex, { className: "fixed top-[6vh] left-0 px-[1vh]", children: /* @__PURE__ */ jsxs(
-      VStack,
-      {
-        className: "h-[92vh] justify-around p-[1.5vh] bg-col-150 shadowWideLoose",
-        align: "items-start ",
+  return /* @__PURE__ */ jsxs(SnapScrollContainer, {
+    children: [
+      /* @__PURE__ */ jsxs(NavContainer, {
+        bg: "bg-col-990",
         children: [
-          " ",
-          AnimationTypes.map((animation, index) => /* @__PURE__ */ jsx(
-            CustomNavLink,
-            {
-              to: String(`#${animation}`),
-              useHash: true,
-              linkText: animation,
-              className: "text-sm-tight md:text-md-tight"
-            },
-            index
-          ))
-        ]
-      }
-    ) }),
-    AnimationTypes.map((animation, index) => /* @__PURE__ */ jsx(
-      SnapScrollPage,
-      {
-        className: "w-screen h-screen bg-col-300",
-        id: animation,
-        children: /* @__PURE__ */ jsx(FlexFull, { className: "justify-center pl-[20vh]", children: /* @__PURE__ */ jsx(
-          AnimatedComponent,
+          /* @__PURE__ */ jsx(Box, {
+            className: "w-[6vw] absolute top-[0.7vh] left-[1vh]",
+            children: /* @__PURE__ */ jsx(IconButton, {
+              icon: ReturnPathIcon,
+              to: "/design#components",
+            }),
+          }),
+          /* @__PURE__ */ jsx(FlexFull, {
+            className: "justify-center pl-[6vh]",
+            children: /* @__PURE__ */ jsx(Text, {
+              className:
+                "font-semibold text-md-tight md:text-xl-tight text-col-200",
+              children: "Snap Scroll Animate-On-Scroll Duration",
+            }),
+          }),
+        ],
+      }),
+      /* @__PURE__ */ jsx(Flex, {
+        className: "fixed top-[6vh] left-0 px-[1vh]",
+        children: /* @__PURE__ */ jsxs(VStack, {
+          className:
+            "h-[92vh] justify-around p-[1.5vh] bg-col-150 shadowWideLoose",
+          align: "items-start ",
+          children: [
+            " ",
+            AnimationTypes.map((animation, index) =>
+              /* @__PURE__ */ jsx(
+                CustomNavLink,
+                {
+                  to: String(`#${animation}`),
+                  useHash: true,
+                  linkText: animation,
+                  className: "text-sm-tight md:text-md-tight",
+                },
+                index
+              )
+            ),
+          ],
+        }),
+      }),
+      AnimationTypes.map((animation, index) =>
+        /* @__PURE__ */ jsx(
+          SnapScrollPage,
           {
-            animation,
-            className: "bg-col-970 p-[1.5vh] text-col-100 shadowWideLoose",
-            delay: 0.4,
-            duration: 1,
-            children: /* @__PURE__ */ jsxs("h1", { className: "text-sm-tight md:text-xl-tight font-bold textShadow", children: [
-              'animationName="',
-              animation,
-              '"'
-            ] })
-          }
-        ) })
-      },
-      index
-    ))
-  ] });
+            className: "w-screen h-screen bg-col-300",
+            id: animation,
+            children: /* @__PURE__ */ jsx(FlexFull, {
+              className: "justify-center pl-[20vh]",
+              children: /* @__PURE__ */ jsx(AnimatedComponent, {
+                animation,
+                className: "bg-col-970 p-[1.5vh] text-col-100 shadowWideLoose",
+                delay: 0.4,
+                duration: 1,
+                children: /* @__PURE__ */ jsxs("h1", {
+                  className:
+                    "text-sm-tight md:text-xl-tight font-bold textShadow",
+                  children: ['animationName="', animation, '"'],
+                }),
+              }),
+            }),
+          },
+          index
+        )
+      ),
+    ],
+  });
 }
-const route4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: AnimateOnScroll
-}, Symbol.toStringTag, { value: "Module" }));
-function TestBox({
-  item,
-  index,
-  itemRefs
-}) {
+const route4 = /* @__PURE__ */ Object.freeze(
+  /* @__PURE__ */ Object.defineProperty(
+    {
+      __proto__: null,
+      default: AnimateOnScroll,
+    },
+    Symbol.toStringTag,
+    { value: "Module" }
+  )
+);
+function TestBox({ item, index, itemRefs }) {
   const backgroundOptions = [
     "bg-300-linear1op50 text-col-900 text-stroke-7-900 lightTextShadow",
     "bg-100-linear2op50 text-col-900 text-stroke-7-900 lightTextShadow",
     "bg-600-radial3op25 text-col-100 text-stroke-7-100 textShadow",
     "bg-800-diagonal1op75 text-col-900 text-stroke-7-900 lightTextShadow",
-    "bg-900-diagonal1op75 text-col-100 text-stroke-7-100 textShadow"
+    "bg-900-diagonal1op75 text-col-100 text-stroke-7-100 textShadow",
   ];
-  const randomBackground = index % 2 === 0 ? backgroundOptions[0] : index % 3 === 0 ? backgroundOptions[4] : index % 5 === 0 ? backgroundOptions[3] : index % 7 === 0 ? backgroundOptions[2] : backgroundOptions[1];
-  return /* @__PURE__ */ jsx(Transition, { duration: 0.6, delay: 0.5, children: /* @__PURE__ */ jsx(
-    "div",
-    {
-      "data-id": item.id,
-      ref: (el) => itemRefs.current[index] = el,
-      className: `h-[30vh] w-[25vh] p-[2vh]`,
-      children: /* @__PURE__ */ jsxs(
-        VStack,
-        {
+  const randomBackground =
+    index % 2 === 0
+      ? backgroundOptions[0]
+      : index % 3 === 0
+      ? backgroundOptions[4]
+      : index % 5 === 0
+      ? backgroundOptions[3]
+      : index % 7 === 0
+      ? backgroundOptions[2]
+      : backgroundOptions[1];
+  return /* @__PURE__ */ jsx(Transition, {
+    duration: 0.6,
+    delay: 0.5,
+    children: /* @__PURE__ */ jsx(
+      "div",
+      {
+        "data-id": item.id,
+        ref: (el) => (itemRefs.current[index] = el),
+        className: `h-[30vh] w-[25vh] p-[2vh]`,
+        children: /* @__PURE__ */ jsxs(VStack, {
           gap: "gap-[3vh]",
           className: `w-full h-full border-150-lg font-cursive ${randomBackground} flex justify-center items-center lightGlowMd`,
           children: [
-            /* @__PURE__ */ jsx(Text, { className: "text-xxxl-tight tracking-wider", children: item.text }),
-            /* @__PURE__ */ jsx(Text, { className: "text-xxl-tight", children: "😀" })
-          ]
-        }
-      )
-    },
-    item.id
-  ) });
+            /* @__PURE__ */ jsx(Text, {
+              className: "text-xxxl-tight tracking-wider",
+              children: item.text,
+            }),
+            /* @__PURE__ */ jsx(Text, {
+              className: "text-xxl-tight",
+              children: "😀",
+            }),
+          ],
+        }),
+      },
+      item.id
+    ),
+  });
 }
 function LoadingBar({ children }) {
-  return /* @__PURE__ */ jsx(Flex, { className: "h-[6vh] w-[75vw] border-500-md bg-col-400 rounded-3vh justify-center items-center text-xl-tight lightTextShadow text-col-900 font-semibold shadowNarrowTight", children });
+  return /* @__PURE__ */ jsx(Flex, {
+    className:
+      "h-[6vh] w-[75vw] border-500-md bg-col-400 rounded-3vh justify-center items-center text-xl-tight lightTextShadow text-col-900 font-semibold shadowNarrowTight",
+    children,
+  });
 }
-function MasonryBox({
-  item,
-  index,
-  itemRefs
-}) {
-  return /* @__PURE__ */ jsx(Transition, { duration: 0.6, children: /* @__PURE__ */ jsx(
-    "div",
-    {
-      "data-id": item.id,
-      ref: (el) => itemRefs.current[index] = el,
-      className: `${item.height} w-[98vw] sm:w-[80vw] md:w-[50vw] xl:w-[33.3vw] fullHD:w-[25vw] p-[1.5vh] overflow-hidden`,
-      children: /* @__PURE__ */ jsxs(Box, { className: "w-full h-full overflow-hidden rounded-[3vh] shadowWideLoose", children: [
-        " ",
-        /* @__PURE__ */ jsx(
-          Image,
-          {
-            src: item.image,
-            alt: "random",
-            w: "w-full",
-            className: "w-full h-full object-cover object-center border-970-sm rounded-[3vh]"
-          }
-        )
-      ] })
-    },
-    item.id
-  ) });
+function MasonryBox({ item, index, itemRefs }) {
+  return /* @__PURE__ */ jsx(Transition, {
+    duration: 0.6,
+    children: /* @__PURE__ */ jsx(
+      "div",
+      {
+        "data-id": item.id,
+        ref: (el) => (itemRefs.current[index] = el),
+        className: `${item.height} w-[98vw] sm:w-[80vw] md:w-[50vw] xl:w-[33.3vw] fullHD:w-[25vw] p-[1.5vh] overflow-hidden`,
+        children: /* @__PURE__ */ jsxs(Box, {
+          className:
+            "w-full h-full overflow-hidden rounded-[3vh] shadowWideLoose",
+          children: [
+            " ",
+            /* @__PURE__ */ jsx(Image, {
+              src: item.image,
+              alt: "random",
+              w: "w-full",
+              className:
+                "w-full h-full object-cover object-center border-970-sm rounded-[3vh]",
+            }),
+          ],
+        }),
+      },
+      item.id
+    ),
+  });
 }
 const fetchItems$1 = (startIndex, limit = 20) => {
   return Array.from({ length: limit }, (_, index) => ({
     id: startIndex + index,
-    text: `Item ${startIndex + index}`
+    text: `Item ${startIndex + index}`,
   }));
 };
 function InfiniteScroll() {
@@ -5973,18 +6860,16 @@ function InfiniteScroll() {
       },
       {
         rootMargin: "0px",
-        threshold: 0.1
+        threshold: 0.1,
         // Adjust based on when you consider the item to be visible
       }
     );
     itemRefs.current.forEach((ref) => {
-      if (ref)
-        observer.observe(ref);
+      if (ref) observer.observe(ref);
     });
     return () => {
       itemRefs.current.forEach((ref) => {
-        if (ref)
-          observer.unobserve(ref);
+        if (ref) observer.unobserve(ref);
       });
     };
   }, [items]);
@@ -6001,10 +6886,15 @@ function InfiniteScroll() {
           setLoading(true);
           setTimeout(() => {
             setItems((prevItems) => {
-              const newItems = [...prevItems, ...fetchItems$1(prevItems.length)];
-              itemRefs.current = itemRefs.current.slice(0, prevItems.length).concat(
-                new Array(newItems.length - prevItems.length).fill(null)
-              );
+              const newItems = [
+                ...prevItems,
+                ...fetchItems$1(prevItems.length),
+              ];
+              itemRefs.current = itemRefs.current
+                .slice(0, prevItems.length)
+                .concat(
+                  new Array(newItems.length - prevItems.length).fill(null)
+                );
               return newItems;
             });
             setLoading(false);
@@ -6012,127 +6902,225 @@ function InfiniteScroll() {
         }
       },
       {
-        rootMargin: "100px"
+        rootMargin: "100px",
       }
     );
     const target = document.querySelector("#scroll-down-trigger");
-    if (target)
-      observer.observe(target);
+    if (target) observer.observe(target);
     return () => {
-      if (target)
-        observer.unobserve(target);
+      if (target) observer.unobserve(target);
     };
   }, [loading]);
-  return /* @__PURE__ */ jsxs(Fragment, { children: [
-    /* @__PURE__ */ jsxs(Flex, { className: "fixed top-0 left-0 h-[6vh] bg-100-radial1op75 rounded-none text-col-900 w-full text-center shadowNarrowTight justify-center items-center gap-[2vh]", children: [
-      /* @__PURE__ */ jsx(Flex, { className: "w-[8vw] justify-center flex-shrink-0", children: /* @__PURE__ */ jsx(IconButton, { icon: ReturnPathIcon, to: "/design#components" }) }),
-      /* @__PURE__ */ jsxs(HStackFull, { className: "h-full justify-center items-center", children: [
-        /* @__PURE__ */ jsx(Flex, { className: "w-35% justify-end boldTextGlow ", children: /* @__PURE__ */ jsx(Text, { className: "text-md-tighter", children: "Intersection Observer - " }) }),
-        /* @__PURE__ */ jsx(Flex, { className: "w-65% text-left items-end", children: /* @__PURE__ */ jsxs(Text, { className: "text-md-tight lightTextShadow font-semibold h-full", children: [
-          "items: ",
-          Array.from(visibleItems).map((id) => `${id} | `)
-        ] }) })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxs(Wrap, { className: "justify-around items-start gap-5vh px-[2vh] pt-[7vh] gap-y-[1vh] h-[100vh] overflow-y-auto bg-100-linear6op75", children: [
-      items.map((item, index) => /* @__PURE__ */ jsx(TestBox, { item, itemRefs, index }, index)),
-      !loading && /* @__PURE__ */ jsx("div", { id: "scroll-down-trigger", style: { height: "20px" } }),
-      /* @__PURE__ */ jsx(FlexFull, { className: "justify-center pb-[2vh]", children: /* @__PURE__ */ jsx(LoadingBar, { children: loading && /* @__PURE__ */ jsxs(HStack, { children: [
-        /* @__PURE__ */ jsx(Text, { className: "text-lg-tight", children: "Loading more items..." }),
-        /* @__PURE__ */ jsx(BouncingDots, {})
-      ] }) }) })
-    ] })
-  ] });
+  return /* @__PURE__ */ jsxs(Fragment, {
+    children: [
+      /* @__PURE__ */ jsxs(Flex, {
+        className:
+          "fixed top-0 left-0 h-[6vh] bg-100-radial1op75 rounded-none text-col-900 w-full text-center shadowNarrowTight justify-center items-center gap-[2vh]",
+        children: [
+          /* @__PURE__ */ jsx(Flex, {
+            className: "w-[8vw] justify-center flex-shrink-0",
+            children: /* @__PURE__ */ jsx(IconButton, {
+              icon: ReturnPathIcon,
+              to: "/design#components",
+            }),
+          }),
+          /* @__PURE__ */ jsxs(HStackFull, {
+            className: "h-full justify-center items-center",
+            children: [
+              /* @__PURE__ */ jsx(Flex, {
+                className: "w-35% justify-end boldTextGlow ",
+                children: /* @__PURE__ */ jsx(Text, {
+                  className: "text-md-tighter",
+                  children: "Intersection Observer - ",
+                }),
+              }),
+              /* @__PURE__ */ jsx(Flex, {
+                className: "w-65% text-left items-end",
+                children: /* @__PURE__ */ jsxs(Text, {
+                  className:
+                    "text-md-tight lightTextShadow font-semibold h-full",
+                  children: [
+                    "items: ",
+                    Array.from(visibleItems).map((id) => `${id} | `),
+                  ],
+                }),
+              }),
+            ],
+          }),
+        ],
+      }),
+      /* @__PURE__ */ jsxs(Wrap, {
+        className:
+          "justify-around items-start gap-5vh px-[2vh] pt-[7vh] gap-y-[1vh] h-[100vh] overflow-y-auto bg-100-linear6op75",
+        children: [
+          items.map((item, index) =>
+            /* @__PURE__ */ jsx(TestBox, { item, itemRefs, index }, index)
+          ),
+          !loading &&
+            /* @__PURE__ */ jsx("div", {
+              id: "scroll-down-trigger",
+              style: { height: "20px" },
+            }),
+          /* @__PURE__ */ jsx(FlexFull, {
+            className: "justify-center pb-[2vh]",
+            children: /* @__PURE__ */ jsx(LoadingBar, {
+              children:
+                loading &&
+                /* @__PURE__ */ jsxs(HStack, {
+                  children: [
+                    /* @__PURE__ */ jsx(Text, {
+                      className: "text-lg-tight",
+                      children: "Loading more items...",
+                    }),
+                    /* @__PURE__ */ jsx(BouncingDots, {}),
+                  ],
+                }),
+            }),
+          }),
+        ],
+      }),
+    ],
+  });
 }
 function InfiniteScrollDemo() {
   return /* @__PURE__ */ jsx(InfiniteScroll, {});
 }
-const route5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: InfiniteScrollDemo
-}, Symbol.toStringTag, { value: "Module" }));
-function MainNavDemo() {
-  function NavElement({
-    to,
-    label,
-    icon: IconComponent
-  }) {
-    return /* @__PURE__ */ jsx(NavLink, { to, children: /* @__PURE__ */ jsxs(HStack, { className: `items-center gap-[0.2vh] p-[0.3vh] `, children: [
-      IconComponent && /* @__PURE__ */ jsx(IconComponent, { className: "h-[2.5vh] w-[2.5vh]" }),
-      /* @__PURE__ */ jsx(Text, { children: label })
-    ] }) });
-  }
-  return /* @__PURE__ */ jsxs(
-    NavContainer,
+const route5 = /* @__PURE__ */ Object.freeze(
+  /* @__PURE__ */ Object.defineProperty(
     {
-      bg: "bg-100-diagonal4op25",
-      alignment: "justify-between items-center",
-      className: "border-b-970-md",
-      children: [
-        /* @__PURE__ */ jsx(Flex, { className: "h-full items-end w-60% lg:w-40% flex-shrink-0", children: /* @__PURE__ */ jsxs(Flex, { className: "h-[3.7vh] md:h-[4.5vh] w-fit flex-shrink-0", children: [
-          " ",
-          /* @__PURE__ */ jsx(NavLink, { to: "#home", children: /* @__PURE__ */ jsx(Image, { src: "/images/logo.png", alt: "logo", className: "h-full" }) }),
-          " "
-        ] }) }),
-        /* @__PURE__ */ jsxs(HStackFull, { className: "justify-around hidden lg:flex textShadow", children: [
-          /* @__PURE__ */ jsx(NavElement, { to: "#linkOne", label: "Link One", icon: BiSmile }),
-          /* @__PURE__ */ jsx(NavElement, { to: "#linkTwo", label: "Link Two", icon: BiSmile }),
-          /* @__PURE__ */ jsx(NavElement, { to: "#linkThree", label: "Link Three", icon: BiSmile }),
-          /* @__PURE__ */ jsx(NavElement, { to: "#linkFour", label: "Link Four", icon: BiSmile })
-        ] }),
-        /* @__PURE__ */ jsxs(HStackFull, { className: " w-full justify-around flex lg:hidden", children: [
-          /* @__PURE__ */ jsx(
-            IconButton,
-            {
-              label: "link one",
-              icon: BiSmile,
-              type: "smallNormal",
-              to: "#linkOne"
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            IconButton,
-            {
-              label: "link two",
-              icon: BiSmile,
-              type: "smallNormal",
-              to: "#linkTwo"
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            IconButton,
-            {
-              label: "link three",
-              icon: BiSmile,
-              type: "smallNormal",
-              to: "#linkThree"
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            IconButton,
-            {
-              label: "link four",
-              icon: BiSmile,
-              type: "smallNormal",
-              tooltipPlacement: "bottomLeft",
-              to: "#linkFour"
-            }
-          )
-        ] })
-      ]
-    }
-  );
+      __proto__: null,
+      default: InfiniteScrollDemo,
+    },
+    Symbol.toStringTag,
+    { value: "Module" }
+  )
+);
+function MainNavDemo() {
+  function NavElement({ to, label, icon: IconComponent }) {
+    return /* @__PURE__ */ jsx(NavLink, {
+      to,
+      children: /* @__PURE__ */ jsxs(HStack, {
+        className: `items-center gap-[0.2vh] p-[0.3vh] `,
+        children: [
+          IconComponent &&
+            /* @__PURE__ */ jsx(IconComponent, {
+              className: "h-[2.5vh] w-[2.5vh]",
+            }),
+          /* @__PURE__ */ jsx(Text, { children: label }),
+        ],
+      }),
+    });
+  }
+  return /* @__PURE__ */ jsxs(NavContainer, {
+    bg: "bg-100-diagonal4op25",
+    alignment: "justify-between items-center",
+    className: "border-b-970-md",
+    children: [
+      /* @__PURE__ */ jsx(Flex, {
+        className: "h-full items-end w-60% lg:w-40% flex-shrink-0",
+        children: /* @__PURE__ */ jsxs(Flex, {
+          className: "h-[3.7vh] md:h-[4.5vh] w-fit flex-shrink-0",
+          children: [
+            " ",
+            /* @__PURE__ */ jsx(NavLink, {
+              to: "#home",
+              children: /* @__PURE__ */ jsx(Image, {
+                src: "/images/logo.png",
+                alt: "logo",
+                className: "h-full",
+              }),
+            }),
+            " ",
+          ],
+        }),
+      }),
+      /* @__PURE__ */ jsxs(HStackFull, {
+        className: "justify-around hidden lg:flex textShadow",
+        children: [
+          /* @__PURE__ */ jsx(NavElement, {
+            to: "#linkOne",
+            label: "Link One",
+            icon: BiSmile,
+          }),
+          /* @__PURE__ */ jsx(NavElement, {
+            to: "#linkTwo",
+            label: "Link Two",
+            icon: BiSmile,
+          }),
+          /* @__PURE__ */ jsx(NavElement, {
+            to: "#linkThree",
+            label: "Link Three",
+            icon: BiSmile,
+          }),
+          /* @__PURE__ */ jsx(NavElement, {
+            to: "#linkFour",
+            label: "Link Four",
+            icon: BiSmile,
+          }),
+        ],
+      }),
+      /* @__PURE__ */ jsxs(HStackFull, {
+        className: " w-full justify-around flex lg:hidden",
+        children: [
+          /* @__PURE__ */ jsx(IconButton, {
+            label: "link one",
+            icon: BiSmile,
+            type: "smallNormal",
+            to: "#linkOne",
+          }),
+          /* @__PURE__ */ jsx(IconButton, {
+            label: "link two",
+            icon: BiSmile,
+            type: "smallNormal",
+            to: "#linkTwo",
+          }),
+          /* @__PURE__ */ jsx(IconButton, {
+            label: "link three",
+            icon: BiSmile,
+            type: "smallNormal",
+            to: "#linkThree",
+          }),
+          /* @__PURE__ */ jsx(IconButton, {
+            label: "link four",
+            icon: BiSmile,
+            type: "smallNormal",
+            tooltipPlacement: "bottomLeft",
+            to: "#linkFour",
+          }),
+        ],
+      }),
+    ],
+  });
 }
 function MainNavDemoPage() {
-  return /* @__PURE__ */ jsxs(VStackFull, { children: [
-    /* @__PURE__ */ jsx(VStackFull, { className: "absolute top-0 left-0", children: /* @__PURE__ */ jsx(FlexFull, { children: /* @__PURE__ */ jsx(MainNavDemo, {}) }) }),
-    /* @__PURE__ */ jsx(Flex, { className: "w-[20vh] h-[20vh] justify-center items-center", children: /* @__PURE__ */ jsx(IconButton, { icon: ReturnPathIcon, to: "/design#components" }) })
-  ] });
+  return /* @__PURE__ */ jsxs(VStackFull, {
+    children: [
+      /* @__PURE__ */ jsx(VStackFull, {
+        className: "absolute top-0 left-0",
+        children: /* @__PURE__ */ jsx(FlexFull, {
+          children: /* @__PURE__ */ jsx(MainNavDemo, {}),
+        }),
+      }),
+      /* @__PURE__ */ jsx(Flex, {
+        className: "w-[20vh] h-[20vh] justify-center items-center",
+        children: /* @__PURE__ */ jsx(IconButton, {
+          icon: ReturnPathIcon,
+          to: "/design#components",
+        }),
+      }),
+    ],
+  });
 }
-const route6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: MainNavDemoPage
-}, Symbol.toStringTag, { value: "Module" }));
+const route6 = /* @__PURE__ */ Object.freeze(
+  /* @__PURE__ */ Object.defineProperty(
+    {
+      __proto__: null,
+      default: MainNavDemoPage,
+    },
+    Symbol.toStringTag,
+    { value: "Module" }
+  )
+);
 const GetGalleryRowHeight = (viewportWidth) => {
   if (viewportWidth >= 1920) {
     const rowHeight = viewportWidth * 0.25;
@@ -6167,7 +7155,7 @@ const useWindowSize = () => {
       const handleResize = () => {
         setSize({
           width: window.innerWidth,
-          height: window.innerHeight
+          height: window.innerHeight,
         });
       };
       window.addEventListener("resize", handleResize);
@@ -6180,24 +7168,19 @@ const useWindowSize = () => {
 function ViewportBar() {
   const { width } = useWindowSize();
   const { viewportWidth, itemsPerRow } = GetGalleryRowHeight(width);
-  return /* @__PURE__ */ jsxs(
-    HStackFull,
-    {
-      className: "fixed z-50 bottom-0 right-0  bg-col-980 rounded-none text-col-100 text-xs-normal md:text-lg xl:text-xl justify-around px-[1vh]",
-      gap: "gap-[2vh]",
-      children: [
-        /* @__PURE__ */ jsxs(Text, { children: [
-          "window width: ",
-          viewportWidth,
-          "px"
-        ] }),
-        /* @__PURE__ */ jsxs(Text, { children: [
-          "items per row: ",
-          itemsPerRow
-        ] })
-      ]
-    }
-  );
+  return /* @__PURE__ */ jsxs(HStackFull, {
+    className:
+      "fixed z-50 bottom-0 right-0  bg-col-980 rounded-none text-col-100 text-xs-normal md:text-lg xl:text-xl justify-around px-[1vh]",
+    gap: "gap-[2vh]",
+    children: [
+      /* @__PURE__ */ jsxs(Text, {
+        children: ["window width: ", viewportWidth, "px"],
+      }),
+      /* @__PURE__ */ jsxs(Text, {
+        children: ["items per row: ", itemsPerRow],
+      }),
+    ],
+  });
 }
 const randomHeights = [
   "h-[30vh]",
@@ -6206,7 +7189,7 @@ const randomHeights = [
   "h-[45vh]",
   "h-[50vh]",
   "h-[55vh]",
-  "h-[60vh]"
+  "h-[60vh]",
 ];
 const fetchItems = (startIndex, limit = 20) => {
   return Array.from({ length: limit }, (_, index) => {
@@ -6214,7 +7197,7 @@ const fetchItems = (startIndex, limit = 20) => {
     return {
       id: startIndex + index,
       image: `https://picsum.photos/seed/${randomNum}/500/900`,
-      height: randomHeights[Math.floor(Math.random() * randomHeights.length)]
+      height: randomHeights[Math.floor(Math.random() * randomHeights.length)],
     };
   });
 };
@@ -6244,18 +7227,16 @@ function MasonryGrid() {
       },
       {
         rootMargin: "0px",
-        threshold: 0.1
+        threshold: 0.1,
         // Adjust based on when you consider the item to be visible
       }
     );
     itemRefs.current.forEach((ref) => {
-      if (ref)
-        observer.observe(ref);
+      if (ref) observer.observe(ref);
     });
     return () => {
       itemRefs.current.forEach((ref) => {
-        if (ref)
-          observer.unobserve(ref);
+        if (ref) observer.unobserve(ref);
       });
     };
   }, [items]);
@@ -6273,9 +7254,11 @@ function MasonryGrid() {
           setTimeout(() => {
             setItems((prevItems) => {
               const newItems = [...prevItems, ...fetchItems(prevItems.length)];
-              itemRefs.current = itemRefs.current.slice(0, prevItems.length).concat(
-                new Array(newItems.length - prevItems.length).fill(null)
-              );
+              itemRefs.current = itemRefs.current
+                .slice(0, prevItems.length)
+                .concat(
+                  new Array(newItems.length - prevItems.length).fill(null)
+                );
               return newItems;
             });
             setLoading(false);
@@ -6283,77 +7266,381 @@ function MasonryGrid() {
         }
       },
       {
-        rootMargin: "100px"
+        rootMargin: "100px",
       }
     );
     const target = document.querySelector("#scroll-down-trigger");
-    if (target)
-      observer.observe(target);
+    if (target) observer.observe(target);
     return () => {
-      if (target)
-        observer.unobserve(target);
+      if (target) observer.unobserve(target);
     };
   }, [loading]);
-  return /* @__PURE__ */ jsxs(VStackFull, { className: "items-center h-full pt-[6vh] bg-900-radial2op75", children: [
-    /* @__PURE__ */ jsxs(HStackFull, { className: "fixed top-0 left-0 h-[6vh] px-[1.5vh] bg-900-radial3op50 rounded-none shadowNarrowTight justify-between items-center", children: [
-      /* @__PURE__ */ jsx(IconButton, { icon: ReturnPathIcon, to: "/design#components" }),
-      /* @__PURE__ */ jsx(FlexFull, { className: "md:text-xl-tight font-semibold justify-center text-col-100 textShadow", children: "Remix/Tailwind Infinite Scroll Masonry Grid" })
-    ] }),
-    /* @__PURE__ */ jsx(ViewportBar, {}),
-    /* @__PURE__ */ jsxs(VStackFull, { className: "h-[94vh] overflow-y-auto p-[1vh]", children: [
-      /* @__PURE__ */ jsx(Box, { className: "w-full h-fit columns-1 md:columns-2 xl:columns-3 fullHD:columns-4 gap-0", children: items.map((item, index) => /* @__PURE__ */ jsx(
-        MasonryBox,
-        {
-          item,
-          itemRefs,
-          index
-        },
-        index
-      )) }),
-      !loading && /* @__PURE__ */ jsx("div", { id: "scroll-down-trigger", style: { height: "20px" } })
-    ] })
-  ] });
+  return /* @__PURE__ */ jsxs(VStackFull, {
+    className: "items-center h-full pt-[6vh] bg-900-radial2op75",
+    children: [
+      /* @__PURE__ */ jsxs(HStackFull, {
+        className:
+          "fixed top-0 left-0 h-[6vh] px-[1.5vh] bg-900-radial3op50 rounded-none shadowNarrowTight justify-between items-center",
+        children: [
+          /* @__PURE__ */ jsx(IconButton, {
+            icon: ReturnPathIcon,
+            to: "/design#components",
+          }),
+          /* @__PURE__ */ jsx(FlexFull, {
+            className:
+              "md:text-xl-tight font-semibold justify-center text-col-100 textShadow",
+            children: "Remix/Tailwind Infinite Scroll Masonry Grid",
+          }),
+        ],
+      }),
+      /* @__PURE__ */ jsx(ViewportBar, {}),
+      /* @__PURE__ */ jsxs(VStackFull, {
+        className: "h-[94vh] overflow-y-auto p-[1vh]",
+        children: [
+          /* @__PURE__ */ jsx(Box, {
+            className:
+              "w-full h-fit columns-1 md:columns-2 xl:columns-3 fullHD:columns-4 gap-0",
+            children: items.map((item, index) =>
+              /* @__PURE__ */ jsx(
+                MasonryBox,
+                {
+                  item,
+                  itemRefs,
+                  index,
+                },
+                index
+              )
+            ),
+          }),
+          !loading &&
+            /* @__PURE__ */ jsx("div", {
+              id: "scroll-down-trigger",
+              style: { height: "20px" },
+            }),
+        ],
+      }),
+    ],
+  });
 }
 function MasonryGridDemo() {
   return /* @__PURE__ */ jsx(MasonryGrid, {});
 }
-const route7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: MasonryGridDemo
-}, Symbol.toStringTag, { value: "Module" }));
+const route7 = /* @__PURE__ */ Object.freeze(
+  /* @__PURE__ */ Object.defineProperty(
+    {
+      __proto__: null,
+      default: MasonryGridDemo,
+    },
+    Symbol.toStringTag,
+    { value: "Module" }
+  )
+);
 function TextRoute() {
-  return /* @__PURE__ */ jsx(VStackFull, { className: "h-full p-[2vh] bg-col-600 overflow-y-auto", children: "This" });
+  return /* @__PURE__ */ jsx(VStackFull, {
+    className: "h-full p-[2vh] bg-col-600 overflow-y-auto",
+    children: "This",
+  });
 }
-const route8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: TextRoute
-}, Symbol.toStringTag, { value: "Module" }));
+const route8 = /* @__PURE__ */ Object.freeze(
+  /* @__PURE__ */ Object.defineProperty(
+    {
+      __proto__: null,
+      default: TextRoute,
+    },
+    Symbol.toStringTag,
+    { value: "Module" }
+  )
+);
 function RouteIndex() {
-  return /* @__PURE__ */ jsxs("div", { children: [
-    "return ",
-    /* @__PURE__ */ jsx("div", { className: "text-3xl", children: "Route Index" }),
-    ";"
-  ] });
+  return /* @__PURE__ */ jsxs("div", {
+    children: [
+      "return ",
+      /* @__PURE__ */ jsx("div", {
+        className: "text-3xl",
+        children: "Route Index",
+      }),
+      ";",
+    ],
+  });
 }
-const route9 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: RouteIndex
-}, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-DNQsbFOK.js?client-route", "imports": ["/assets/jsx-runtime-BfF-YriY.js", "/assets/components-BL27QBWM.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-D6aX2lTf.js?client-route", "imports": ["/assets/jsx-runtime-BfF-YriY.js", "/assets/components-BL27QBWM.js", "/assets/flex-COvQVarW.js", "/assets/layoutContainer-GjrKoGyE.js"], "css": ["/assets/root-B9-cxrwT.css"] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-TNypQogi.js?client-route", "imports": ["/assets/jsx-runtime-BfF-YriY.js", "/assets/flex-COvQVarW.js", "/assets/layoutContainer-GjrKoGyE.js", "/assets/transition-DVSgZb6N.js", "/assets/vStack-xcuHHABo.js", "/assets/components-BL27QBWM.js"], "css": [] }, "routes/design+/_index": { "id": "routes/design+/_index", "parentId": "root", "path": "design/", "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-CtHhjTxg.js?client-route", "imports": ["/assets/jsx-runtime-BfF-YriY.js", "/assets/flex-COvQVarW.js", "/assets/transition-DVSgZb6N.js", "/assets/components-BL27QBWM.js", "/assets/vStack-xcuHHABo.js", "/assets/box-BdT0KxCu.js", "/assets/hStackFull-CFb3YDvE.js", "/assets/wrap-SIAqqN24.js", "/assets/vStackFull-BVjnb3Lo.js", "/assets/custonNavLink-CcJZnLvH.js", "/assets/index-ztp-Fbuh.js", "/assets/image-DzzBi0M2.js"], "css": [] }, "routes/design+/animate-on-scroll-spring": { "id": "routes/design+/animate-on-scroll-spring", "parentId": "root", "path": "design/animate-on-scroll-spring", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/animate-on-scroll-spring-OLpMZKsi.js?client-route", "imports": ["/assets/jsx-runtime-BfF-YriY.js", "/assets/components-BL27QBWM.js", "/assets/box-BdT0KxCu.js", "/assets/vStack-xcuHHABo.js", "/assets/flex-COvQVarW.js", "/assets/vStackFull-BVjnb3Lo.js", "/assets/transition-DVSgZb6N.js", "/assets/hStackFull-CFb3YDvE.js", "/assets/custonNavLink-CcJZnLvH.js", "/assets/snapScrollPage-pgr6U6lG.js", "/assets/navContainer-lXWniVTZ.js"], "css": [] }, "routes/design+/animate-on-scroll": { "id": "routes/design+/animate-on-scroll", "parentId": "root", "path": "design/animate-on-scroll", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/animate-on-scroll-BmYGbFzY.js?client-route", "imports": ["/assets/jsx-runtime-BfF-YriY.js", "/assets/components-BL27QBWM.js", "/assets/box-BdT0KxCu.js", "/assets/vStack-xcuHHABo.js", "/assets/flex-COvQVarW.js", "/assets/vStackFull-BVjnb3Lo.js", "/assets/transition-DVSgZb6N.js", "/assets/hStackFull-CFb3YDvE.js", "/assets/custonNavLink-CcJZnLvH.js", "/assets/snapScrollPage-pgr6U6lG.js", "/assets/navContainer-lXWniVTZ.js"], "css": [] }, "routes/design+/infinite-scroll-demo": { "id": "routes/design+/infinite-scroll-demo", "parentId": "root", "path": "design/infinite-scroll-demo", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/infinite-scroll-demo-CrKrJ9ll.js?client-route", "imports": ["/assets/jsx-runtime-BfF-YriY.js", "/assets/flex-COvQVarW.js", "/assets/transition-DVSgZb6N.js", "/assets/components-BL27QBWM.js", "/assets/hStackFull-CFb3YDvE.js", "/assets/box-BdT0KxCu.js", "/assets/image-DzzBi0M2.js", "/assets/vStack-xcuHHABo.js", "/assets/wrap-SIAqqN24.js", "/assets/inifiniteScrollDemoComponents-B_ssEQFC.js"], "css": [] }, "routes/design+/main-nav-demo": { "id": "routes/design+/main-nav-demo", "parentId": "root", "path": "design/main-nav-demo", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/main-nav-demo-CwgFf002.js?client-route", "imports": ["/assets/jsx-runtime-BfF-YriY.js", "/assets/flex-COvQVarW.js", "/assets/transition-DVSgZb6N.js", "/assets/components-BL27QBWM.js", "/assets/hStackFull-CFb3YDvE.js", "/assets/vStack-xcuHHABo.js", "/assets/image-DzzBi0M2.js", "/assets/navContainer-lXWniVTZ.js", "/assets/index-ztp-Fbuh.js", "/assets/vStackFull-BVjnb3Lo.js"], "css": [] }, "routes/design+/masonry-grid-demo": { "id": "routes/design+/masonry-grid-demo", "parentId": "root", "path": "design/masonry-grid-demo", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/masonry-grid-demo-D9gLdGWs.js?client-route", "imports": ["/assets/jsx-runtime-BfF-YriY.js", "/assets/flex-COvQVarW.js", "/assets/transition-DVSgZb6N.js", "/assets/components-BL27QBWM.js", "/assets/hStackFull-CFb3YDvE.js", "/assets/box-BdT0KxCu.js", "/assets/image-DzzBi0M2.js", "/assets/vStack-xcuHHABo.js", "/assets/inifiniteScrollDemoComponents-B_ssEQFC.js", "/assets/vStackFull-BVjnb3Lo.js"], "css": [] }, "routes/design+/test": { "id": "routes/design+/test", "parentId": "root", "path": "design/test", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/test-CV496_6h.js?client-route", "imports": ["/assets/jsx-runtime-BfF-YriY.js", "/assets/vStack-xcuHHABo.js", "/assets/vStackFull-BVjnb3Lo.js"], "css": [] }, "routes/flat-route+/_index": { "id": "routes/flat-route+/_index", "parentId": "root", "path": "flat-route/", "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-BXMvnfxf.js?client-route", "imports": ["/assets/jsx-runtime-BfF-YriY.js"], "css": [] } }, "url": "/assets/manifest-23f86c54.js", "version": "23f86c54" };
+const route9 = /* @__PURE__ */ Object.freeze(
+  /* @__PURE__ */ Object.defineProperty(
+    {
+      __proto__: null,
+      default: RouteIndex,
+    },
+    Symbol.toStringTag,
+    { value: "Module" }
+  )
+);
+const serverManifest = {
+  entry: {
+    module: "/assets/entry.client-DNQsbFOK.js?client-route",
+    imports: [
+      "/assets/jsx-runtime-BfF-YriY.js",
+      "/assets/components-BL27QBWM.js",
+    ],
+    css: [],
+  },
+  routes: {
+    root: {
+      id: "root",
+      parentId: void 0,
+      path: "",
+      index: void 0,
+      caseSensitive: void 0,
+      hasAction: false,
+      hasLoader: false,
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasErrorBoundary: false,
+      module: "/assets/root-D6aX2lTf.js?client-route",
+      imports: [
+        "/assets/jsx-runtime-BfF-YriY.js",
+        "/assets/components-BL27QBWM.js",
+        "/assets/flex-COvQVarW.js",
+        "/assets/layoutContainer-GjrKoGyE.js",
+      ],
+      css: ["/assets/root-B9-cxrwT.css"],
+    },
+    "routes/_index": {
+      id: "routes/_index",
+      parentId: "root",
+      path: void 0,
+      index: true,
+      caseSensitive: void 0,
+      hasAction: false,
+      hasLoader: false,
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasErrorBoundary: false,
+      module: "/assets/_index-TNypQogi.js?client-route",
+      imports: [
+        "/assets/jsx-runtime-BfF-YriY.js",
+        "/assets/flex-COvQVarW.js",
+        "/assets/layoutContainer-GjrKoGyE.js",
+        "/assets/transition-DVSgZb6N.js",
+        "/assets/vStack-xcuHHABo.js",
+        "/assets/components-BL27QBWM.js",
+      ],
+      css: [],
+    },
+    "routes/design+/_index": {
+      id: "routes/design+/_index",
+      parentId: "root",
+      path: "design/",
+      index: true,
+      caseSensitive: void 0,
+      hasAction: false,
+      hasLoader: false,
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasErrorBoundary: false,
+      module: "/assets/_index-CtHhjTxg.js?client-route",
+      imports: [
+        "/assets/jsx-runtime-BfF-YriY.js",
+        "/assets/flex-COvQVarW.js",
+        "/assets/transition-DVSgZb6N.js",
+        "/assets/components-BL27QBWM.js",
+        "/assets/vStack-xcuHHABo.js",
+        "/assets/box-BdT0KxCu.js",
+        "/assets/hStackFull-CFb3YDvE.js",
+        "/assets/wrap-SIAqqN24.js",
+        "/assets/vStackFull-BVjnb3Lo.js",
+        "/assets/custonNavLink-CcJZnLvH.js",
+        "/assets/index-ztp-Fbuh.js",
+        "/assets/image-DzzBi0M2.js",
+      ],
+      css: [],
+    },
+    "routes/design+/animate-on-scroll-spring": {
+      id: "routes/design+/animate-on-scroll-spring",
+      parentId: "root",
+      path: "design/animate-on-scroll-spring",
+      index: void 0,
+      caseSensitive: void 0,
+      hasAction: false,
+      hasLoader: false,
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasErrorBoundary: false,
+      module: "/assets/animate-on-scroll-spring-OLpMZKsi.js?client-route",
+      imports: [
+        "/assets/jsx-runtime-BfF-YriY.js",
+        "/assets/components-BL27QBWM.js",
+        "/assets/box-BdT0KxCu.js",
+        "/assets/vStack-xcuHHABo.js",
+        "/assets/flex-COvQVarW.js",
+        "/assets/vStackFull-BVjnb3Lo.js",
+        "/assets/transition-DVSgZb6N.js",
+        "/assets/hStackFull-CFb3YDvE.js",
+        "/assets/custonNavLink-CcJZnLvH.js",
+        "/assets/snapScrollPage-pgr6U6lG.js",
+        "/assets/navContainer-lXWniVTZ.js",
+      ],
+      css: [],
+    },
+    "routes/design+/animate-on-scroll": {
+      id: "routes/design+/animate-on-scroll",
+      parentId: "root",
+      path: "design/animate-on-scroll",
+      index: void 0,
+      caseSensitive: void 0,
+      hasAction: false,
+      hasLoader: false,
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasErrorBoundary: false,
+      module: "/assets/animate-on-scroll-BmYGbFzY.js?client-route",
+      imports: [
+        "/assets/jsx-runtime-BfF-YriY.js",
+        "/assets/components-BL27QBWM.js",
+        "/assets/box-BdT0KxCu.js",
+        "/assets/vStack-xcuHHABo.js",
+        "/assets/flex-COvQVarW.js",
+        "/assets/vStackFull-BVjnb3Lo.js",
+        "/assets/transition-DVSgZb6N.js",
+        "/assets/hStackFull-CFb3YDvE.js",
+        "/assets/custonNavLink-CcJZnLvH.js",
+        "/assets/snapScrollPage-pgr6U6lG.js",
+        "/assets/navContainer-lXWniVTZ.js",
+      ],
+      css: [],
+    },
+    "routes/design+/infinite-scroll-demo": {
+      id: "routes/design+/infinite-scroll-demo",
+      parentId: "root",
+      path: "design/infinite-scroll-demo",
+      index: void 0,
+      caseSensitive: void 0,
+      hasAction: false,
+      hasLoader: false,
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasErrorBoundary: false,
+      module: "/assets/infinite-scroll-demo-CrKrJ9ll.js?client-route",
+      imports: [
+        "/assets/jsx-runtime-BfF-YriY.js",
+        "/assets/flex-COvQVarW.js",
+        "/assets/transition-DVSgZb6N.js",
+        "/assets/components-BL27QBWM.js",
+        "/assets/hStackFull-CFb3YDvE.js",
+        "/assets/box-BdT0KxCu.js",
+        "/assets/image-DzzBi0M2.js",
+        "/assets/vStack-xcuHHABo.js",
+        "/assets/wrap-SIAqqN24.js",
+        "/assets/inifiniteScrollDemoComponents-B_ssEQFC.js",
+      ],
+      css: [],
+    },
+    "routes/design+/main-nav-demo": {
+      id: "routes/design+/main-nav-demo",
+      parentId: "root",
+      path: "design/main-nav-demo",
+      index: void 0,
+      caseSensitive: void 0,
+      hasAction: false,
+      hasLoader: false,
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasErrorBoundary: false,
+      module: "/assets/main-nav-demo-CwgFf002.js?client-route",
+      imports: [
+        "/assets/jsx-runtime-BfF-YriY.js",
+        "/assets/flex-COvQVarW.js",
+        "/assets/transition-DVSgZb6N.js",
+        "/assets/components-BL27QBWM.js",
+        "/assets/hStackFull-CFb3YDvE.js",
+        "/assets/vStack-xcuHHABo.js",
+        "/assets/image-DzzBi0M2.js",
+        "/assets/navContainer-lXWniVTZ.js",
+        "/assets/index-ztp-Fbuh.js",
+        "/assets/vStackFull-BVjnb3Lo.js",
+      ],
+      css: [],
+    },
+    "routes/design+/masonry-grid-demo": {
+      id: "routes/design+/masonry-grid-demo",
+      parentId: "root",
+      path: "design/masonry-grid-demo",
+      index: void 0,
+      caseSensitive: void 0,
+      hasAction: false,
+      hasLoader: false,
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasErrorBoundary: false,
+      module: "/assets/masonry-grid-demo-D9gLdGWs.js?client-route",
+      imports: [
+        "/assets/jsx-runtime-BfF-YriY.js",
+        "/assets/flex-COvQVarW.js",
+        "/assets/transition-DVSgZb6N.js",
+        "/assets/components-BL27QBWM.js",
+        "/assets/hStackFull-CFb3YDvE.js",
+        "/assets/box-BdT0KxCu.js",
+        "/assets/image-DzzBi0M2.js",
+        "/assets/vStack-xcuHHABo.js",
+        "/assets/inifiniteScrollDemoComponents-B_ssEQFC.js",
+        "/assets/vStackFull-BVjnb3Lo.js",
+      ],
+      css: [],
+    },
+    "routes/design+/test": {
+      id: "routes/design+/test",
+      parentId: "root",
+      path: "design/test",
+      index: void 0,
+      caseSensitive: void 0,
+      hasAction: false,
+      hasLoader: false,
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasErrorBoundary: false,
+      module: "/assets/test-CV496_6h.js?client-route",
+      imports: [
+        "/assets/jsx-runtime-BfF-YriY.js",
+        "/assets/vStack-xcuHHABo.js",
+        "/assets/vStackFull-BVjnb3Lo.js",
+      ],
+      css: [],
+    },
+    "routes/flat-route+/_index": {
+      id: "routes/flat-route+/_index",
+      parentId: "root",
+      path: "flat-route/",
+      index: true,
+      caseSensitive: void 0,
+      hasAction: false,
+      hasLoader: false,
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasErrorBoundary: false,
+      module: "/assets/_index-BXMvnfxf.js?client-route",
+      imports: ["/assets/jsx-runtime-BfF-YriY.js"],
+      css: [],
+    },
+  },
+  url: "/assets/manifest-23f86c54.js",
+  version: "23f86c54",
+};
 const mode = "production";
 const assetsBuildDirectory = "build/client";
-const future = { "v3_fetcherPersist": false, "v3_relativeSplatPath": false, "v3_throwAbortReason": false };
+const future = {
+  v3_fetcherPersist: false,
+  v3_relativeSplatPath: false,
+  v3_throwAbortReason: false,
+};
 const isSpaMode = false;
 const publicPath = "/";
 const entry = { module: entryServer };
 const routes = {
-  "root": {
+  root: {
     id: "root",
     parentId: void 0,
     path: "",
     index: void 0,
     caseSensitive: void 0,
-    module: route0
+    module: route0,
   },
   "routes/_index": {
     id: "routes/_index",
@@ -6361,7 +7648,7 @@ const routes = {
     path: void 0,
     index: true,
     caseSensitive: void 0,
-    module: route1
+    module: route1,
   },
   "routes/design+/_index": {
     id: "routes/design+/_index",
@@ -6369,7 +7656,7 @@ const routes = {
     path: "design/",
     index: true,
     caseSensitive: void 0,
-    module: route2
+    module: route2,
   },
   "routes/design+/animate-on-scroll-spring": {
     id: "routes/design+/animate-on-scroll-spring",
@@ -6377,7 +7664,7 @@ const routes = {
     path: "design/animate-on-scroll-spring",
     index: void 0,
     caseSensitive: void 0,
-    module: route3
+    module: route3,
   },
   "routes/design+/animate-on-scroll": {
     id: "routes/design+/animate-on-scroll",
@@ -6385,7 +7672,7 @@ const routes = {
     path: "design/animate-on-scroll",
     index: void 0,
     caseSensitive: void 0,
-    module: route4
+    module: route4,
   },
   "routes/design+/infinite-scroll-demo": {
     id: "routes/design+/infinite-scroll-demo",
@@ -6393,7 +7680,7 @@ const routes = {
     path: "design/infinite-scroll-demo",
     index: void 0,
     caseSensitive: void 0,
-    module: route5
+    module: route5,
   },
   "routes/design+/main-nav-demo": {
     id: "routes/design+/main-nav-demo",
@@ -6401,7 +7688,7 @@ const routes = {
     path: "design/main-nav-demo",
     index: void 0,
     caseSensitive: void 0,
-    module: route6
+    module: route6,
   },
   "routes/design+/masonry-grid-demo": {
     id: "routes/design+/masonry-grid-demo",
@@ -6409,7 +7696,7 @@ const routes = {
     path: "design/masonry-grid-demo",
     index: void 0,
     caseSensitive: void 0,
-    module: route7
+    module: route7,
   },
   "routes/design+/test": {
     id: "routes/design+/test",
@@ -6417,7 +7704,7 @@ const routes = {
     path: "design/test",
     index: void 0,
     caseSensitive: void 0,
-    module: route8
+    module: route8,
   },
   "routes/flat-route+/_index": {
     id: "routes/flat-route+/_index",
@@ -6425,8 +7712,8 @@ const routes = {
     path: "flat-route/",
     index: true,
     caseSensitive: void 0,
-    module: route9
-  }
+    module: route9,
+  },
 };
 export {
   serverManifest as assets,
@@ -6436,5 +7723,5 @@ export {
   isSpaMode,
   mode,
   publicPath,
-  routes
+  routes,
 };

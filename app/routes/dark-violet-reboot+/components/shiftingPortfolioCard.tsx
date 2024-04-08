@@ -7,8 +7,8 @@ import { PortfolioItem } from "./data";
 import { BackOfCard, FrontOfCard } from "./portfolioCardSides";
 
 export default function ShiftingPortfolioCard({
-  delay = 0,
-  visibilityThreshold = "300px",
+  delay = 0.2,
+  visibilityThreshold = "200px",
   portfolioItem,
   transitionDuration = 0.8,
 }: {

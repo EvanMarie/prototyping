@@ -39,7 +39,7 @@ export default function BackgroundImageContainer({
   shadow = "shadowNarrowNormal",
   showOverlay = true,
   bgOverlayColor = "bg-col-920",
-  bgOverlayGradient = "bg-darkenPurpleGrad",
+  bgOverlayGradient = "bg-darkenvioletGrad",
   overlayBlur = "backdrop-blur-[2px]",
   overlayStyles,
   children,

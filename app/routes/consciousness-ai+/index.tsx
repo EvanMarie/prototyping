@@ -25,7 +25,7 @@ function AnimatedFlipTestBox({ text, delay }: { text: string; delay: number }) {
       delay={delay}
       duration={0.5}
     >
-      <Center className="p-[2vh] h-[40vh] w-[35vh] shadowBroadLooser border-970-md bg-zinc-300 bg-gradient-to-br from-purple-700/70 via-indigo-700/70 to-teal-700/70">
+      <Center className="p-[2vh] h-[40vh] w-[35vh] shadowBroadLooser border-970-md bg-slate-300 bg-gradient-to-br from-violet-700/70 via-indigo-700/70 to-teal-700/70">
         {text}
       </Center>
     </AnimatedComponent>
@@ -44,9 +44,10 @@ export default function ConscioussnessIndex() {
     { length: 17 },
     (_, i) => `/images/consciousness_ai/genArt${i + 1}.png`
   );
-  const labelStyles = "px-[1vh] py-[0.5vh] text-zinc-100 textShadow text-[3vh]";
+  const labelStyles =
+    "px-[1vh] py-[0.5vh] text-slate-100 textShadow text-[3vh]";
   return (
-    <TransitionFull className="overflow-y-auto text-zinc-100">
+    <TransitionFull className="overflow-y-auto text-slate-100">
       <GlowCursor />
       <VStackFull className="h-fit">
         <LayoutContainer className="relative">
@@ -109,7 +110,7 @@ export default function ConscioussnessIndex() {
               triggerPercent={0.3}
             >
               <FlexFull className="h-fitxl:h-screen py-[2vh] px-[1vh] sm:px-[2vh] justify-center">
-                <FlexFull className="h-fit md:w-95% lg:w-85% shadowBroadLooser border-970-md bg-zinc-900 bg-gradient-to-br from-purple-700/70 via-indigo-700/70 to-teal-700/70">
+                <FlexFull className="h-fit md:w-95% lg:w-85% shadowBroadLooser border-970-md bg-slate-900 bg-gradient-to-br from-violet-700/70 via-indigo-700/70 to-teal-700/70">
                   <FlexFull className="flex-col xl:flex-row items-center p-[2vh] gap-[2vh]">
                     <Flex className={genSectionStyles}>
                       <ShiftingImages imageArray={genImages} shape="circle" />
