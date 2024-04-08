@@ -121,6 +121,7 @@ export default function NavIconButton({
                 icon={icon}
                 iconClassName={`${displayIconSize} ${iconClassName}`}
                 containerClassName={`flex w-full h-full justify-center items-center hover:cursor-pointer`}
+                hoverCursor="hover:cursor-pointer"
               />
             )}
           </Flex>
