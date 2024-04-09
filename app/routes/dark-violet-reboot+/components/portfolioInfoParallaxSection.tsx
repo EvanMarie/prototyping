@@ -31,8 +31,8 @@ export default function PortfolioParallaxSection({
         sticky={headingSticky}
         className={className}
       >
-        <FlexFull className="px-[1vh] md:px-[2vh] xl:px-[3vh] justify-center">
-          <FlexFull className="xl:max-w-[80vw]">
+        <FlexFull className="px-[1vh] md:px-[2vh] xl:px-[3vh] justify-center ">
+          <FlexFull className="xl:max-w-[80vw] ">
             <Text className="text-cyan-300 text-[2.5vh] md:text-[2.8vh] lg:text-[3vh] xl:text-[3.3vh] textShadow">
               {projectInfoSection.heading}
             </Text>
@@ -47,7 +47,7 @@ export default function PortfolioParallaxSection({
       >
         {" "}
         <VStackFull
-          className="px-[1vh] md:px-[2vh] lg:px-[3vh]"
+          className="px-[1vh] md:px-[2vh] lg:px-[3vh] "
           gap="gap-[2vh]"
           align="items-start xl:items-center"
         >

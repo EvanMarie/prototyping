@@ -117,43 +117,28 @@ export default function PortfolioItemParallax() {
           </CenterFull>
           <Parallax
             ref={parallax}
-            pages={numSections === 3 ? 3.3 : 4.1}
+            // pages={numSections === 3 ? 3.3 : 4.1}
+            pages={2.9}
             className="hide-scrollbar max-h-[84vh] md:max-h-[82vh] top-[7vh] md:top-[8.5vh] left-0"
           >
-            {/* IMAGES  */}
-            <ParallaxLayer offset={0} speed={0.7}>
-              <CenterHorizontalFull className="pt-[1.5vh] ">
-                <Flex className="h-fit w-[93vw] max-h-[85vh] xl:w-[85vw]">
-                  <RadialScrollProgress title={project?.title}>
-                    {project?.projectImages.map((image, index) => (
-                      <Flex
-                        key={index}
-                        className="w-fit flex-shrink-0 snap-center snap-always "
-                      >
-                        <RadialProgressiveImage
-                          image={image.src}
-                          title={image.title}
-                        />
-                      </Flex>
-                    ))}
-                  </RadialScrollProgress>
-                </Flex>
-              </CenterHorizontalFull>
-            </ParallaxLayer>
             {/* PARAGRAPHS  */}
             <PortfolioItemParallaxBodyMobile
+              project={project as PortfolioItem}
               infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
               projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
             />
             <PortfolioItemParallaxBodySmall
+              project={project as PortfolioItem}
               infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
               projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
             />
             <PortfolioItemParallaxBodyMedium
+              project={project as PortfolioItem}
               infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
               projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
             />
             <PortfolioItemParallaxBodyLarge
+              project={project as PortfolioItem}
               infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
               projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
             />
