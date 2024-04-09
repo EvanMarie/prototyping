@@ -13,7 +13,7 @@ import TransitionFull from "~/components/buildingBlocks/TransitionFull";
 export default function PortfolioItem() {
   return (
     <TransitionFull className="h-full">
-      <LayoutContainer className="md:p-[2vh] ">
+      <LayoutContainer className="md:p-[2vh] xl:px-[5vw]">
         <FlexFull className="h-fit bg-gradient-to-br from-violet-400 via-indigo-400 to-fuchsia-400 shadowBroadLooser p-[0.3vh] ">
           <PortfolioItemParallax />
         </FlexFull>

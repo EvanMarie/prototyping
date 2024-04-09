@@ -55,7 +55,7 @@ export default function PortfolioParallaxSection({
             <FlexFull className="xl:max-w-[80vw]">
               <Text
                 key={index}
-                className="text-[1.9vh] sm:text-[2.1vh] textShadow"
+                className="text-[1.9vh] sm:text-[2.1vh] md:text-[2.2vh] lg:text-[2.3vh] xl:text-[2.4vh] xxl:text-[2.8vh] textShadow"
               >
                 {paragraph}
               </Text>

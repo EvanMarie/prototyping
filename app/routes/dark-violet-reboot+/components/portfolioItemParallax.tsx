@@ -79,7 +79,7 @@ export default function PortfolioItemParallax() {
               <Text className="text-cyan-300 text-[2vh] leading-[2.3vh] md:text-[2.7vh] md:leading-[3vh] leading-tighter">
                 {project?.title}
               </Text>
-              <Text className="text-[1.3vh] leading-[1.5vh] md:text-[1.7vh] md:leading-[2vh] leading-tighter">
+              <Text className="text-[1.3vh] leading-[1.5vh] md:text-[1.7vh] md:leading-[2.8vh] leading-tighter">
                 {project?.description}
               </Text>
             </VStack>
@@ -116,7 +116,7 @@ export default function PortfolioItemParallax() {
             {/* IMAGES  */}
             <ParallaxLayer offset={0} speed={0.7}>
               <CenterHorizontalFull className="pt-[1.5vh]">
-                <Flex className="h-fit w-[93vw] max-h-[85vh]">
+                <Flex className="h-fit w-[93vw] max-h-[85vh] xl:w-[85vw]">
                   <RadialScrollProgress title={project?.title}>
                     {project?.projectImages.map((image, index) => (
                       <Flex
