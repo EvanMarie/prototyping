@@ -1,7 +1,5 @@
-import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+import { ParallaxLayer } from "@react-spring/parallax";
 import CenterHorizontalFull from "~/components/buildingBlocks/centerHorizontalFull";
-import FlexFull from "~/components/buildingBlocks/flexFull";
-import RadialScrollProgress from "./radialProgress";
 import PortfolioParallaxSection from "./portfolioInfoParallaxSection";
 import { PortfolioImage, PortfolioItemInfoSection } from "./data";
 import Image from "~/components/buildingBlocks/image";
