@@ -22,10 +22,10 @@ export function PortfolioItemParallaxBodyMobile({
           className="sm:hidden"
           headingOffset={0.65}
           paragraphsOffset={0.7}
-          // headingSpeed={0.6}
-          // paragraphsSpeed={0.5}
-          headingSpeed={0.65}
-          paragraphsSpeed={0.3}
+          headingSpeed={0.6}
+          paragraphsSpeed={0.5}
+          // headingSpeed={0.65}
+          // paragraphsSpeed={0.3}
           projectInfoSection={infoSections[0]}
         />
       )}
@@ -43,10 +43,10 @@ export function PortfolioItemParallaxBodyMobile({
           className="sm:hidden"
           headingOffset={1.8}
           paragraphsOffset={1.85}
-          // headingSpeed={0.6}
-          // paragraphsSpeed={0.5}
-          headingSpeed={0.75}
-          paragraphsSpeed={0.7}
+          headingSpeed={0.6}
+          paragraphsSpeed={0.5}
+          // headingSpeed={0.75}
+          // paragraphsSpeed={0.7}
           projectInfoSection={infoSections[1]}
         />
       )}
@@ -62,12 +62,12 @@ export function PortfolioItemParallaxBodyMobile({
       {infoSections[2] && (
         <PortfolioParallaxSection
           className="sm:hidden"
-          headingOffset={2.5}
-          paragraphsOffset={2.55}
-          // headingSpeed={0.6}
-          // paragraphsSpeed={0.5}
-          headingSpeed={0.4}
-          paragraphsSpeed={0.25}
+          headingOffset={2.7}
+          paragraphsOffset={2.75}
+          headingSpeed={0.6}
+          paragraphsSpeed={0.5}
+          // headingSpeed={0.4}
+          // paragraphsSpeed={0.25}
           projectInfoSection={infoSections[2]}
         />
       )}
@@ -76,10 +76,10 @@ export function PortfolioItemParallaxBodyMobile({
           className="sm:hidden"
           headingOffset={3.3}
           paragraphsOffset={3.4}
-          // headingSpeed={0.6}
-          // paragraphsSpeed={0.5}
-          headingSpeed={-0.3}
-          paragraphsSpeed={-0.35}
+          headingSpeed={0.6}
+          paragraphsSpeed={0.5}
+          // headingSpeed={-0.3}
+          // paragraphsSpeed={-0.35}
           projectInfoSection={infoSections[3]}
         />
       )}
