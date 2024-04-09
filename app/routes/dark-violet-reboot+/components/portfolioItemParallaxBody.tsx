@@ -22,8 +22,6 @@ export function PortfolioItemParallaxBodyMobile({
           paragraphsOffset={0.7}
           headingSpeed={0.6}
           paragraphsSpeed={0.5}
-          // headingSpeed={0.65}
-          // paragraphsSpeed={0.3}
           projectInfoSection={infoSections[0]}
         />
       )}

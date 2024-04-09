@@ -16,7 +16,6 @@ svg {
   border-radius: none;
 }
 
-
 ol {
   padding: 1rem;
 }
@@ -276,4 +275,13 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 
 input[type="color"]::-webkit-color-swatch {
   border: none;
+}
+
+@keyframes fillAnimation {
+  0% {
+    fill-opacity: 0;
+  }
+  100% {
+    fill-opacity: 1;
+  }
 }

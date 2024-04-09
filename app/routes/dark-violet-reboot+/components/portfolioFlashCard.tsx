@@ -51,11 +51,11 @@ export default function PortfolioCard({
           >
             {/* FRONT OF CARD  */}
             <FlexFull className="h-full shadowBroadLoose border-970-md">
-              <FrontOfCard portofolioItem={porfolioItem} />
+              <FrontOfCard portfolioItem={porfolioItem} />
             </FlexFull>
             {/* BACK OF CARD  */}
             <Center className="h-full w-full absolute inset-0 backface-hidden rotate-y-180 shadowBroadLoose">
-              <BackOfCard portofolioItem={porfolioItem} />
+              <BackOfCard portfolioItem={porfolioItem} />
             </Center>
           </Box>
         </Box>

@@ -97,9 +97,10 @@ export default function PortfolioItemParallax() {
             style={{ scaleX: scrollProgress, transformOrigin: "left" }}
           />
         </VStackFull>
+
         {/* FOOTER  */}
         <CenterHorizontalFull className="absolute bottom-0 left-0 h-[4vh] p-[1vh] items-center bg-slate-900/60 border-t-970-md">
-          <Box className="z-20">
+          <Box className="z-10">
             <NavLinkButton
               iconLeft={CloseIcon}
               to="/dark-violet-reboot/#portfolio"
@@ -117,11 +118,11 @@ export default function PortfolioItemParallax() {
           <Parallax
             ref={parallax}
             pages={numSections === 3 ? 3.3 : 4.1}
-            className="hide-scrollbar max-h-[84vh] md:max-h-[82vh]"
+            className="hide-scrollbar max-h-[84vh] md:max-h-[82vh] top-[7vh] md:top-[8.5vh] left-0"
           >
             {/* IMAGES  */}
             <ParallaxLayer offset={0} speed={0.7}>
-              <CenterHorizontalFull className="pt-[1.5vh]">
+              <CenterHorizontalFull className="pt-[1.5vh] ">
                 <Flex className="h-fit w-[93vw] max-h-[85vh] xl:w-[85vw]">
                   <RadialScrollProgress title={project?.title}>
                     {project?.projectImages.map((image, index) => (

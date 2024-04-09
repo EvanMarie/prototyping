@@ -14,12 +14,16 @@ export default function HorizontalParallaxCarousel({
   randomWidths = ["w-[60vh]", "w-[70vh]", "w-[80vh]", "w-[90vh]", "w-[100vh]"],
   gap = "gap-[1vh]",
   includeModal = false,
+  imageSize = "h-[30vh] w-[30vw]",
+  carouselPadding,
 }: {
   images: string[];
   height?: string;
   randomWidths?: string[];
   gap?: string;
   includeModal?: boolean;
+  imageSize?: string;
+  carouselPadding?: string;
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(images[0]);
@@ -56,7 +60,7 @@ export default function HorizontalParallaxCarousel({
       <Box className="pb-[1.5vh] overflow-x-auto overflow-y-hidden rounded-none scrollbar-none">
         <Box className={`w-fit ${height}`}>
           <HStackFull
-            className="w-maxContent rounded-none gap-[1.5vh]"
+            className={`w-maxContent rounded-none ${carouselPadding} `}
             gap={gap}
           >
             {images.map((image, index) => {

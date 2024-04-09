@@ -43,7 +43,7 @@ export function BackOfCard({
   portfolioItem: PortfolioItem;
 }) {
   const heading = portfolioItem.projectInfo[0].heading;
-  const paragraph = portfolioItem.projectInfo[0].paragraphs[0];
+  const paragraph = portfolioItem.projectInfo[0].description;
   return (
     <VStackFull className="h-full bg-slate-900 bg-gradient-to-br from-indigo-700/70 via-violet-900/70 to-fuchsia-900/70 justify-between shadowBroadLoose border-900-md">
       <NavLink to={`/dark-violet-reboot/portfolio/${portfolioItem.title}`}>

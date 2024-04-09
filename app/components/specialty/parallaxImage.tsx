@@ -7,6 +7,7 @@ export default function ParallaxImage({
   bgPosition = "center",
   bgAttachment = "bg-fixed",
   bgFit = "bg-cover",
+  bgSize = "bg-auto",
   className,
 }: {
   dimensions?: string;
@@ -22,7 +23,7 @@ export default function ParallaxImage({
       {" "}
       {/* Performance optimization */}
       <Box
-        className={`${dimensions} border-970-md overflow-y-scroll ${bgAttachment} ${bgImage} ${bgFit} ${bgPosition} bg-no-repeat shadowWideLoose 
+        className={`${dimensions} border-970-md overflow-y-scroll ${bgAttachment} ${bgImage} ${bgFit} bg-no-repeat shadowWideLoose ${bgSize} 
         ${className} `}
         style={{
           backgroundImage: `url(${bgImage})`,
