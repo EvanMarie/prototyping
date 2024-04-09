@@ -63,6 +63,8 @@ export default function PortfolioItemParallax() {
     }
   }, []);
 
+  const numSections = project?.projectInfo.length || 0;
+
   return (
     <FlexFull className="bg-[url('https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/aurora.png?quality=60')] bg-center bg-cover">
       <VStackFull className="relative h-[95vh] bg-gradient-to-br from-violet-900/90 via-indigo-900/90 to-fuchsia-900/90 p-[0.5vh] insetShadowXl text-slate-100 pt-[7vh] md:pt-[8.5vh] border-900-md">
@@ -108,11 +110,11 @@ export default function PortfolioItemParallax() {
         <FlexFull>
           <Parallax
             ref={parallax}
-            pages={7}
+            pages={numSections === 3 ? 3.5 : 4}
             className="hide-scrollbar max-h-[84vh] md:max-h-[82vh]"
           >
             {/* IMAGES  */}
-            <ParallaxLayer offset={0} speed={0.6}>
+            <ParallaxLayer offset={0} speed={0.7}>
               <CenterHorizontalFull className="pt-[1.5vh]">
                 <Flex className="h-fit w-[93vw] max-h-[85vh]">
                   <RadialScrollProgress title={project?.title}>
