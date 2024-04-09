@@ -16,7 +16,7 @@ import ShiftingImages from "./components/shiftingImages";
 import AnimatedText from "~/components/specialty/animatedText";
 import ShiftingComponents from "./components/shiftingComponents";
 import { PortfolioItem, Projects } from "./components/data";
-import ShiftingPortfolioCard from "./components/shiftingPortfolioCard";
+import ShiftingPortfolioCard from "./components/portfolioShiftingCard";
 import IndexPortfolioSection from "./components/indexPortfolioSection";
 import IndexTopSection from "./components/indexTopSection";
 import IndexAboutUsSection from "./components/indexAboutUsSection";

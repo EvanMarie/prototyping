@@ -33,7 +33,7 @@ export default function PortfolioParallaxSection({
       >
         <FlexFull className="px-[1vh] md:px-[2vh] xl:px-[3vh] justify-center">
           <FlexFull className="xl:max-w-[80vw]">
-            <Text className="text-cyan-300 text-[2.5vh] textShadow">
+            <Text className="text-cyan-300 text-[2.5vh] md:text-[2.8vh] lg:text-[3vh] xl:text-[3.3vh] textShadow">
               {projectInfoSection.heading}
             </Text>
           </FlexFull>

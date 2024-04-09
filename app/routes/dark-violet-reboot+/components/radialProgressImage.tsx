@@ -22,7 +22,10 @@ export default function RadialProgressiveImage({
   const [expanded, setExpanded] = useState(false);
   return (
     <>
-      <Flex className="shadowBroadLoose border-970-md rounded-md relative">
+      <Flex
+        className="shadowBroadLoose border-970-md rounded-md relative hover:cursor-pointer"
+        onClick={() => setExpanded(true)}
+      >
         <Box className="absolute top-[0.5vh] right-[0.5vh] bg-slate-500/90 px-[0.5vh] border-[0.2vh] border-slate-900 shadowBroadLoose hover:bg-slate-900 transition-400">
           <IconButton
             icon={IoMdExpand}

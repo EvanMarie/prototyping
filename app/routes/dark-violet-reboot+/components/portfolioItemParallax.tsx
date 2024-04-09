@@ -31,6 +31,8 @@ import {
   PortfolioItemParallaxBodySmall,
 } from "./portfolioItemParallaxBody";
 import { useScroll, motion } from "framer-motion";
+import CenterFull from "~/components/buildingBlocks/centerFull";
+import FlowerOfLifeOnScroll from "./flowerOfLifeOnScroll";
 
 export default function PortfolioItemParallax() {
   // Your existing setup...
@@ -83,7 +85,7 @@ export default function PortfolioItemParallax() {
                 {project?.description}
               </Text>
             </VStack>
-            <Flex className="h-full w-7% justify-end">
+            <Flex className="h-full w-7% justify-end z-10">
               <NavIconButton
                 icon={CloseIcon}
                 to="/dark-violet-reboot/#portfolio"
@@ -107,10 +109,14 @@ export default function PortfolioItemParallax() {
           </Box>
         </CenterHorizontalFull>
         {/* CONTENT  */}
+
         <FlexFull>
+          <CenterFull className="absolute top-0 right-0 left-0 pt-[4vh]">
+            <FlowerOfLifeOnScroll />
+          </CenterFull>
           <Parallax
             ref={parallax}
-            pages={numSections === 3 ? 3.5 : 4}
+            pages={numSections === 3 ? 3.3 : 4.2}
             className="hide-scrollbar max-h-[84vh] md:max-h-[82vh]"
           >
             {/* IMAGES  */}

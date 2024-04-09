@@ -1,20 +1,18 @@
-import CenterFull from "~/components/buildingBlocks/centerFull";
-import ShiftingImages from "./components/shiftingImages";
-import { useEffect, useState } from "react";
-import HStackFull from "~/components/buildingBlocks/hStackFull";
-import AnimatedText from "~/components/specialty/animatedText";
-import FlashCard from "~/routes/dark-violet-reboot+/components/portfolioFlashCard";
-import VStackFull from "~/components/buildingBlocks/vStackFull";
+import { useRef } from "react";
 import LayoutContainer from "~/components/buildingBlocks/layoutContainer";
-import PorfolioCard from "~/routes/dark-violet-reboot+/components/portfolioFlashCard";
+import { IParallax, Parallax } from "@react-spring/parallax";
+import FlowerOfLifeOnScroll from "./components/flowerOfLifeOnScroll";
+import CenterFull from "~/components/buildingBlocks/centerFull";
 
 export default function Test() {
+  const parallax = useRef<IParallax>(null);
   return (
-    <LayoutContainer className="overflow-y-auto">
-      <VStackFull className="h-fit">
-        <CenterFull className="h-screen">THIS</CenterFull>
-        <CenterFull className="h-screen">this</CenterFull>
-      </VStackFull>
+    <LayoutContainer className="overflow-y-auto ">
+      {/* <Parallax ref={parallax} pages={4}> */}
+      <CenterFull className="h-[200vh]">
+        <FlowerOfLifeOnScroll />
+      </CenterFull>
+      {/* </Parallax> */}
     </LayoutContainer>
   );
 }

@@ -9,12 +9,14 @@ import NavIconButton from "~/components/buildingBlocks/navLinkIconButton";
 import Text from "~/components/buildingBlocks/text";
 import PortfolioItemParallax from "../components/portfolioItemParallax";
 import TransitionFull from "~/components/buildingBlocks/TransitionFull";
+import CenterFull from "~/components/buildingBlocks/centerFull";
+import FlowerOfLifeOnScroll from "../components/flowerOfLifeOnScroll";
 
 export default function PortfolioItem() {
   return (
     <TransitionFull className="h-full">
       <LayoutContainer className="md:p-[2vh] xl:px-[5vw]">
-        <FlexFull className="h-fit bg-gradient-to-br from-violet-400 via-indigo-400 to-fuchsia-400 shadowBroadLooser p-[0.3vh] ">
+        <FlexFull className="h-fit bg-gradient-to-br from-violet-400 via-indigo-400 to-fuchsia-400 shadowBroadLooser p-[0.3vh]">
           <PortfolioItemParallax />
         </FlexFull>
       </LayoutContainer>

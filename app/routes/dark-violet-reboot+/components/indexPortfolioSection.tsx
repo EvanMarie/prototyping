@@ -6,7 +6,7 @@ import ShiftingImages from "./shiftingImages";
 import Wrap from "~/components/buildingBlocks/wrap";
 import { PortfolioItem, Projects } from "./data";
 import Box from "~/components/buildingBlocks/box";
-import ShiftingPortfolioCard from "./shiftingPortfolioCard";
+import ShiftingPortfolioCard from "./portfolioShiftingCard";
 
 export default function IndexPortfolioSection() {
   const genImages = Array.from(

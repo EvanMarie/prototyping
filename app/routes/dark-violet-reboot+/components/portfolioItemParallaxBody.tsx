@@ -22,13 +22,15 @@ export function PortfolioItemParallaxBodyMobile({
           className="sm:hidden"
           headingOffset={0.65}
           paragraphsOffset={0.7}
-          headingSpeed={0.6}
-          paragraphsSpeed={0.5}
+          // headingSpeed={0.6}
+          // paragraphsSpeed={0.5}
+          headingSpeed={0.65}
+          paragraphsSpeed={0.3}
           projectInfoSection={infoSections[0]}
         />
       )}
       {projectInfoImages[0] && (
-        <ParallaxLayer offset={1.1} speed={1.9} className="sm:hidden">
+        <ParallaxLayer offset={1} speed={2.3} className="sm:hidden">
           <CenterHorizontalFull>
             <Box className="w-[85vw] border-970-md shadowBroadLoose">
               <Image src={projectInfoImages[0].src} alt="project image" />
@@ -41,13 +43,15 @@ export function PortfolioItemParallaxBodyMobile({
           className="sm:hidden"
           headingOffset={1.8}
           paragraphsOffset={1.85}
-          headingSpeed={0.6}
-          paragraphsSpeed={0.5}
+          // headingSpeed={0.6}
+          // paragraphsSpeed={0.5}
+          headingSpeed={0.75}
+          paragraphsSpeed={0.7}
           projectInfoSection={infoSections[1]}
         />
       )}
       {projectInfoImages[1] && (
-        <ParallaxLayer offset={2} speed={1.8} className="sm:hidden">
+        <ParallaxLayer offset={2} speed={3} className="sm:hidden">
           <CenterHorizontalFull>
             <Box className="w-[90vw] border-970-md shadowBroadLoose">
               <Image src={projectInfoImages[1].src} alt="project image" />
@@ -58,20 +62,24 @@ export function PortfolioItemParallaxBodyMobile({
       {infoSections[2] && (
         <PortfolioParallaxSection
           className="sm:hidden"
-          headingOffset={2.7}
-          paragraphsOffset={2.75}
-          headingSpeed={0.6}
-          paragraphsSpeed={0.5}
+          headingOffset={2.5}
+          paragraphsOffset={2.55}
+          // headingSpeed={0.6}
+          // paragraphsSpeed={0.5}
+          headingSpeed={0.4}
+          paragraphsSpeed={0.25}
           projectInfoSection={infoSections[2]}
         />
       )}
       {infoSections[3] && (
         <PortfolioParallaxSection
           className="sm:hidden"
-          headingOffset={3}
-          paragraphsOffset={3.1}
-          headingSpeed={0.6}
-          paragraphsSpeed={0.5}
+          headingOffset={3.3}
+          paragraphsOffset={3.4}
+          // headingSpeed={0.6}
+          // paragraphsSpeed={0.5}
+          headingSpeed={-0.3}
+          paragraphsSpeed={-0.35}
           projectInfoSection={infoSections[3]}
         />
       )}
