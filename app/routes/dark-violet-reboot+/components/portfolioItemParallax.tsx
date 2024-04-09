@@ -116,7 +116,7 @@ export default function PortfolioItemParallax() {
           </CenterFull>
           <Parallax
             ref={parallax}
-            pages={numSections === 3 ? 3.3 : 4.2}
+            pages={numSections === 3 ? 3.3 : 4.1}
             className="hide-scrollbar max-h-[84vh] md:max-h-[82vh]"
           >
             {/* IMAGES  */}

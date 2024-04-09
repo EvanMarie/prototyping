@@ -1,8 +1,8 @@
 import { useState, ReactNode, useRef, useEffect } from "react";
-import VStackFull from "../buildingBlocks/vStackFull";
-import HStackFull from "../buildingBlocks/hStackFull";
-import Text from "../buildingBlocks/text";
-import Icon from "../buildingBlocks/icon";
+import VStackFull from "~/components/buildingBlocks/vStackFull";
+import HStackFull from "~/components/buildingBlocks/hStackFull";
+import Text from "~/components//buildingBlocks/text";
+import Icon from "~/components/buildingBlocks/icon";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
 interface AccordionProps {
@@ -12,10 +12,11 @@ interface AccordionProps {
   contentStyles?: string;
 }
 
-export default function Accordion({
+export default function AboutUsAccordion({
   title,
   children,
-  titleStyles = "bg-100-linear6op75 hover:bg-100-linear6op50 transition-400 text-col-100 textShadow",
+  //   titleStyles = "bg-slate-900 bg-gradient-to-b from-violet-600/30 via-indigo-700/30 to-fuchsia-700/30 hover:bg-slate-600 transition-400 text-col-100 textShadow",
+  titleStyles = "text-slate-100 textShadow",
   contentStyles = "bg-col-990 text-col-100 textShadow",
 }: AccordionProps) {
   const [isOpen, setIsOpen] = useState(false);

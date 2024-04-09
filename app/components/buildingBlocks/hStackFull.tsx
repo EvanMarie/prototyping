@@ -7,6 +7,7 @@ export default function HStackFull({
   onClick,
   id,
   style,
+  hoverCursor,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -14,12 +15,14 @@ export default function HStackFull({
   onClick?: () => void;
   id?: string;
   style?: React.CSSProperties;
+  hoverCursor?: string;
 }) {
   return (
     <HStack
       className={`w-full ${gap} ${className}`}
       onClick={onClick}
       id={id}
+      hoverCursor={hoverCursor}
       style={style}
     >
       {children}
