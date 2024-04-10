@@ -1,17 +1,11 @@
 import FlexFull from "~/components/buildingBlocks/flexFull";
-import {
-  PortfolioImage,
-  PortfolioItem,
-  PortfolioItemInfoSection,
-  Projects,
-} from "./data";
+import { Projects } from "./data";
 import HStackFull from "~/components/buildingBlocks/hStackFull";
 import Text from "~/components/buildingBlocks/text";
 import Box from "~/components/buildingBlocks/box";
 import NavIconButton from "~/components/buildingBlocks/navLinkIconButton";
 import { CloseIcon } from "styles";
-import { IParallax, Parallax, ParallaxLayer } from "@react-spring/parallax";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import VStackFull from "~/components/buildingBlocks/vStackFull";
 import CenterHorizontalFull from "~/components/buildingBlocks/centerHorizontalFull";
 import NavLinkButton from "~/components/buildingBlocks/navLinkButton";
@@ -19,53 +13,26 @@ import { useNavigate, useParams } from "@remix-run/react";
 import useEscapeKey from "~/utils/useEscapeKey";
 import Flex from "~/components/buildingBlocks/flex";
 import VStack from "~/components/buildingBlocks/vStack";
-
-import RadialScrollProgress from "./radialProgress";
-import Image from "~/components/buildingBlocks/image";
-import RadialProgressiveImage from "./radialProgressImage";
-import PortfolioParallaxSection from "./portfolioInfoParallaxSection";
-import {
-  PortfolioItemParallaxBodyLarge,
-  PortfolioItemParallaxBodyMedium,
-  PortfolioItemParallaxBodyMobile,
-  PortfolioItemParallaxBodySmall,
-} from "./portfolioItemParallaxBody";
 import { useScroll, motion } from "framer-motion";
 import CenterFull from "~/components/buildingBlocks/centerFull";
 import FlowerOfLifeOnScroll from "./flowerOfLifeOnScroll";
+import RadialScrollProgress from "./radialProgress";
+import RadialProgressiveImage from "./radialProgressImage";
+import PortfolioTextSection from "./portfolioTextSection";
+import Image from "~/components/buildingBlocks/image";
 
-export default function PortfolioItemParallax() {
+export default function PortfolioItemComponent() {
   // Your existing setup...
   const { title } = useParams();
   const project = Projects.find((project) => project.title === title);
   const navigate = useNavigate();
-  const parallax = useRef<IParallax>(null);
-
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    // Access the DOM node of the Parallax container
-    const parallaxContainer = parallax.current?.container.current;
-
-    if (parallaxContainer) {
-      const handleScroll = () => {
-        const maxScroll =
-          parallaxContainer.scrollHeight - parallaxContainer.clientHeight;
-        const progress = parallaxContainer.scrollTop / maxScroll;
-        setScrollProgress(progress); // Update the scroll progress state
-      };
-
-      // Add the scroll event listener
-      parallaxContainer.addEventListener("scroll", handleScroll);
-
-      return () => {
-        // Remove the scroll event listener on cleanup
-        parallaxContainer.removeEventListener("scroll", handleScroll);
-      };
-    }
-  }, []);
-
-  const numSections = project?.projectInfo.length || 0;
+  const scrollYRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ container: scrollYRef });
+  useEscapeKey(() => navigate("/dark-violet-reboot/#portfolio"));
+  const infoSections = project?.projectInfo ? project.projectInfo : [];
+  const projectInfoImages = project?.projectInfoImages
+    ? project.projectInfoImages
+    : [];
 
   return (
     <FlexFull className="bg-[url('https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/aurora.png?quality=60')] bg-center bg-cover">
@@ -76,7 +43,7 @@ export default function PortfolioItemParallax() {
             <VStack
               className="w-93% h-full justify-evenly"
               align="items-start"
-              gap="gap-[0px]"
+              gap="gap-[0px] sm:gap-[1vh]"
             >
               <Text className="text-cyan-300 text-[2vh] leading-[2.3vh] md:text-[2.7vh] md:leading-[3vh] leading-tighter">
                 {project?.title}
@@ -94,7 +61,7 @@ export default function PortfolioItemParallax() {
           </HStackFull>
           <motion.div
             className="h-[0.8vh] rounded-l-none w-full bg-gradient-to-r from-violet-400 via-indigo-400 to-fuchsia-400  absolute bottom-0 left-0"
-            style={{ scaleX: scrollProgress, transformOrigin: "left" }}
+            style={{ scaleX: scrollYProgress, transformOrigin: "left" }}
           />
         </VStackFull>
 
@@ -115,34 +82,61 @@ export default function PortfolioItemParallax() {
           <CenterFull className="absolute top-0 right-0 left-0 pt-[4vh]">
             <FlowerOfLifeOnScroll />
           </CenterFull>
-          <Parallax
-            ref={parallax}
-            // pages={numSections === 3 ? 3.3 : 4.1}
-            pages={2.9}
-            className="hide-scrollbar max-h-[84vh] md:max-h-[82vh] top-[7vh] md:top-[8.5vh] left-0"
+          <FlexFull
+            ref={scrollYRef}
+            className="hide-scrollbar max-h-[84vh] md:max-h-[82vh] overflow-y-auto flex-col z-10"
           >
             {/* PARAGRAPHS  */}
-            <PortfolioItemParallaxBodyMobile
-              project={project as PortfolioItem}
-              infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
-              projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
-            />
-            <PortfolioItemParallaxBodySmall
-              project={project as PortfolioItem}
-              infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
-              projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
-            />
-            <PortfolioItemParallaxBodyMedium
-              project={project as PortfolioItem}
-              infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
-              projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
-            />
-            <PortfolioItemParallaxBodyLarge
-              project={project as PortfolioItem}
-              infoSections={project?.projectInfo as PortfolioItemInfoSection[]}
-              projectInfoImages={project?.projectInfoImages as PortfolioImage[]}
-            />
-          </Parallax>
+            <VStackFull
+              className="h-fit py-[1vh]"
+              gap="gap-[1.5vh] sm:gap-[2vh]"
+            >
+              {/* IMAGES */}
+              <CenterHorizontalFull className="pt-[1.5vh] ">
+                <Flex className="h-fit w-[93vw] max-h-[85vh] xl:w-[85vw]">
+                  <RadialScrollProgress title={project?.title}>
+                    {project?.projectImages.map((image, index) => (
+                      <Flex
+                        key={index}
+                        className="w-fit flex-shrink-0 snap-center snap-always "
+                      >
+                        <RadialProgressiveImage
+                          image={image.src}
+                          title={image.title ? image.title : ""}
+                        />
+                      </Flex>
+                    ))}
+                  </RadialScrollProgress>
+                </Flex>
+              </CenterHorizontalFull>
+              {infoSections[0] && (
+                <PortfolioTextSection projectInfoSection={infoSections[0]} />
+              )}
+              {projectInfoImages[0] && (
+                <CenterHorizontalFull>
+                  <Box className="w-[65vw] border-970-md shadowBroadLoose">
+                    <Image src={projectInfoImages[0].src} alt="project image" />
+                  </Box>
+                </CenterHorizontalFull>
+              )}
+              {infoSections[1] && (
+                <PortfolioTextSection projectInfoSection={infoSections[1]} />
+              )}
+              {projectInfoImages[1] && (
+                <CenterHorizontalFull>
+                  <Box className="w-[65vw] border-970-md shadowBroadLoose">
+                    <Image src={projectInfoImages[1].src} alt="project image" />
+                  </Box>
+                </CenterHorizontalFull>
+              )}
+              {infoSections[2] && (
+                <PortfolioTextSection projectInfoSection={infoSections[2]} />
+              )}
+              {infoSections[3] && (
+                <PortfolioTextSection projectInfoSection={infoSections[3]} />
+              )}
+            </VStackFull>
+          </FlexFull>
         </FlexFull>
       </VStackFull>
     </FlexFull>

@@ -5,6 +5,7 @@ import Box from "~/components/buildingBlocks/box";
 import Button from "~/components/buildingBlocks/button";
 import CenterHorizontalFull from "~/components/buildingBlocks/centerHorizontalFull";
 import Flex from "~/components/buildingBlocks/flex";
+import FlexFull from "~/components/buildingBlocks/flexFull";
 import HStackFull from "~/components/buildingBlocks/hStackFull";
 import IconButton from "~/components/buildingBlocks/iconButton";
 import Image from "~/components/buildingBlocks/image";
@@ -40,7 +41,7 @@ export default function RadialProgressiveImage({
         isOpen={expanded}
         setModalOpen={setExpanded}
         onClose={() => setExpanded(false)}
-        modalSize="w-full h-full md:h-[98vh] md:w-[90vw] lg:w-[80vw]"
+        modalSize="w-full h-fit max-h-screnn md:w-[90vw] lg:w-[80vw]"
         showTopClose={false}
         showBottomClose={false}
         overlayBlur="backdrop-blur-md"
@@ -56,9 +57,15 @@ export default function RadialProgressiveImage({
               <IconButton icon={CloseIcon} onClick={() => setExpanded(false)} />
             </Flex>
           </HStackFull>
-          <Flex className="shadowBroadLoose border-970-md rounded-md max-h-[85vh] max-w-[98vw] md:max-w-[85vw] lg:max-w-[75vw]">
-            <Image src={image} alt={title} className="w-full h-full" />
-          </Flex>
+          <FlexFull className="py-[5vh] xl:py-[3vh] px-[1vh] justify-center">
+            <Flex className="shadowBroadLoose border-970-md rounded-md max-h-[85vh] max-w-[98vw] md:max-w-[85vw] lg:max-w-[75vw]">
+              <Image
+                src={image}
+                alt={title}
+                className="w-full h-full max-h-[75vh] max-w-[95vw]"
+              />
+            </Flex>
+          </FlexFull>
           <CenterHorizontalFull className="h-[4vh] p-[1vh] items-center bg-slate-900/60 border-t-970-md rounded-t-none">
             <Button
               iconLeft={CloseIcon}
