@@ -77,14 +77,20 @@ export default function AboutUsSection({
           </AboutUsAccordion>
         </VStackFull>
         {/* CONTENT XL SCREENS  */}
-        <VStackFull className="hidden xl:flex">
-          <VStack className="md:text-[1.9vh]">
+        <VStackFull className="hidden xl:flex" gap="gap-[1vh]">
+          <VStack
+            className="md:text-[1.9vh] bg-slate-900/80 p-[1vh] shadowBroadNormal"
+            gap="gap-[1.5vh]"
+          >
             <Text>{teamFrame.paragraphs[0]}</Text>
             <Text>{teamFrame.paragraphs[1]}</Text>
             <Text>{teamFrame.paragraphs[2]}</Text>
           </VStack>
 
-          <VStack className="md:text-[1.9vh]">
+          <VStack
+            className="md:text-[1.9vh]  bg-slate-900/80 p-[2vh] shadowBroadNormal"
+            gap="gap-[1.5vh]"
+          >
             <Text>{teamFrame.edu1}</Text>
             <Text>{teamFrame.edu2}</Text>
             <Text>{teamFrame.edu3}</Text>
