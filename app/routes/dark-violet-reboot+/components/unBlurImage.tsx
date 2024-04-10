@@ -50,7 +50,7 @@ export default function UnblurImage({
           top: 0,
           left: 0,
           objectFit: "cover",
-          // opacity: 0.4,
+          opacity: 0.7,
         }}
       />
       {[...Array(rows)].map((_, rowIndex) =>

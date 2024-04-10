@@ -11,7 +11,8 @@ import FlexFull from "~/components/buildingBlocks/flexFull";
 import CenterFull from "~/components/buildingBlocks/centerFull";
 
 export default function IndexTopSection() {
-  const taglineStyles = "text-[2.5vh] md:text-[3vh] text-cyan-300 textShadow";
+  const taglineStyles =
+    "text-[2.1vh] sm:text-[3vh] md:text-[3vh] text-cyan-300 textShadow";
   const taglineContainerStyles = "justify-end lg:justify-start";
   return (
     <LayoutContainer className="relative">
@@ -41,20 +42,20 @@ export default function IndexTopSection() {
         />
       </Box>
 
-      <CenterFull
-        className=" absolute left-0 top-0 w-screen h-screen"
+      <FlexFull
+        className="absolute left-0 top-0 w-screen h-screen justify-center xl:justify-end items-end pb-[10vh] sm:pb-[3vh] md:pb-[2vh] xl:pb-[10vh] pr-[5vh] xxl:pb-[16vh] xxl:pr-[16vh]"
         style={{ zIndex: 0 }}
       >
         <Box className="w-fit h-fit z-20">
           <AnimatedText
             text="What can AI do for you?"
             animationType="inFromBottom"
-            textClassName="text-[3vh] md:text-[4vh] text-slate-900 textGlow"
+            textClassName="text-[3.5vh] sm:text-[4vh] md:text-[4.5vh] lg:text-[4vh] text-slate-900 textGlow"
             overallDuration={1.5}
             overallDelay={1.2}
           />
         </Box>
-      </CenterFull>
+      </FlexFull>
     </LayoutContainer>
   );
 }

@@ -7,20 +7,20 @@ import { PortfolioItem } from "./data";
 import { BackOfCard, FrontOfCard } from "./portfolioCardSides";
 
 export default function ShiftingPortfolioCard({
-  delay = 0.1,
+  delay = 0,
   visibilityThreshold,
   portfolioItem,
   transitionDuration = 0.5,
+  trigger = 0.7,
 }: {
   delay?: number;
   visibilityThreshold?: string;
   portfolioItem: PortfolioItem;
+  trigger?: number;
   transitionDuration?: number;
 }) {
   const cardDimensions = "h-[56vh] w-[41vh]";
   const animationProps = {
-    // initial: { scale: 0 },
-    // whileInView: { scale: 1 },
     initial: { opacity: 0, y: "6vh" },
     whileInView: { opacity: 1, y: 0 },
     whileHover: { scale: 1.02 },
@@ -28,12 +28,11 @@ export default function ShiftingPortfolioCard({
       type: "spring",
       stiffness: 80,
       damping: 25,
-      mass: 0.7,
+      mass: 0.5,
       delay: delay,
     },
   };
 
-  const threshold = visibilityThreshold ? visibilityThreshold : "0px";
   return (
     <motion.div
       initial={animationProps.initial}
@@ -42,9 +41,7 @@ export default function ShiftingPortfolioCard({
       transition={animationProps.transition}
       viewport={{
         once: true,
-        amount: 1.0,
-        // margin: `-${visibilityThreshold} 0px 0px 0px`,
-        margin: `-${threshold} 0px -${threshold} 0px`,
+        amount: trigger,
       }}
     >
       <Box

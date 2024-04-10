@@ -23,7 +23,7 @@ export default function TopMenu() {
     linkUrl: string;
   }) {
     const linkStyle =
-      "w-20% md:text-[2.1vh] lg:text-[2.8vh] xl:text-[3.5vh]  text-cyan-200 textShadow flex justify-center items-center hover:text-fuchsia-200 transition-300 py-[1.5vh] px-[2vh] hover:cursor-pointer";
+      "lg:w-20% md:text-[2.1vh] lg:text-[2.8vh] xl:text-[3.5vh]  text-cyan-200 textShadow flex justify-center items-center hover:text-fuchsia-200 transition-300 py-[1.5vh] lg:px-[2vh] hover:cursor-pointer";
 
     return (
       <motion.div
@@ -65,16 +65,16 @@ export default function TopMenu() {
       <HStack className="text-[3.7vh] sm:text-[4vh] md:text-[4.5vh] lg:text-[6vh] xl:text-[7vh] leading-tighter textShadow kufam-font flex-shrink-0 items-center h-full text-violet-300 ">
         <AnimatedText
           text="DarkViolet.ai"
-          textClassName="text-fuchsia-400 text-[5.7vh] md:text-[5vh] lg:text-[7vh] xl:text-[7.5vh] xxl:text-[8vh] textShadow tracking-wider"
+          textClassName="text-fuchsia-400 text-[5vh] lg:text-[7vh] xl:text-[7.5vh] xxl:text-[8vh] textShadow tracking-wider"
         />
       </HStack>
-      <HStack className="h-full w-[50vw] xl:w-[55vw] items-center hidden md:flex justify-evenly flex-shrink-0 px-[1vh] lg:px-[2vh]">
+      <HStack className="h-full w-[50vw] xl:w-[55vw] items-center hidden lg:flex justify-evenly flex-shrink-0 px-[1vh] lg:px-[2vh]">
         {menuItems.map((item, index) => (
           <LinkText key={index} linkText={item.title} linkUrl={item.to} />
         ))}
       </HStack>
 
-      <Box className="group bg-cyan-400 p-[0.7vh] hover:bg-fuchsia-800 md:p-[1.5vh] shadowBroadLoose border-970-md absolute top-[1.5vh] right-[1vh] md:hidden transition-400 hover:cursor-pointer z-10">
+      <Box className="group bg-cyan-400 p-[0.7vh] hover:bg-fuchsia-800 md:p-[1.5vh] shadowBroadLoose border-970-md absolute top-[1.5vh] md:top-[0.5vh] right-[1vh] lg:hidden transition-400 hover:cursor-pointer z-10">
         <StaggerMenu
           menuItems={menuItems}
           enterFrom="top"
