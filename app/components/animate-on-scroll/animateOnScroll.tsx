@@ -44,7 +44,7 @@ const AnimatedComponent: React.FC<Props> = ({
   children,
   animation = "slideInY",
   duration = 1,
-  triggerPercent = 0.1,
+  triggerPercent = 0.3,
   xOffset = "40vw",
   yOffset = "20vh",
   zoomInFrom = 0.1,
@@ -262,44 +262,15 @@ const AnimatedComponent: React.FC<Props> = ({
     },
   };
 
-  useEffect(() => {
-    const currentRef = ref.current;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // Check runOnce and hasPlayed to decide if we should trigger the animation
-        if (
-          (runOnce && !hasPlayed && entry.intersectionRatio > triggerPercent) ||
-          (!runOnce && entry.intersectionRatio > triggerPercent)
-        ) {
-          setIsVisible(true);
-          if (runOnce) {
-            setHasPlayed(true);
-          }
-        }
-      },
-      { threshold: [0.9, triggerPercent] }
-    );
-
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, [triggerPercent, runOnce, hasPlayed]); // Add runOnce to the dependency array
-
   const variants = animationVariants[animation];
 
   return (
     <motion.div
-      ref={ref}
       initial="hidden"
-      animate={isVisible ? "visible" : "hidden"}
+      whileInView="visible"
+      viewport={{ once: runOnce, amount: triggerPercent }}
       variants={variants}
+      transition={{ duration, delay }}
       className={className}
     >
       {children}

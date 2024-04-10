@@ -6,6 +6,7 @@ import Icon from "~/components/buildingBlocks/icon";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import FlexFull from "~/components/buildingBlocks/flexFull";
 import CenterHorizontalFull from "~/components/buildingBlocks/centerHorizontalFull";
+import { aboutUsElementWidth } from "./aboutUsSection";
 
 interface AccordionProps {
   title: string;
@@ -49,17 +50,18 @@ export default function AboutUsAccordion({
         // onClick={() => setIsOpen(!isOpen)}
         onClick={clickAccordion}
       >
-        <HStackFull
-          className="rounded-none justify-between h-full items-center px-[2vh] sm:px-[4vh] md:px-[10vh] lg:px-[25vh] xl:px-[2vh]"
-          hoverCursor="hover:cursor-pointer"
-        >
-          <Text className="text-md-tight">{title}</Text>
-
-          <Icon
-            icon={isOpen ? BiChevronUp : BiChevronDown}
-            iconClassName="text-[3vh]"
-          />
-        </HStackFull>
+        <CenterHorizontalFull>
+          <HStackFull
+            className={`rounded-none justify-between h-full items-center ${aboutUsElementWidth}`}
+            hoverCursor="hover:cursor-pointer"
+          >
+            <Text className="text-md-tight">{title}</Text>
+            <Icon
+              icon={isOpen ? BiChevronUp : BiChevronDown}
+              iconClassName="text-[3vh]"
+            />
+          </HStackFull>
+        </CenterHorizontalFull>
       </button>
       <div
         ref={contentRef}

@@ -9,7 +9,7 @@ import { BackOfCard, FrontOfCard } from "./portfolioCardSides";
 export default function ShiftingPortfolioCard({
   delay = 0,
   portfolioItem,
-  sideShiftDuration = 0.6,
+  sideShiftDuration = 0.4,
   animateInDuration = 1.5,
   trigger = 0.5,
 }: {
@@ -19,7 +19,7 @@ export default function ShiftingPortfolioCard({
   sideShiftDuration?: number;
   animateInDuration?: number;
 }) {
-  const cardDimensions = "h-[56vh] w-[41vh]";
+  const cardDimensions = "w-[35vh] h-[56vh] sm:w-[41vh]";
   const animationProps = {
     initial: { opacity: 0, y: "13vh" },
     whileInView: { opacity: 1, y: 0 },
