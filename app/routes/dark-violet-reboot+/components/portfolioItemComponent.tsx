@@ -92,8 +92,8 @@ export default function PortfolioItemComponent() {
               gap="gap-[1.5vh] sm:gap-[2vh]"
             >
               {/* IMAGES */}
-              <CenterHorizontalFull className="pt-[1.5vh] ">
-                <Flex className="h-fit w-[93vw] max-h-[85vh] xl:w-[85vw]">
+              <CenterHorizontalFull className="pt-[1vh] ">
+                <Flex className="h-fit w-[93vw] max-h-[84vh] xl:w-[87vw]">
                   <RadialScrollProgress title={project?.title}>
                     {project?.projectImages.map((image, index) => (
                       <Flex
@@ -113,20 +113,36 @@ export default function PortfolioItemComponent() {
                 <PortfolioTextSection projectInfoSection={infoSections[0]} />
               )}
               {projectInfoImages[0] && (
-                <CenterHorizontalFull>
-                  <Box className="w-[65vw] border-970-md shadowBroadLoose">
-                    <Image src={projectInfoImages[0].src} alt="project image" />
-                  </Box>
+                <CenterHorizontalFull className="max-h-[84vh]">
+                  <Flex
+                    className="border-970-md shadowBroadLoose"
+                    style={{ maxWidth: "65vw", maxHeight: "65vh" }}
+                  >
+                    <Image
+                      src={projectInfoImages[0].src}
+                      alt="project image"
+                      className="w-full h-full"
+                      style={{ maxWidth: "65vw", maxHeight: "65vh" }}
+                    />
+                  </Flex>
                 </CenterHorizontalFull>
               )}
               {infoSections[1] && (
                 <PortfolioTextSection projectInfoSection={infoSections[1]} />
               )}
               {projectInfoImages[1] && (
-                <CenterHorizontalFull>
-                  <Box className="w-[65vw] border-970-md shadowBroadLoose">
-                    <Image src={projectInfoImages[1].src} alt="project image" />
-                  </Box>
+                <CenterHorizontalFull className="max-h-[84vh]">
+                  <Flex
+                    className="border-970-md shadowBroadLoose"
+                    style={{ maxWidth: "65vw", maxHeight: "65vh" }}
+                  >
+                    <Image
+                      src={projectInfoImages[1].src}
+                      alt="project image"
+                      className="w-full h-full"
+                      style={{ maxWidth: "65vw", maxHeight: "65vh" }}
+                    />
+                  </Flex>
                 </CenterHorizontalFull>
               )}
               {infoSections[2] && (
