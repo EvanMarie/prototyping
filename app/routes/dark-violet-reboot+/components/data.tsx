@@ -211,6 +211,80 @@ export const Projects = [
   // Do A Thing
   {
     id: 3,
+    title: "MothRamen",
+    description: "",
+    link: "https://remix-template.darkviolet.ai/design/demos/ramen-bar",
+    github: "https://github.com/EvanMarie/remix-vite-tailwind",
+    projectImages: [
+      {
+        src: "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/moth-ramen-main.png",
+        title: "MothRamen - Welcome Banner",
+      },
+      {
+        src: "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/moth-ramen-images.png",
+        title: "MothRamen - Parallax Images",
+      },
+      {
+        src: "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/moth-ramen-menu.png",
+        title: "MothRamen - Menu",
+      },
+
+      {
+        src: "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/moth-ramen-merch-banner.png",
+        title: "MothRamen - Merch Banner",
+      },
+      {
+        src: "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/moth-ramen-merch-item-1.png",
+        title: "MothRamen - Merch Page",
+      },
+      {
+        src: "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/moth-ramen-merch-item-2.png",
+        title: "MothRamen - Sake Set",
+      },
+      {
+        src: "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/moth-ramen-merch-item-3.png",
+        title: "MothRamen - Women's Tank",
+      },
+      {
+        src: "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/moth-ramen-merch-item-4.png",
+        title: "MothRamen - Women's Hoodie",
+      },
+    ],
+
+    projectInfo: [
+      {
+        heading: "Immersive Dining Experience",
+        description:
+          "Step into the captivating world of MothRamen, where the essence of a traditional Japanese ramen bar comes to life through a stunning parallax scrolling website. As you navigate through the site, you'll be transported to the heart of an urban, culturally rich dining experience. The carefully crafted design elements, from the vibrant colors to the intricate illustrations, work in harmony to create an atmosphere that is both inviting and authentic. Whether you're a ramen enthusiast or simply curious about this beloved Japanese cuisine, MothRamen's immersive online presence will leave you craving for more. Get ready to embark on a visual journey that showcases the artistry and passion behind every bowl of ramen served at this stylish establishment.",
+      },
+      {
+        heading: "Mouthwatering Menu Showcase",
+        description:
+          "Discover the tantalizing offerings of MothRamen through its interactive and visually stunning menu showcase. From the Emperor's Noodle Nest, a luxurious bowl featuring succulent slices of pork belly and perfectly cooked egg, to the Shogun's Sushi Ramen, a creative fusion of traditional ramen and fresh sushi ingredients, each dish is a testament to the chef's creativity and commitment to quality. The menu section of the website is designed to engage and entice, with high-resolution images and detailed descriptions that bring the flavors to life. Whether you're a fan of classic shoyu ramen or adventurous enough to try the spicy miso variety, MothRamen's online menu will have you eagerly planning your next visit to this trendy ramen bar.",
+      },
+      {
+        heading: "Cutting-Edge Web Development",
+        description:
+          "MothRamen's website is a testament to the power of combining innovative design with cutting-edge web development techniques. Built using state-of-the-art technologies such as React, TypeScript, Tailwind CSS, and Framer Motion, the site offers a seamless and responsive user experience across both mobile and large screens. The parallax scrolling effect adds depth and dynamism to the visual narrative, while the intuitive navigation ensures that visitors can easily explore the restaurant's offerings. The use of modals for the merchandise section allows for detailed product views without disrupting the overall flow of the site. By leveraging these technologies, MothRamen has created a website that not only showcases its unique dining experience but also sets a new standard for restaurant web design.",
+      },
+    ],
+
+    projectInfoImages: [
+      {
+        src: "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/moth-ramen-images.png",
+        dimension: "w-45%",
+      },
+      {
+        src: "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/moth-ramen-merch-item-1.png",
+        dimension: "w-40%",
+      },
+    ],
+    thumbnail:
+      "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/moth-ramen-merch-banner.png",
+  },
+  // Do A Thing
+  {
+    id: 4,
     title: "Do-A-Thing",
     description:
       "Productivity social media to track, share, and celebrate accomplishments.",
@@ -320,7 +394,7 @@ export const Projects = [
   },
   // Remix/Tailwind
   {
-    id: 4,
+    id: 5,
     title: "Remix Launchpad",
     description: "All in one launchpad for Remix with Vite and Tailwind CSS.",
     link: "https://remix-template.darkviolet.ai/",
@@ -441,7 +515,7 @@ export const Projects = [
   },
   // IHeartComponents
   {
-    id: 5,
+    id: 6,
     title: "I💜Components",
     description: "Component driven web design.",
     link: "https://www.iheartcomponents.com",
@@ -534,7 +608,7 @@ export const Projects = [
   },
   // Dreams AI
   {
-    id: 6,
+    id: 7,
     title: "Dreams AI",
     description:
       "Thoughtful, profound, and provaocative dreams interpretation by AI.",
@@ -589,7 +663,7 @@ export const Projects = [
       "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/dreams-index.png",
   }, // Aetherial Role Play
   {
-    id: 7,
+    id: 8,
     title: "Aethereal Role Play",
     description:
       "Role play and story creation with the help of Dark Violet and AI.",
