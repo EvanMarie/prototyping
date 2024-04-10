@@ -820,8 +820,8 @@ export const TeamFrames = [
     name: "Evan Marie Carr",
     role: "UI / UX &  Frontend Developer",
     edu1: "Postgrad - Universität Mozarteum",
-    edu2: "Masters - Georgia State University",
-    edu3: "Bachelors - Vanderbilt University",
+    edu2: "Masters Degree - Georgia State University",
+    edu3: "Bachelors Degree - Vanderbilt University",
     image:
       "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/evan-headshot.png" +
       teamImageSettings,
@@ -837,9 +837,9 @@ export const TeamFrames = [
   {
     name: "Dustin W. Carr",
     role: "Backend Developer & AI Specialist",
-    edu1: "PhD - Cornell University",
-    edu2: "Masters - Cornell University",
-    edu3: "Bachelors - Oklahoma State",
+    edu1: "Ph.D. in Physics - Cornell University",
+    edu2: "Master of Science in Physics - Cornell University",
+    edu3: "Bachelor of Science in Mathematics - Oklahoma State",
     image:
       "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/dustin-headshot.png" +
       teamImageSettings,
