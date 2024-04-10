@@ -109,7 +109,7 @@ export const Projects = [
       },
     ],
     thumbnail:
-      "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/chatter-characters-main.png",
+      "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/chatter-front.png",
   },
   // Dark Violet Art
   {
@@ -206,7 +206,7 @@ export const Projects = [
       },
     ],
     thumbnail:
-      "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/dvart-mainfeed.png",
+      "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/dvart-login.png",
   },
   // Do A Thing
   {
@@ -316,7 +316,7 @@ export const Projects = [
       },
     ],
     thumbnail:
-      "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/dat-viewbadge.png",
+      "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/dat-index.png",
   },
   // Remix/Tailwind
   {
@@ -684,7 +684,7 @@ export const Projects = [
       },
     ],
     thumbnail:
-      "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/am-storyplay.png",
+      "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/am-login.png",
   },
   // RealConnection.Life
   // {
