@@ -74,7 +74,7 @@ export default function TopMenu() {
         ))}
       </HStack>
 
-      <Box className="group bg-cyan-400 p-[0.7vh] hover:bg-fuchsia-800 md:p-[1.5vh] shadowBroadLoose border-970-md absolute top-[1.5vh] right-[1vh] md:hidden transition-400 hover:cursor-pointer">
+      <Box className="group bg-cyan-400 p-[0.7vh] hover:bg-fuchsia-800 md:p-[1.5vh] shadowBroadLoose border-970-md absolute top-[1.5vh] right-[1vh] md:hidden transition-400 hover:cursor-pointer z-10">
         <StaggerMenu
           menuItems={menuItems}
           enterFrom="top"

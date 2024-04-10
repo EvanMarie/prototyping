@@ -191,6 +191,7 @@ export default function StaggerMenu({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
+              style={{ zIndex: 30 }}
             >
               <motion.div
                 className={`fixed ${menuPosition}`}

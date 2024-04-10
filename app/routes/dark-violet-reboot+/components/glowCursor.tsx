@@ -41,7 +41,7 @@ export default function GlowCursor() {
         height: "70vh",
         borderRadius: "50%",
         background:
-          "radial-gradient(circle, rgba(140, 19, 240, 0.8) 0%, rgba(140, 19, 240, 0.6) 25%, rgba(140, 19, 240, 0) 50%, rgba(140, 19, 240, 0) 80%, transparent 100%)",
+          "radial-gradient(circle, rgba(140, 19, 240, 0.6) 0%, rgba(140, 19, 240, 0.4) 25%, rgba(140, 19, 240, 0) 50%, rgba(140, 19, 240, 0) 80%, transparent 100%)",
         opacity: 0.3,
         transform: "translate(-50%, -50%)",
         transition: "opacity 0.3s ease-in-out",

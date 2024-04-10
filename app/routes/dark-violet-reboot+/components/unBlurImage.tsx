@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Box from "~/components/buildingBlocks/box";
+import Flex from "~/components/buildingBlocks/flex";
 
 interface UnblurImageProps {
   imageUrl: string;
@@ -42,12 +44,13 @@ export default function UnblurImage({
     <div className={`relative ${dimensions}`} style={{ overflow: "hidden" }}>
       <img
         src={imageUrl}
-        alt=""
+        alt="unblur image"
         style={{
           position: "absolute",
           top: 0,
           left: 0,
           objectFit: "cover",
+          // opacity: 0.4,
         }}
       />
       {[...Array(rows)].map((_, rowIndex) =>
