@@ -8,6 +8,8 @@ import Image from "~/components/buildingBlocks/image";
 import CenterHorizontalFull from "~/components/buildingBlocks/centerHorizontalFull";
 import VStack from "~/components/buildingBlocks/vStack";
 import Text from "~/components/buildingBlocks/text";
+import VStackFull from "~/components/buildingBlocks/vStackFull";
+import { useState } from "react";
 
 export default function AboutUsSection({
   teamMember,
@@ -16,6 +18,19 @@ export default function AboutUsSection({
   teamMember: TeamMember;
   teamFrame: TeamFrame;
 }) {
+  const [accordioOneOpen, setAccordionOneOpen] = useState(false);
+  const [accordioTwoOpen, setAccordionTwoOpen] = useState(false);
+
+  const handleClickAccordioOne = () => {
+    setAccordionTwoOpen(false);
+    setAccordionOneOpen(!accordioOneOpen);
+  };
+
+  const handleClickAccordioTwo = () => {
+    setAccordionOneOpen(false);
+    setAccordionTwoOpen(!accordioTwoOpen);
+  };
+
   return (
     <FlexFull className="justify-center p-[1vh]">
       <FlexFull className="flex-col xl:flex-row p-[1vh]">
@@ -36,9 +51,45 @@ export default function AboutUsSection({
             </Text>
           </VStack>
         </CenterHorizontalFull>
-        <AboutUsAccordion title="Education">
-          <VStack>{teamFrame.edu1}</VStack>
-        </AboutUsAccordion>
+        {/* CONTENT SMALL SCREENS TO LARGE  */}
+        <VStackFull className="flex xl:hidden">
+          <AboutUsAccordion
+            title="About"
+            isOpen={accordioOneOpen}
+            clickAccordion={handleClickAccordioOne}
+          >
+            <VStack className="md:text-[1.9vh]">
+              <Text>{teamFrame.paragraphs[0]}</Text>
+              <Text>{teamFrame.paragraphs[1]}</Text>
+              <Text>{teamFrame.paragraphs[2]}</Text>
+            </VStack>
+          </AboutUsAccordion>
+          <AboutUsAccordion
+            title="Education"
+            isOpen={accordioTwoOpen}
+            clickAccordion={handleClickAccordioTwo}
+          >
+            <VStack className="md:text-[1.9vh]">
+              <Text>{teamFrame.edu1}</Text>
+              <Text>{teamFrame.edu2}</Text>
+              <Text>{teamFrame.edu3}</Text>
+            </VStack>
+          </AboutUsAccordion>
+        </VStackFull>
+        {/* CONTENT XL SCREENS  */}
+        <VStackFull className="hidden xl:flex">
+          <VStack className="md:text-[1.9vh]">
+            <Text>{teamFrame.paragraphs[0]}</Text>
+            <Text>{teamFrame.paragraphs[1]}</Text>
+            <Text>{teamFrame.paragraphs[2]}</Text>
+          </VStack>
+
+          <VStack className="md:text-[1.9vh]">
+            <Text>{teamFrame.edu1}</Text>
+            <Text>{teamFrame.edu2}</Text>
+            <Text>{teamFrame.edu3}</Text>
+          </VStack>
+        </VStackFull>
       </FlexFull>
     </FlexFull>
   );

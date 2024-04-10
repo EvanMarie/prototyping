@@ -785,7 +785,7 @@ export type TeamMember = {
 export const TeamMembers = [
   {
     name: "Evan Marie Carr",
-    role: "UI / UX &  Frontend Developer",
+    role: "Co-Founder, UI / UX & Frontend",
     linkedin: "https://www.linkedin.com/in/evanmarie/",
     github: "https://github.com/EvanMarie",
     headshot:
@@ -794,7 +794,7 @@ export const TeamMembers = [
   },
   {
     name: "Dustin W. Carr",
-    role: "Backend Developer & AI Specialist",
+    role: "Co-Founder, AI Specialist, Backend",
     linkedin: "https://www.linkedin.com/in/dustin-carr-5ab1762/",
     github: "https://github.com/dwcarr",
     headshot:
@@ -829,6 +829,7 @@ export const TeamFrames = [
       "Evan Marie is a dynamic technological and artistic force. She's a proficient programmer, a creative designer, and an adept developer who's right at home with the latest advancements in web and app development, machine learning, and artificial intelligence.",
       "Evan thrives working with powerful development tools, her current favorite being Remix with TailwindCSS. These advanced frameworks are her go-to resources, enabling her to turn abstract ideas into interactive, user-friendly digital experiences. With a strong command of Javascript, Typescript, JSX, HTML, and CSS, she crafts solutions that blend innovation with practicality, constructing digital experiences that are both engaging and intuitive and fully responsive from the smallest mobile device to Ultra HD 4K displays.",
       "She also loves programming in Python and has extensive experience working with Pandas, Numpy, and Scikit-learn, just to name a few. To Evan, data science is a world of intricate puzzles waiting to be solved and views machine learning, natural language processing, and computer vision as a thrilling frontier of innovation.",
+      "In this exciting technological landscape, Evan continues to broaden her horizons, treating each new project as an opportunity to further her comprehension and skills and to push the boundaries of what's possible. In short, Evan Marie Carr is a blend of artistic creativity and technical proficiency, constantly pushing the boundaries of what she can learn and achieve.",
     ],
     link: "https://www.evanmarie.com",
     linkDescription: "Evan Marie's Blog",
@@ -845,6 +846,7 @@ export const TeamFrames = [
     paragraphs: [
       "Dustin W. Carr, Ph.D., is a talented engineer and inventor aiming to channel his extensive technical expertise in the realm of artificial intelligence. Owning a portfolio of over 25 issued patents across diverse fields, he has extensive skills in innovation and effective problem-solving. Proficient in a wide range of programming languages including Python, Node, JavaScript, Remix, Rust, C, and C++, he has the versatility to develop robust software solutions and is particularly skilled at incorporating AI into the development process.",
       "An influential figure in the fields of MEMS, nanofabrication, and optical sensors, Dustin has held significant leadership roles, demonstrating expertise in design, assembly, and testing of intricate systems, significantly boosting operational efficiency and productivity in numerous organizations. Dustin has a distinguished academic foundation with a Ph.D. in Physics from Cornell University. To the AI field, Dustin brings a comprehensive suite of expertise and a proven trajectory of innovation and leadership. His ambitious pursuit of opportunities in AI and his unparalleled skill set position him uniquely to create and steer groundbreaking solutions in the industry.",
+      "Dustin's distinguished career is underpinned by a robust academic foundation with a Ph.D. in Physics from Cornell University and a B.S. in Mathematics from Oklahoma State University. As he pivots into the AI field, Dustin brings a comprehensive suite of expertise and a proven trajectory of innovation and leadership. His ambitious pursuit of opportunities in AI and his unparalleled skill set position him uniquely to create and steer groundbreaking solutions in the industry.",
     ],
   },
   {
