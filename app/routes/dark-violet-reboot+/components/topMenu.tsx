@@ -14,6 +14,9 @@ import AnimatedTitleDemo from "~/routes/design+/components/animatedTextDemo";
 import AnimateInPlaceText from "~/components/specialty/animateInPlaceText";
 import Image from "~/components/buildingBlocks/image";
 
+export const linkStyle =
+  "lg:w-20% md:text-[2.1vh] lg:text-[2.8vh] xl:text-[3.5vh]  text-cyan-200 textShadow flex justify-center items-center hover:text-fuchsia-200 transition-300 py-[1.5vh] lg:px-[2vh] hover:cursor-pointer";
+
 export default function TopMenu() {
   function LinkText({
     linkText,
@@ -22,9 +25,6 @@ export default function TopMenu() {
     linkText: string;
     linkUrl: string;
   }) {
-    const linkStyle =
-      "lg:w-20% md:text-[2.1vh] lg:text-[2.8vh] xl:text-[3.5vh]  text-cyan-200 textShadow flex justify-center items-center hover:text-fuchsia-200 transition-300 py-[1.5vh] lg:px-[2vh] hover:cursor-pointer";
-
     return (
       <motion.div
         className={linkStyle}
@@ -68,7 +68,7 @@ export default function TopMenu() {
           textClassName="text-fuchsia-400 text-[5vh] lg:text-[7vh] xl:text-[7.5vh] xxl:text-[8vh] textShadow tracking-wider"
         />
       </HStack>
-      <HStack className="h-full w-[50vw] xl:w-[55vw] items-center hidden lg:flex justify-evenly flex-shrink-0 px-[1vh] lg:px-[2vh]">
+      <HStack className="h-full w-[50vw] xl:w-[55vw] items-center hidden lg:flex justify-evenly flex-shrink-0 px-[1vh] lg:px-[2vh] z-10">
         {menuItems.map((item, index) => (
           <LinkText key={index} linkText={item.title} linkUrl={item.to} />
         ))}

@@ -37,7 +37,7 @@ export default function IndexTopSection() {
         <UnblurImage
           rows={3}
           columns={3}
-          imageUrl="/images/dark_violet/headLightBulbColored.png"
+          imageUrl="https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/object/public/darkVioletPublic/landing/dark_violet_main.png"
           dimensions="h-[96vw] w-[96vw] sm:h-[85vw] sm:w-[85vw] md:h-[66vh] md:w-[65vh]"
         />
       </Box>

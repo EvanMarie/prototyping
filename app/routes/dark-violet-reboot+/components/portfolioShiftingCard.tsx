@@ -8,28 +8,34 @@ import { BackOfCard, FrontOfCard } from "./portfolioCardSides";
 
 export default function ShiftingPortfolioCard({
   delay = 0,
-  visibilityThreshold,
   portfolioItem,
-  transitionDuration = 0.5,
-  trigger = 0.7,
+  sideShiftDuration = 0.6,
+  animateInDuration = 1.5,
+  trigger = 0.5,
 }: {
   delay?: number;
-  visibilityThreshold?: string;
   portfolioItem: PortfolioItem;
   trigger?: number;
-  transitionDuration?: number;
+  sideShiftDuration?: number;
+  animateInDuration?: number;
 }) {
   const cardDimensions = "h-[56vh] w-[41vh]";
   const animationProps = {
-    initial: { opacity: 0, y: "6vh" },
+    initial: { opacity: 0, y: "13vh" },
     whileInView: { opacity: 1, y: 0 },
     whileHover: { scale: 1.02 },
     transition: {
-      type: "spring",
-      stiffness: 80,
-      damping: 25,
-      mass: 0.5,
-      delay: delay,
+      opacity: {
+        duration: animateInDuration * 0.5,
+        delay: delay,
+      },
+      y: {
+        type: "spring",
+        stiffness: 80,
+        damping: 25,
+        mass: 0.25,
+        delay: delay,
+      },
     },
   };
 
@@ -51,7 +57,7 @@ export default function ShiftingPortfolioCard({
           className="absolute inset-0"
           animate={{ opacity: 1 }}
           whileHover={{ opacity: 0 }}
-          transition={{ duration: transitionDuration }}
+          transition={{ duration: sideShiftDuration }}
         >
           <FlexFull className="h-full p-[1vh]">
             <FrontOfCard portfolioItem={portfolioItem as PortfolioItem} />
@@ -62,7 +68,7 @@ export default function ShiftingPortfolioCard({
           initial={{ opacity: 0 }}
           animate={{ opacity: 0 }}
           whileHover={{ opacity: 1 }}
-          transition={{ duration: transitionDuration }}
+          transition={{ duration: sideShiftDuration }}
         >
           <Center className="h-full w-full shadowBroadLoose">
             <BackOfCard portfolioItem={portfolioItem} />

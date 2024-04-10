@@ -26,7 +26,7 @@ export function FrontOfCard({
             className="w-full"
           />
         </Flex>
-        <VStackFull className="bg-slate-900/90 py-[0.5vh] px-[1vh] h-20% shadowBroadLoose">
+        <VStackFull className="bg-slate-900 bg-gradient-to-t from-indigo-800-50 to-fuchsia-900/50 py-[0.5vh] px-[1vh] h-20% shadowBroadLoose">
           <Text className=" text-[2.3vh] textShadow text-fuchsia-300">
             {portfolioItem.title}
           </Text>

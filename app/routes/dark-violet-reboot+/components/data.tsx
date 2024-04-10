@@ -208,11 +208,12 @@ export const Projects = [
     thumbnail:
       "https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/dvart-login.png",
   },
-  // Do A Thing
+  // Moth Ramen
   {
     id: 3,
     title: "MothRamen",
-    description: "",
+    description:
+      "Cutting edge site design for this stylish and culturally immersive ramen bar.",
     link: "https://remix-template.darkviolet.ai/design/demos/ramen-bar",
     github: "https://github.com/EvanMarie/remix-vite-tailwind",
     projectImages: [
