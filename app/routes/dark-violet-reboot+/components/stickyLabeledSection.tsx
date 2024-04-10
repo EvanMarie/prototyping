@@ -41,7 +41,7 @@ export default function StickyLabeledSection({
   spacerHeight?: string;
 }) {
   return (
-    <VStackFull className="">
+    <VStackFull className="" focusable={false}>
       <FlexFull className={`${spacerHeight} text-transparent`}>spacer</FlexFull>
       <HStackFull
         gap={menuGap}

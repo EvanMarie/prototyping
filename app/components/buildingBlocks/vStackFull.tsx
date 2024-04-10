@@ -7,6 +7,7 @@ export default function VStackFull({
   onClick,
   style = {},
   align = "items-center",
+  focusable = true,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -14,6 +15,7 @@ export default function VStackFull({
   style?: React.CSSProperties;
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   align?: "items-start" | "items-center" | "items-end" | string;
+  focusable?: boolean;
 }) {
   return (
     <VStack
@@ -21,6 +23,7 @@ export default function VStackFull({
       onClick={onClick}
       style={style}
       align={align}
+      focusable={focusable}
     >
       {children}
     </VStack>

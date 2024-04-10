@@ -7,9 +7,9 @@ interface VStackProps {
   align?: string;
   className?: string;
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  focusable?: boolean; // New prop to control focusability
 }
 
-// Use React.forwardRef to forward the ref to the div element
 const VStack = React.forwardRef<HTMLDivElement, VStackProps>(
   (
     {
@@ -19,6 +19,7 @@ const VStack = React.forwardRef<HTMLDivElement, VStackProps>(
       style = {},
       align = "items-center",
       onClick,
+      focusable = true, // Default value is true
     },
     ref
   ) => {
@@ -26,8 +27,9 @@ const VStack = React.forwardRef<HTMLDivElement, VStackProps>(
       <div
         onClick={onClick}
         className={`flex flex-col ${align} ${gap} ${className}`}
-        ref={ref} // The forwarded ref is applied here
+        ref={ref}
         style={style}
+        tabIndex={focusable ? 0 : -1} // Conditionally apply tabindex based on focusable prop
       >
         {children}
       </div>
@@ -35,6 +37,6 @@ const VStack = React.forwardRef<HTMLDivElement, VStackProps>(
   }
 );
 
-VStack.displayName = "VStack"; // Assigning a display name for debugging purposes
+VStack.displayName = "VStack";
 
 export default VStack;

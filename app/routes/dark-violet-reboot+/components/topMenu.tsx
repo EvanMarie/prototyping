@@ -23,13 +23,13 @@ export default function TopMenu() {
     linkUrl: string;
   }) {
     const linkStyle =
-      "w-20% md:text-[2.1vh] lg:text-[2.8vh] xl:text-[3.5vh]  text-cyan-200 textShadow flex justify-center items-center  hover:text-fuchsia-600 transition-300";
+      "w-20% md:text-[2.1vh] lg:text-[2.8vh] xl:text-[3.5vh]  text-cyan-200 textShadow flex justify-center items-center hover:text-fuchsia-200 transition-300 py-[1.5vh] px-[2vh] hover:cursor-pointer";
 
     return (
       <motion.div
         className={linkStyle}
         whileTap={{ scale: 0.8 }}
-        whileHover={{ scale: 1.1, rotate: -3 }}
+        whileHover={{ scale: 1.2, rotate: -6 }}
         transition={{ duration: 0.2 }}
       >
         <NavLink to={linkUrl}>{linkText}</NavLink>

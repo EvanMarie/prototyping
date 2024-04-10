@@ -17,7 +17,7 @@ export default function AboutUsAccordion({
   children,
   //   titleStyles = "bg-slate-900 bg-gradient-to-b from-violet-600/30 via-indigo-700/30 to-fuchsia-700/30 hover:bg-slate-600 transition-400 text-col-100 textShadow",
   titleStyles = "text-slate-100 textShadow",
-  contentStyles = "bg-col-990 text-col-100 textShadow",
+  contentStyles = "bg-slate-900/70 text-col-100 textShadow",
 }: AccordionProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [maxHeight, setMaxHeight] = useState("0px");
@@ -38,11 +38,11 @@ export default function AboutUsAccordion({
       align="items-start"
     >
       <button
-        className={`w-full text-left px-[1.5vh] py-[1vh] ${titleStyles} transition-300 rounded-none`}
+        className={`w-full text-left p-[1vh]  ${titleStyles} transition-300 rounded-none`}
         onClick={() => setIsOpen(!isOpen)}
       >
         <HStackFull
-          className="rounded-none justify-between"
+          className="rounded-none justify-between h-full items-center"
           hoverCursor="hover:cursor-pointer"
         >
           <Text className="text-md-tight">{title}</Text>
