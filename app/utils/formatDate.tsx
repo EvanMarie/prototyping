@@ -2,10 +2,12 @@ export default function FormatDate({
   inputDate,
   format = "number",
   dateOnly = false,
+  short = false,
 }: {
   inputDate: Date | string | null | undefined;
   format?: "text" | "number";
   dateOnly?: boolean;
+  short?: boolean;
 }): string {
   if (!inputDate) {
     return "Invalid Date";
@@ -32,7 +34,7 @@ export default function FormatDate({
   } else {
     // Return the date in text format as it currently does
     const datePart = new Intl.DateTimeFormat("en-US", {
-      month: "short",
+      month: short ? "short" : "long",
       day: "2-digit",
       year: "numeric",
     }).format(date);

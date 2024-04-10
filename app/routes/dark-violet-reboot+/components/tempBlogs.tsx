@@ -2,7 +2,7 @@ import { GetRandomImageString } from "./getRandomImage";
 
 export type BlogPost = {
   id: string;
-  date: string;
+  date: Date;
   title: string;
   author: string;
   tags: string[];
@@ -14,7 +14,7 @@ const blogImage = GetRandomImageString({ height: 500, width: 500 });
 export const dummyBlogs = [
   {
     id: "1",
-    date: "2024-04-01",
+    date: new Date().toISOString(),
     title: "The Future of UI/UX Design: Trends to Watch",
     author: "Evan Marie Carr",
     tags: ["UI/UX", "Design", "Trends"],
@@ -29,7 +29,7 @@ export const dummyBlogs = [
   },
   {
     id: "2",
-    date: "2024-04-03",
+    date: new Date().toISOString(),
     title: "The Ethical Implications of Artificial Intelligence",
     author: "Dustin Carr",
     tags: ["Artificial Intelligence", "Ethics", "Technology"],
@@ -44,7 +44,7 @@ export const dummyBlogs = [
   },
   {
     id: "3",
-    date: "2024-04-05",
+    date: new Date().toISOString(),
     title: "The Role of Physics in Understanding the Universe",
     author: "Dustin Carr",
     tags: ["Physics", "Science", "Universe"],
@@ -59,7 +59,7 @@ export const dummyBlogs = [
   },
   {
     id: "4",
-    date: "2024-04-07",
+    date: new Date().toISOString(),
     title: "Designing for Emotion: Creating Memorable User Experiences",
     author: "Evan Marie Carr",
     tags: ["UI/UX", "Design", "Emotion"],
@@ -74,7 +74,7 @@ export const dummyBlogs = [
   },
   {
     id: "5",
-    date: "2024-04-09",
+    date: new Date().toISOString(),
     title:
       "The Future of Artificial Intelligence: Opportunities and Challenges",
     author: "Dustin Carr",
@@ -90,7 +90,7 @@ export const dummyBlogs = [
   },
   {
     id: "6",
-    date: "2024-04-11",
+    date: new Date().toISOString(),
     title: "The Fascinating World of Quantum Physics",
     author: "Dustin Carr",
     tags: ["Physics", "Quantum", "Science"],
@@ -105,7 +105,7 @@ export const dummyBlogs = [
   },
   {
     id: "7",
-    date: "2024-04-13",
+    date: new Date().toISOString(),
     title: "The Psychology of User Experience: Understanding User Behavior",
     author: "Evan Marie Carr",
     tags: ["UI/UX", "Psychology", "User Behavior"],
@@ -120,7 +120,7 @@ export const dummyBlogs = [
   },
   {
     id: "8",
-    date: "2024-04-15",
+    date: new Date().toISOString(),
     title:
       "The Ethics of Artificial Intelligence: Balancing Innovation and Responsibility",
     author: "Dustin Carr",
@@ -136,7 +136,7 @@ export const dummyBlogs = [
   },
   {
     id: "9",
-    date: "2024-04-17",
+    date: new Date().toISOString(),
     title:
       "The Wonders of Astrophysics: Exploring the Mysteries of the Universe",
     author: "Dustin Carr",
@@ -152,7 +152,7 @@ export const dummyBlogs = [
   },
   {
     id: "10",
-    date: "2024-04-19",
+    date: new Date().toISOString(),
     title: "The Future of Mobile App Development: Trends and Innovations",
     author: "Evan Marie Carr",
     tags: ["App Development", "Mobile", "Trends"],
@@ -167,7 +167,7 @@ export const dummyBlogs = [
   },
   {
     id: "11",
-    date: "2024-04-21",
+    date: new Date().toISOString(),
     title: "Designing User-Centric Mobile Apps: Best Practices and Principles",
     author: "Evan Marie Carr",
     tags: ["App Development", "User Experience", "Design"],
@@ -182,7 +182,7 @@ export const dummyBlogs = [
   },
   {
     id: "12",
-    date: "2024-04-23",
+    date: new Date().toISOString(),
     title: "The Role of Agile Methodologies in Mobile App Development",
     author: "Dustin Carr",
     tags: ["App Development", "Agile", "Methodologies"],

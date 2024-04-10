@@ -25,7 +25,7 @@ export default function IndexBlogSection() {
         triggerPercent={0.3}
       >
         {" "}
-        <ShiftingBlogPanel blog={tempBlog as BlogPost} />
+        <ShiftingBlogPanel blog={tempBlog} />
         {/* <ShiftingComponents
               componentArray={[
                 <Center className="bg-violet-400 text-slate-100 h-[40vh] w-[40vh]">
