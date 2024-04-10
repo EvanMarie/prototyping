@@ -24,11 +24,9 @@ export default function IndexBlogSection() {
         runOnce={true}
         triggerPercent={0.3}
       >
-        <CenterFull className="h-fit xl:h-screen py-[2vh] px-[1vh] sm:px-[2vh] justify-center">
-          {" "}
-          <FlexFull className="h-fit lg:h-screen">
-            <ShiftingBlogPanel blog={tempBlog as BlogPost} />
-            {/* <ShiftingComponents
+        {" "}
+        <ShiftingBlogPanel blog={tempBlog as BlogPost} />
+        {/* <ShiftingComponents
               componentArray={[
                 <Center className="bg-violet-400 text-slate-100 h-[40vh] w-[40vh]">
                   One
@@ -41,8 +39,6 @@ export default function IndexBlogSection() {
                 </Center>,
               ]}
             /> */}
-          </FlexFull>
-        </CenterFull>
       </AnimatedComponent>
     </StickyLabeledSection>
   );

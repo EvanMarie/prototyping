@@ -55,7 +55,7 @@ const ScrollToTop: React.FC<ScrollToTopProps> = ({ scrollContainerRef }) => {
   };
 
   const buttonStyle =
-    "bg-cyan-300 hover:bg-cyan-800 transition-400 hover:metallicEdgesMd z-10 cursor-pointer group p-[0.5vh] md:p-[0.3vh]";
+    "bg-cyan-300 hover:bg-fuchsia-800 transition-400 hover:metallicEdgesSm z-10 cursor-pointer group p-[0.5vh] md:p-[0.3vh]";
   const containerStyle = "bg-slate-800/80 p-[1vh] shadowBroadNormal";
   const iconStyle =
     "text-slate-900 text-[2.5] md:text-[3vh] group-hover:text-slate-100 transition-400";

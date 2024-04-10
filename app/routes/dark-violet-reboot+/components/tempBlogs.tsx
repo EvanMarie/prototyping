@@ -1,11 +1,16 @@
+import { GetRandomImageString } from "./getRandomImage";
+
 export type BlogPost = {
   id: string;
   date: string;
   title: string;
   author: string;
   tags: string[];
+  image: string;
   paragraphs: string[];
 };
+
+const blogImage = GetRandomImageString({ height: 500, width: 500 });
 export const dummyBlogs = [
   {
     id: "1",
@@ -13,6 +18,7 @@ export const dummyBlogs = [
     title: "The Future of UI/UX Design: Trends to Watch",
     author: "Evan Marie Carr",
     tags: ["UI/UX", "Design", "Trends"],
+    image: blogImage,
     paragraphs: [
       "As technology continues to evolve at a rapid pace, the field of UI/UX design is undergoing significant changes. Designers must stay up-to-date with the latest trends and best practices to create engaging and user-friendly experiences. In this blog post, we'll explore some of the most exciting trends shaping the future of UI/UX design.",
       "One major trend is the increasing use of artificial intelligence (AI) and machine learning (ML) in design. AI-powered tools can help designers create more personalized and adaptive user interfaces that cater to individual user preferences and behaviors. Additionally, AI can automate repetitive tasks, freeing up designers to focus on more creative and strategic aspects of their work.",
@@ -27,6 +33,7 @@ export const dummyBlogs = [
     title: "The Ethical Implications of Artificial Intelligence",
     author: "Dustin Carr",
     tags: ["Artificial Intelligence", "Ethics", "Technology"],
+    image: blogImage,
     paragraphs: [
       "As artificial intelligence (AI) becomes increasingly sophisticated and ubiquitous, it raises a host of ethical questions and concerns. How can we ensure that AI systems are developed and used in ways that benefit humanity as a whole, rather than exacerbating existing inequalities and biases? In this blog post, we'll explore some of the key ethical implications of AI and discuss strategies for addressing them.",
       "One major ethical concern surrounding AI is the potential for bias and discrimination. If AI systems are trained on biased data or designed with biased algorithms, they can perpetuate and even amplify existing social inequalities. For example, facial recognition algorithms have been shown to perform less accurately on people with darker skin tones, leading to potential misidentification and false arrests.",
@@ -41,6 +48,7 @@ export const dummyBlogs = [
     title: "The Role of Physics in Understanding the Universe",
     author: "Dustin Carr",
     tags: ["Physics", "Science", "Universe"],
+    image: blogImage,
     paragraphs: [
       "Physics is the fundamental science that seeks to understand the nature of the universe and the laws that govern it. From the smallest subatomic particles to the largest structures in the cosmos, physics provides a framework for explaining the behavior of matter and energy. In this blog post, we'll explore some of the key ways in which physics helps us make sense of the world around us.",
       "One of the most important contributions of physics is the development of theories that describe the fundamental forces of nature. These include gravity, electromagnetism, and the strong and weak nuclear forces. By understanding how these forces interact with matter and energy, physicists have been able to explain a wide range of phenomena, from the motion of planets and stars to the behavior of atoms and molecules.",
@@ -55,6 +63,7 @@ export const dummyBlogs = [
     title: "Designing for Emotion: Creating Memorable User Experiences",
     author: "Evan Marie Carr",
     tags: ["UI/UX", "Design", "Emotion"],
+    image: blogImage,
     paragraphs: [
       "In the world of UI/UX design, creating memorable and engaging user experiences is key to building successful products and services. One often overlooked aspect of design is the role of emotion in shaping user perceptions and behaviors. In this blog post, we'll explore some strategies for designing for emotion and creating experiences that resonate with users on a deep level.",
       "One key principle of emotional design is to create a sense of connection and empathy between the user and the product. This can be achieved through the use of relatable and authentic language, engaging visuals and animations, and personalized content that speaks directly to the user's needs and interests. By creating a sense of warmth and humanity in the design, designers can foster a stronger emotional bond between the user and the product.",
@@ -70,6 +79,7 @@ export const dummyBlogs = [
       "The Future of Artificial Intelligence: Opportunities and Challenges",
     author: "Dustin Carr",
     tags: ["Artificial Intelligence", "Technology", "Future"],
+    image: blogImage,
     paragraphs: [
       "Artificial intelligence (AI) is rapidly transforming virtually every aspect of our lives, from healthcare and education to transportation and entertainment. As AI technologies continue to advance at an unprecedented pace, it's clear that the future of AI holds both tremendous opportunities and significant challenges. In this blog post, we'll explore some of the key trends and issues shaping the future of AI.",
       "One of the most exciting opportunities of AI is its potential to solve complex problems and drive innovation across a wide range of industries. From developing new drugs and treatments to optimizing supply chains and logistics, AI has the power to revolutionize the way we live and work. As AI systems become more sophisticated and autonomous, we can expect to see even more breakthrough applications in fields like robotics, autonomous vehicles, and smart cities.",
@@ -84,6 +94,7 @@ export const dummyBlogs = [
     title: "The Fascinating World of Quantum Physics",
     author: "Dustin Carr",
     tags: ["Physics", "Quantum", "Science"],
+    image: blogImage,
     paragraphs: [
       "Quantum physics is one of the most fascinating and mind-bending fields of science, exploring the strange and counterintuitive behavior of matter and energy at the smallest scales. From the famous double-slit experiment to the concept of quantum entanglement, quantum physics challenges our intuitive understanding of the world and reveals a reality that is far more complex and mysterious than we ever imagined.",
       "One of the key principles of quantum physics is the idea of wave-particle duality. This means that particles like electrons and photons can behave like both waves and particles, depending on how they are observed and measured. This dual nature of matter has profound implications for our understanding of the universe, from the behavior of atoms and molecules to the structure of the cosmos itself.",
@@ -98,6 +109,7 @@ export const dummyBlogs = [
     title: "The Psychology of User Experience: Understanding User Behavior",
     author: "Evan Marie Carr",
     tags: ["UI/UX", "Psychology", "User Behavior"],
+    image: blogImage,
     paragraphs: [
       "User experience (UX) design is not just about creating beautiful interfaces and intuitive workflows. To create truly effective and engaging user experiences, designers must also have a deep understanding of the underlying psychology of user behavior. By leveraging insights from fields like cognitive psychology and behavioral economics, UX designers can create experiences that are not only functional and usable but also emotionally resonant and persuasive.",
       "One key concept in the psychology of UX is the idea of cognitive load. This refers to the mental effort required to process and understand information, and it can have a significant impact on user engagement and satisfaction. By designing interfaces that minimize cognitive load and provide clear and concise information, UX designers can help users navigate complex systems and complete tasks more efficiently and effectively.",
@@ -113,6 +125,7 @@ export const dummyBlogs = [
       "The Ethics of Artificial Intelligence: Balancing Innovation and Responsibility",
     author: "Dustin Carr",
     tags: ["Artificial Intelligence", "Ethics", "Innovation"],
+    image: blogImage,
     paragraphs: [
       "As artificial intelligence (AI) technologies continue to advance and become more integrated into our daily lives, it's crucial that we consider the ethical implications of their development and deployment. While AI has the potential to drive tremendous innovation and progress across a wide range of industries and domains, it also raises important questions about privacy, security, transparency, and accountability.",
       "One of the key ethical challenges surrounding AI is the issue of bias and fairness. If AI systems are trained on biased data or designed with biased algorithms, they can perpetuate and even amplify existing social inequalities and discrimination. This is particularly concerning in high-stakes domains like healthcare, criminal justice, and hiring, where AI-based decisions can have significant impacts on people's lives and livelihoods.",
@@ -128,6 +141,7 @@ export const dummyBlogs = [
       "The Wonders of Astrophysics: Exploring the Mysteries of the Universe",
     author: "Dustin Carr",
     tags: ["Physics", "Astrophysics", "Universe"],
+    image: blogImage,
     paragraphs: [
       "Astrophysics is the branch of physics that seeks to understand the universe and its celestial objects, from the smallest particles to the largest structures in the cosmos. From the birth and death of stars to the formation and evolution of galaxies, astrophysics seeks to unravel the mysteries of the universe and shed light on some of the most fundamental questions about our place in the grand scheme of things.",
       "These enigmatic objects are formed when massive stars collapse under their own gravity, creating a singularity with an immense gravitational pull that not even light can escape. By studying the behavior of matter and energy around black holes, astrophysicists have gained incredible insights into the nature of space, time, and gravity itself.",
@@ -142,6 +156,7 @@ export const dummyBlogs = [
     title: "The Future of Mobile App Development: Trends and Innovations",
     author: "Evan Marie Carr",
     tags: ["App Development", "Mobile", "Trends"],
+    image: blogImage,
     paragraphs: [
       "The world of mobile app development is constantly evolving, with new technologies, frameworks, and best practices emerging all the time. As app developers, it's crucial to stay up-to-date with the latest trends and innovations in order to create apps that are not only functional and user-friendly but also competitive and commercially successful.",
       "One of the biggest trends in mobile app development today is the rise of cross-platform development frameworks like React Native and Flutter. These frameworks allow developers to write code once and deploy it across multiple platforms, including iOS and Android, saving time and resources while still delivering high-quality, native-like experiences. As more businesses look to reach users across a wide range of devices and platforms, cross-platform development is becoming an increasingly attractive option.",
@@ -156,6 +171,7 @@ export const dummyBlogs = [
     title: "Designing User-Centric Mobile Apps: Best Practices and Principles",
     author: "Evan Marie Carr",
     tags: ["App Development", "User Experience", "Design"],
+    image: blogImage,
     paragraphs: [
       "Designing a successful mobile app is not just about creating a functional and feature-rich product, but also about delivering a seamless and enjoyable user experience. In today's crowded app market, user-centricity is the key to standing out and building a loyal user base. But what exactly does it mean to design a user-centric mobile app, and what are the best practices and principles that developers should follow?",
       "One of the most important principles of user-centric app design is simplicity and clarity. Mobile users have short attention spans and limited screen real estate, so it's essential to create interfaces that are easy to navigate and understand at a glance. This means using clear and concise language, intuitive icons and visual cues, and a logical and streamlined information architecture.",
@@ -170,6 +186,7 @@ export const dummyBlogs = [
     title: "The Role of Agile Methodologies in Mobile App Development",
     author: "Dustin Carr",
     tags: ["App Development", "Agile", "Methodologies"],
+    image: blogImage,
     paragraphs: [
       "Agile methodologies have revolutionized the world of software development, and mobile app development is no exception. By emphasizing flexibility, collaboration, and iterative development, agile approaches have helped app developers create products that are more responsive to user needs, faster to market, and more adaptable to changing requirements and technologies.",
       "One of the key benefits of agile methodologies in mobile app development is the ability to deliver working software early and often. Rather than following a traditional 'waterfall' approach where development proceeds in a linear fashion from requirements gathering to design, implementation, and testing, agile teams work in short, focused sprints to deliver incremental value to users. This allows for more frequent feedback and course correction, ensuring that the final product meets user needs and expectations.",
