@@ -5,8 +5,12 @@ import CenterFull from "~/components/buildingBlocks/centerFull";
 import Flex from "~/components/buildingBlocks/flex";
 import ShiftingComponents from "./shiftingComponents";
 import Center from "~/components/buildingBlocks/center";
+import FlexFull from "~/components/buildingBlocks/flexFull";
+import { BlogPost, dummyBlogs } from "./tempBlogs";
+import ShiftingBlogPanel from "./shiftingBlogPanel";
 
 export default function IndexBlogSection() {
+  const tempBlog = dummyBlogs[0];
   return (
     <StickyLabeledSection
       labelText="blog"
@@ -22,8 +26,9 @@ export default function IndexBlogSection() {
       >
         <CenterFull className="h-fit xl:h-screen py-[2vh] px-[1vh] sm:px-[2vh] justify-center">
           {" "}
-          <Flex className="w-[50vh] h-[50vh]">
-            <ShiftingComponents
+          <FlexFull className="h-fit lg:h-screen">
+            <ShiftingBlogPanel blog={tempBlog as BlogPost} />
+            {/* <ShiftingComponents
               componentArray={[
                 <Center className="bg-violet-400 text-slate-100 h-[40vh] w-[40vh]">
                   One
@@ -35,8 +40,8 @@ export default function IndexBlogSection() {
                   Three
                 </Center>,
               ]}
-            />
-          </Flex>
+            /> */}
+          </FlexFull>
         </CenterFull>
       </AnimatedComponent>
     </StickyLabeledSection>

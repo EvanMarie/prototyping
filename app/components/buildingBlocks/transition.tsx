@@ -1,7 +1,7 @@
 // PageTransition.tsx
 
 import { motion, type Variants } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, forwardRef } from "react";
 
 export type TransitionType =
   | "fade"
@@ -153,29 +153,37 @@ const transitionVariants: Record<TransitionType, Variants> = {
   },
 };
 
-export default function Transition({
-  children,
-  type = "fade",
-  delay = 0,
-  className = "",
-  style = {},
-  duration = 0.5,
-  onClick,
-  key,
-}: TransitionProps) {
-  return (
-    <motion.div
-      className={`flex justify-center overflow-hidden ${className}`}
-      key={key}
-      variants={transitionVariants[type]}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      transition={{ duration, delay }}
-      style={style}
-      onClick={onClick}
-    >
-      {children}
-    </motion.div>
-  );
-}
+const Transition = forwardRef(
+  (
+    {
+      children,
+      type = "fade",
+      delay = 0,
+      className = "",
+      style = {},
+      duration = 0.5,
+      onClick,
+      key,
+    }: TransitionProps,
+    ref: React.Ref<HTMLDivElement> // specify the type of ref here
+  ) => {
+    return (
+      <motion.div
+        ref={ref} // pass the ref here
+        className={`flex justify-center overflow-hidden ${className}`}
+        key={key}
+        variants={transitionVariants[type]}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={{ duration, delay }}
+        style={style}
+        onClick={onClick}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+);
+
+export default Transition;
