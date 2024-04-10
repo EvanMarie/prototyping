@@ -7,21 +7,23 @@ import { PortfolioItem } from "./data";
 import { BackOfCard, FrontOfCard } from "./portfolioCardSides";
 
 export default function ShiftingPortfolioCard({
-  delay = 0.2,
-  visibilityThreshold = "200px",
+  delay = 0.1,
+  visibilityThreshold,
   portfolioItem,
-  transitionDuration = 0.8,
+  transitionDuration = 0.5,
 }: {
   delay?: number;
   visibilityThreshold?: string;
   portfolioItem: PortfolioItem;
   transitionDuration?: number;
 }) {
-  const cardDimensions = "h-[55vh] w-[40vh]";
+  const cardDimensions = "h-[56vh] w-[41vh]";
   const animationProps = {
-    initial: { scale: 0 },
-    whileInView: { scale: 1 },
-    whileHover: { scale: 1.03 },
+    // initial: { scale: 0 },
+    // whileInView: { scale: 1 },
+    initial: { opacity: 0, y: "6vh" },
+    whileInView: { opacity: 1, y: 0 },
+    whileHover: { scale: 1.02 },
     transition: {
       type: "spring",
       stiffness: 80,
@@ -31,6 +33,7 @@ export default function ShiftingPortfolioCard({
     },
   };
 
+  const threshold = visibilityThreshold ? visibilityThreshold : "0px";
   return (
     <motion.div
       initial={animationProps.initial}
@@ -40,7 +43,8 @@ export default function ShiftingPortfolioCard({
       viewport={{
         once: true,
         amount: 1.0,
-        margin: `-${visibilityThreshold} 0px 0px 0px`,
+        // margin: `-${visibilityThreshold} 0px 0px 0px`,
+        margin: `-${threshold} 0px -${threshold} 0px`,
       }}
     >
       <Box
@@ -52,7 +56,7 @@ export default function ShiftingPortfolioCard({
           whileHover={{ opacity: 0 }}
           transition={{ duration: transitionDuration }}
         >
-          <FlexFull className="h-full ">
+          <FlexFull className="h-full p-[1vh]">
             <FrontOfCard portfolioItem={portfolioItem as PortfolioItem} />
           </FlexFull>
         </motion.div>
