@@ -17,6 +17,29 @@ import Image from "~/components/buildingBlocks/image";
 export const linkStyle =
   "lg:w-20% md:text-[2.1vh] lg:text-[2.8vh] xl:text-[3.5vh]  text-cyan-200 textShadow flex justify-center items-center hover:text-fuchsia-200 transition-300 py-[1.5vh] lg:px-[2vh] hover:cursor-pointer";
 
+export const menuItems = [
+  {
+    title: "portfolio",
+    to: "#portfolio",
+  },
+  {
+    title: "us",
+    to: "#us",
+  },
+  {
+    title: "blog",
+    to: "#blog",
+  },
+  {
+    title: "chat",
+    to: "#chat",
+  },
+  {
+    title: "contact",
+    to: "#contact",
+  },
+];
+
 export default function TopMenu() {
   function LinkText({
     linkText,
@@ -36,29 +59,6 @@ export default function TopMenu() {
       </motion.div>
     );
   }
-
-  const menuItems = [
-    {
-      title: "portfolio",
-      to: "#portfolio",
-    },
-    {
-      title: "us",
-      to: "#us",
-    },
-    {
-      title: "blog",
-      to: "#blog",
-    },
-    {
-      title: "chat",
-      to: "#chat",
-    },
-    {
-      title: "contact",
-      to: "#contact",
-    },
-  ];
 
   return (
     <HStackFull className="h-[10vh] lg:h-[12vh] xl:h-[13vh] justify-between px-[1.5vh] lg:px-[2vh] xxl:px-[5vh] items-end relative gap-[5vh]">

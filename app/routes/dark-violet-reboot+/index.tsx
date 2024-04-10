@@ -7,7 +7,7 @@ import IndexAboutUsSection from "./components/indexAboutUsSection";
 import IndexBlogSection from "./components/indexBlogSection";
 import IndexChatSection from "./components/indexChatSection";
 import IndexContactSection from "./components/indexContactSection";
-import ScrollToTop from "./components/scrollToTop";
+import ScrollToTop from "./components/scrollToTopMenu";
 import { useRef } from "react";
 
 function GetRandomDelay() {
