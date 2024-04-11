@@ -24,7 +24,7 @@ export default function AnimateInPlaceText({
   containerClassName,
   isWave,
   isScale,
-  textSize = "text-too-big-normal",
+  textSize,
   textColor = "text-col-100",
   textShadow = "textShadow",
   textSpacing = "tracking-wider",

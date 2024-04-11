@@ -16,7 +16,7 @@ export default function NavContainer({
   className,
   children,
   bg,
-  h = "h-nav",
+  h,
   isTop = false,
   isBottom = false,
   alignment = "items-center justify-evenly",

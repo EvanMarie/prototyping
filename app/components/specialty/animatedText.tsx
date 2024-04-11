@@ -57,9 +57,9 @@ export default function AnimatedText({
   gradient,
   textClassName = "text-[6vh] font-bold text-col-200 textShadow text-stroke-10-500",
   numSpins = 2,
-  leanAngle = 25, // Default angle for leaning
-  leanDuration = 8, // Default duration for lean animation
-  leanRepeat = 10, // Default repeat times, fallback to numSpins if not specified
+  leanAngle = 25,
+  leanDuration = 8,
+  leanRepeat = 10,
 }: AnimatedTextProps) {
   const letters = text ? Array.from(text) : [];
   const xStringDistance = distanceAsVH ? String(xDistance) + "vh" : undefined;
