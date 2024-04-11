@@ -43,7 +43,7 @@ export default function BlogItemComponent({
   return (
     <FlexFull className="bg-[url('https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/aurora.png?quality=60')] bg-center bg-cover">
       <VStackFull
-        className="relative bg-gradient-to-br from-cyan-900/90 via-indigo-900/90 to-cyan-900/90 p-[0.5vh] insetShadowXl text-slate-100 pt-[6vh] border-900-md"
+        className="relative bg-slate-900/60 bg-gradient-to-br from-fuchsia-900/50 via-indigo-900/80 to-fuchsia-900/80 p-[0.5vh] insetShadowXl text-slate-100 pt-[6vh] border-900-md"
         style={{ height: "90svh" }}
       >
         {/* HEADER  */}
@@ -65,7 +65,7 @@ export default function BlogItemComponent({
         </VStackFull>
 
         {/* FOOTER  */}
-        <CenterHorizontalFull className="absolute bottom-0 left-0 h-[4vh] p-[1vh] items-center bg-slate-900/60 border-t-970-md">
+        <CenterHorizontalFull className="absolute bottom-0 left-0 h-[4vh] p-[1vh] items-center rounded-t-none bg-violet-800/80 border-b-970-md border-t-970-md">
           <Box className="z-10">
             <NavLinkButton
               iconLeft={CloseIcon}
@@ -213,7 +213,7 @@ export default function BlogItemComponent({
               </VStack>
               <FlexFull className="p-[1vh] xl:p-[1.5vh] xxl:p-[2vh]">
                 <VStackFull
-                  className="insetShadowXl bg-gray-900/40"
+                  className="insetShadowXl border-970-md bg-gray-900/40"
                   gap="gap-[0px]"
                 >
                   <motion.div

@@ -11,7 +11,6 @@ export default function IndexChatSection() {
       id="chat"
     >
       <FlexFull className="h-screen ">Section One - Page One</FlexFull>
-      <FlexFull className="h-screen">Section One - Page Two</FlexFull>
     </StickyLabeledSection>
   );
 }

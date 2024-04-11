@@ -10,7 +10,7 @@ export default function IndexContactSection() {
       spacerHeight="h-[5vh]"
       id="contact"
     >
-      <FlexFull className="h-screen">Page One</FlexFull>
+      <FlexFull className="h-screen bg-fuchsia-800/30">Page One</FlexFull>
     </StickyLabeledSection>
   );
 }
