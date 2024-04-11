@@ -19,13 +19,13 @@ export default function BlogId() {
       {" "}
       <TransitionFull
         className="absolute top-0 left-0"
-        style={{ height: "95svh" }}
+        style={{ height: "94svh" }}
       >
-        <FlexFull className=" md:px-[1vh] xl:px-[5vw] items-center">
-          <FlexFull
-            className={`h-fit ${shineyGradient} shadowBroadLooser p-[0.5vh]`}
-          >
-            <BlogItemComponent />
+        <FlexFull className=" md:px-[1vh] xl:px-[2vw] xxl:px-[5vw] md:items-center">
+          <FlexFull className={`${shineyGradient} shadowBroadLooser p-[0.5vh]`}>
+            <BlogItemComponent
+              blogPost={blogPost as unknown as BlogPost as any}
+            />
           </FlexFull>
         </FlexFull>
       </TransitionFull>

@@ -73,7 +73,10 @@ export default function ShiftingBlogPanel({ blog }: { blog: BlogPost }) {
 
             <FlexFull className="xl:w-7/12 justify-center text-[1.9vh] text-left xl:text-[2.5vh] px-[1vh] sm:px-[2vh] xxl:text-[2.6vh] xxl:px-[2vh] items-center">
               {" "}
-              <VStackFull style={{ fontSize: "inherit" }}>
+              <VStackFull
+                style={{ fontSize: "inherit" }}
+                gap="gap-[1.5vh] sm:gap-[2vh] md:gap-[3vh] xl:gap-[4vh] xxl:gap-[5vh]"
+              >
                 <FlexFull
                   className="flex sm:hidden"
                   style={{ fontSize: "inherit" }}
