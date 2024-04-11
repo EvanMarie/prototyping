@@ -13,8 +13,6 @@ import { useRef } from "react";
 function GetRandomDelay() {
   return Math.random() * (0.6 - 0.1) + 0.1;
 }
-export const labelStyles =
-  "px-[1vh] py-[0.5vh] text-cyan-200 textShadow text-[3vh]";
 
 export default function DarkVioletIndex() {
   const genSectionStyles =

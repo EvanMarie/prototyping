@@ -8,6 +8,7 @@ import { DotsMenuIcon } from "styles";
 import VStack from "~/components/buildingBlocks/vStack";
 import { HiMiniArrowUturnUp, HiOutlineArrowUturnUp } from "react-icons/hi2";
 import { PiArrowURightUpBold } from "react-icons/pi";
+import { staggerMenuLinkStyles } from "./styleVariables";
 
 interface ScrollToTopProps {
   scrollContainerRef: React.RefObject<HTMLElement>;
@@ -81,7 +82,7 @@ const ScrollToTop: React.FC<ScrollToTopProps> = ({ scrollContainerRef }) => {
                 menuDirection="flex-col"
                 containerClassName="w-[20vh] justify-evenly p-[1vh]"
                 itemPadding="px-[1.5vh] py-[0.5vh]"
-                itemStyle="bg-violet-700 border-970-md shadowBroadLooser w-[18vh] flex items-center text-[2.5vh] text-slate-100 textShadow hover:bg-violet-500 transition-400"
+                itemStyle={`w-[18vh] ${staggerMenuLinkStyles}`}
                 itemHoverStyle="hover:bg-fuchsia-600 transition-400"
                 closeButtonDelay={1}
                 menuGap="gap-[3vh]"

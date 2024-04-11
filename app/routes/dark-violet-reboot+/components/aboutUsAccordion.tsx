@@ -4,7 +4,6 @@ import HStackFull from "~/components/buildingBlocks/hStackFull";
 import Text from "~/components//buildingBlocks/text";
 import Icon from "~/components/buildingBlocks/icon";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import FlexFull from "~/components/buildingBlocks/flexFull";
 import CenterHorizontalFull from "~/components/buildingBlocks/centerHorizontalFull";
 import { aboutUsElementWidth } from "./aboutUsSection";
 
@@ -23,7 +22,6 @@ export default function AboutUsAccordion({
   children,
   isOpen,
   clickAccordion,
-  //   titleStyles = "bg-slate-900 bg-gradient-to-b from-violet-600/30 via-indigo-700/30 to-fuchsia-700/30 hover:bg-slate-600 transition-400 text-col-100 textShadow",
   titleStyles = "text-slate-100 textShadow ",
   contentStyles = "bg-slate-900/70 text-slate-100 textShadow py-[1vh] md:w-90%",
 }: AccordionProps) {

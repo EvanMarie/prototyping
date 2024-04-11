@@ -13,9 +13,10 @@ import AnimatedText from "~/components/specialty/animatedText";
 import AnimatedTitleDemo from "~/routes/design+/components/animatedTextDemo";
 import AnimateInPlaceText from "~/components/specialty/animateInPlaceText";
 import Image from "~/components/buildingBlocks/image";
+import { staggerMenuLinkStyles } from "./styleVariables";
 
 export const linkStyle =
-  "lg:w-20% md:text-[2.1vh] lg:text-[2.8vh] xl:text-[3.5vh]  text-cyan-200 textShadow flex justify-center items-center hover:text-fuchsia-200 transition-300 py-[1.5vh] lg:px-[2vh] hover:cursor-pointer";
+  "lg:w-20% md:text-[2.1vh] lg:text-[2.8vh] xl:text-[3.5vh] text-cyan-200 textShadow flex justify-center items-center hover:text-fuchsia-200 transition-300 py-[1.5vh] lg:px-[2vh] hover:cursor-pointer";
 
 export const menuItems = [
   {
@@ -83,7 +84,7 @@ export default function TopMenu() {
           menuDirection="flex-col"
           containerClassName="w-screen justify-evenly p-[1vh]"
           itemPadding="px-[1.5vh] py-[0.5vh]"
-          itemStyle="bg-violet-700 border-970-md shadowBroadLooser w-[75vw] sm:w-[65vw] h-[5.5vh] flex items-center text-[2.5vh] text-slate-100 textShadow hover:bg-violet-500 transition-400"
+          itemStyle={`w-[75vw] sm:w-[65vw] ${staggerMenuLinkStyles}`}
           itemHoverStyle="hover:bg-fuchsia-600 transition-400"
           closeButtonDelay={1}
           menuGap="gap-[3vh]"

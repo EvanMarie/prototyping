@@ -1,12 +1,12 @@
 import FlexFull from "~/components/buildingBlocks/flexFull";
-import { labelStyles } from "..";
 import StickyLabeledSection from "./stickyLabeledSection";
+import { stickyLabelStyles } from "./styleVariables";
 
 export default function IndexContactSection() {
   return (
     <StickyLabeledSection
       labelText="contact"
-      labelClassName={labelStyles}
+      labelClassName={stickyLabelStyles}
       spacerHeight="h-[5vh]"
       id="contact"
     >

@@ -1,5 +1,4 @@
 import FlexFull from "~/components/buildingBlocks/flexFull";
-import { labelStyles } from "..";
 import StickyLabeledSection from "./stickyLabeledSection";
 import VStackFull from "~/components/buildingBlocks/vStackFull";
 import ShiftingImages from "./shiftingImages";
@@ -7,6 +6,7 @@ import Wrap from "~/components/buildingBlocks/wrap";
 import { PortfolioItem, Projects } from "./data";
 import Box from "~/components/buildingBlocks/box";
 import ShiftingPortfolioCard from "./portfolioShiftingCard";
+import { stickyLabelStyles } from "./styleVariables";
 
 export default function IndexPortfolioSection() {
   const genImages = Array.from(
@@ -17,16 +17,16 @@ export default function IndexPortfolioSection() {
   return (
     <StickyLabeledSection
       labelText="portfolio"
-      labelClassName={labelStyles}
+      labelClassName={stickyLabelStyles}
       id="portfolio"
     >
       <FlexFull className="h-fit">
         <VStackFull className="h-fit" gap="gap-[5vh]">
-          <Wrap className="w-full h-fit justify-center md:justify-around items-evenly gap-[6vh] py-[2vh]">
+          <Wrap className="w-full h-fit justify-center md:justify-around items-evenly md:gap-[6vh] py-[2vh]">
             {Projects.map((project, i) => (
               <Box
                 key={i}
-                className={`h-fit p-[2vh] ${i % 2 === 0 ? "" : "pt-[10vh]"}`}
+                className={`h-fit p-[2vh] ${i % 2 === 0 ? "" : "md:pt-[10vh]"}`}
               >
                 <ShiftingPortfolioCard
                   portfolioItem={project as PortfolioItem}
