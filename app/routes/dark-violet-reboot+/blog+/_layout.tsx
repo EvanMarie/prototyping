@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "@remix-run/react";
+import { NavLink, Outlet, useLocation, useParams } from "@remix-run/react";
 import LayoutContainer from "~/components/buildingBlocks/layoutContainer";
 import NavContainer from "~/components/buildingBlocks/navContainer";
 import { shineyGradient } from "../components/styleVariables";
@@ -10,30 +10,46 @@ import IconButton from "~/components/buildingBlocks/iconButton";
 import NavIconButton from "~/components/buildingBlocks/navLinkIconButton";
 import { HomeIcon } from "styles";
 import { TbBooks } from "react-icons/tb";
+import Text from "~/components/buildingBlocks/text";
 
 export default function BlogLayout() {
+  const id = useParams().id;
+  const isBlogId = id ? true : false;
+  const isBlogMain = useLocation().pathname.endsWith("blog");
   return (
     <LayoutContainer className="bg-[url('/images/consciousnessBackground.png')] bg-center bg-cover rounded-none ">
-      <LayoutContainer className="bg-gray-900/70 bg-gradient-to-b from-violet-800/30 via-indigo-700/30 to-fuchsia-800/30 rounded-none backdrop-blur-sm">
+      <LayoutContainer className="bg-gray-900/90 rounded-none backdrop-blur-sm">
         <LayoutContainer className="text-slate-100 relative">
           <NavContainer h="h-[5vh] sm:h-[6vh]" bg={shineyGradient}>
-            <HStackFull className="pl-[1vh] h-full items-end justify-between">
+            <HStackFull className="pl-[1vh] h-full items-center justify-between">
               {" "}
-              <NavLink to="/dark-violet-reboot">
-                <AnimateInPlaceText
-                  isScale
-                  text="DarkViolet.ai"
-                  textClassName="text-fuchsia-400 text-[4vh] leading-[4vh] sm:text-[5.5vh] leading-[5.5vh] textShadow"
-                  fontStyle="kufam-font"
-                />
-              </NavLink>
-              <HStack className="h-full items-center" gap="gap-[1.5vh]">
-                <NavIconButton
-                  icon={TbBooks}
+              <HStack
+                className="w-full items-end"
+                gap="gap-[0.5vh] sm:gap-[1vh] md:gap-[2vh]"
+              >
+                <NavLink
                   to="/dark-violet-reboot"
-                  label="all posts"
-                  tooltipPlacement="bottomLeft"
-                />
+                  className="h-full flex items-end "
+                >
+                  <AnimateInPlaceText
+                    isScale
+                    text="DarkViolet.ai"
+                    textClassName="text-fuchsia-400 text-[3.5vh] leading-[3.5vh] sm:text-[5.5vh] leading-[4.7vh] textShadow "
+                    fontStyle="kufam-font"
+                  />
+                </NavLink>
+                <Text className="text-[3vh] sm:text-[3.5vh]">|</Text>
+                <Text className="text-[3vh] sm:text-[3.5vh]"> blog</Text>
+              </HStack>
+              <HStack className="h-full items-center" gap="gap-[1.5vh]">
+                {isBlogId && (
+                  <NavIconButton
+                    icon={TbBooks}
+                    to="/dark-violet-reboot/blog"
+                    label="all posts"
+                    tooltipPlacement="bottomLeft"
+                  />
+                )}
                 <NavIconButton
                   icon={HomeIcon}
                   to="/dark-violet-reboot"

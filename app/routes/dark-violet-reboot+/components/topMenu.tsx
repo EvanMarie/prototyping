@@ -84,7 +84,7 @@ export default function TopMenu() {
           menuDirection="flex-col"
           containerClassName="w-screen justify-evenly p-[1vh]"
           itemPadding="px-[1.5vh] py-[0.5vh]"
-          itemStyle={`w-[75vw] sm:w-[65vw] h-[5.5vh] ${staggerMenuLinkStyles}`}
+          itemStyle={`w-[75vw] sm:w-[65vw] h-[5.5vh] text-[2.5vh] ${staggerMenuLinkStyles}`}
           itemHoverStyle="hover:bg-fuchsia-600 transition-400"
           closeButtonDelay={1}
           menuGap="gap-[3vh]"

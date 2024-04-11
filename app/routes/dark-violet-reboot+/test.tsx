@@ -4,7 +4,7 @@ import { IParallax, Parallax } from "@react-spring/parallax";
 import FlowerOfLifeOnScroll from "./components/flowerOfLifeOnScroll";
 import CenterFull from "~/components/buildingBlocks/centerFull";
 import ShiftingBlogPanel from "./components/shiftingBlogPanel";
-import { dummyBlogs } from "./components/tempBlogs";
+import { dummyBlogs } from "./blog+/tempBlogs";
 import StickyLabeledSection from "./components/stickyLabeledSection";
 import {
   staggerMenuLinkStyles,

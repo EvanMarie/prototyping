@@ -1,5 +1,5 @@
 import FlexFull from "~/components/buildingBlocks/flexFull";
-import { BlogPost } from "./tempBlogs";
+import { BlogPost } from "../blog+/tempBlogs";
 import HStackFull from "~/components/buildingBlocks/hStackFull";
 import Image from "~/components/buildingBlocks/image";
 import Box from "~/components/buildingBlocks/box";
@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import Icon from "~/components/buildingBlocks/icon";
 import { PiBookOpenText } from "react-icons/pi";
 import HStack from "~/components/buildingBlocks/hStack";
+import { TbBook2, TbBooks } from "react-icons/tb";
 
 export default function ShiftingBlogPanel({ blog }: { blog: BlogPost }) {
   return (
@@ -70,53 +71,59 @@ export default function ShiftingBlogPanel({ blog }: { blog: BlogPost }) {
               )}
             </VStackFull>
 
-            <VStackFull
-              className="xl:w-7/12 justify-center text-[1.9vh] text-left xl:text-[2.1vh] px-[1vh] sm:px-[2vh] xxl:text-[2.3vh]"
-              gap="gap-[2.5vh]"
-            >
-              <Text noOfLines={6}>{blog.paragraphs[0]}</Text>
-              <FlexFull
-                className="hidden xl:inline"
-                style={{ fontSize: "inherit" }}
-              >
-                <Text noOfLines={8}>{blog.paragraphs[1]}</Text>
-              </FlexFull>
-            </VStackFull>
-          </FlexFull>
-          <HStackFull className="justify-evenly">
-            <NavLink to={`/blog/${blog.id}`}>
-              <motion.div
-                whileHover={{
-                  scale: 1.05,
-                  transition: { duration: 0.4 },
-                }}
-                whileTap={{ scale: 0.9, transition: { duration: 0.4 } }}
-              >
-                <Flex
-                  className={`${staggerMenuLinkStyles} h-[3.5vh] px-[2vh] hover:cursor-pointer text-[2vh]`}
+            <FlexFull className="xl:w-7/12 justify-center text-[1.9vh] text-left xl:text-[2.5vh] px-[1vh] sm:px-[2vh] xxl:text-[2.6vh] xxl:px-[2vh] items-center">
+              {" "}
+              <VStackFull style={{ fontSize: "inherit" }}>
+                <FlexFull
+                  className="flex sm:hidden"
+                  style={{ fontSize: "inherit" }}
                 >
-                  view this post
-                </Flex>
-              </motion.div>
-            </NavLink>
+                  <Text noOfLines={5}>{blog.summary}</Text>
+                </FlexFull>
+                <FlexFull
+                  className="hidden sm:flex"
+                  style={{ fontSize: "inherit" }}
+                >
+                  <Text noOfLines={8}>{blog.summary}</Text>
+                </FlexFull>
+                <HStackFull className="justify-evenly">
+                  <NavLink to={`/dark-violet-reboot/blog/${blog.id}`}>
+                    <motion.div
+                      whileHover={{
+                        scale: 1.05,
+                        transition: { duration: 0.4 },
+                      }}
+                      whileTap={{ scale: 0.9, transition: { duration: 0.4 } }}
+                    >
+                      <HStack
+                        className={`${staggerMenuLinkStyles} h-[3.5vh] px-[1vh] hover:cursor-pointer text-[1.5vh] md:text-[2vh]`}
+                      >
+                        <Icon icon={TbBook2} iconClassName="text-[2.5vh]" />
+                        view this post
+                      </HStack>
+                    </motion.div>
+                  </NavLink>
 
-            <NavLink to={`/dark-violet-reboot/blog`}>
-              <motion.div
-                whileHover={{
-                  scale: 1.05,
-                  transition: { duration: 0.4 },
-                }}
-                whileTap={{ scale: 0.9, transition: { duration: 0.4 } }}
-              >
-                <HStack
-                  className={`${staggerMenuLinkStyles} h-[3.5vh] px-[2vh] hover:cursor-pointer text-[2vh]`}
-                >
-                  <Icon icon={PiBookOpenText} iconClassName="text-[2.5vh]" />
-                  <Text>view all posts</Text>
-                </HStack>
-              </motion.div>
-            </NavLink>
-          </HStackFull>
+                  <NavLink to={`/dark-violet-reboot/blog`}>
+                    <motion.div
+                      whileHover={{
+                        scale: 1.05,
+                        transition: { duration: 0.4 },
+                      }}
+                      whileTap={{ scale: 0.9, transition: { duration: 0.4 } }}
+                    >
+                      <HStack
+                        className={`${staggerMenuLinkStyles} h-[3.5vh] px-[1vh] hover:cursor-pointer text-[1.5vh] md:text-[2vh]`}
+                      >
+                        <Icon icon={TbBooks} iconClassName="text-[2.5vh]" />
+                        <Text>view all posts</Text>
+                      </HStack>
+                    </motion.div>
+                  </NavLink>
+                </HStackFull>
+              </VStackFull>
+            </FlexFull>
+          </FlexFull>
         </VStackFull>
       </VStackFull>
     </FlexFull>

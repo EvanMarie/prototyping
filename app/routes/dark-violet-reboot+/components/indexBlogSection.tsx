@@ -1,6 +1,6 @@
 import AnimatedComponent from "~/components/animate-on-scroll/animateOnScroll";
 import StickyLabeledSection from "./stickyLabeledSection";
-import { dummyBlogs } from "./tempBlogs";
+import { dummyBlogs } from "../blog+/tempBlogs";
 import ShiftingBlogPanel from "./shiftingBlogPanel";
 import { staggerMenuLinkStyles, stickyLabelStyles } from "./styleVariables";
 import ShiftingComponents from "./shiftingComponents";
