@@ -82,7 +82,7 @@ const ScrollToTop: React.FC<ScrollToTopProps> = ({ scrollContainerRef }) => {
                 menuDirection="flex-col"
                 containerClassName="w-[20vh] justify-evenly p-[1vh]"
                 itemPadding="px-[1.5vh] py-[0.5vh]"
-                itemStyle={`w-[18vh] ${staggerMenuLinkStyles}`}
+                itemStyle={`w-[18vh] h-[5.5vh] ${staggerMenuLinkStyles}`}
                 itemHoverStyle="hover:bg-fuchsia-600 transition-400"
                 closeButtonDelay={1}
                 menuGap="gap-[3vh]"

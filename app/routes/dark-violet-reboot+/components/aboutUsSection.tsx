@@ -19,6 +19,7 @@ import { MdOutlineConnectWithoutContact } from "react-icons/md";
 import { motion } from "framer-motion";
 import AnimatedComponent from "~/components/animate-on-scroll/animateOnScroll";
 import { GrDocumentPdf } from "react-icons/gr";
+import { shineyGradient } from "./styleVariables";
 
 export const aboutUsElementWidth = "w-[65vw] sm:w-[60vw] md:w-[50vh]";
 function TeamMemberContainer({ children }: { children: React.ReactNode }) {
@@ -31,7 +32,9 @@ function TeamMemberContainer({ children }: { children: React.ReactNode }) {
     >
       <CenterHorizontalFull>
         <FlexFull className="h-fit md:w-[80vw] lg:w-[70vw] xl:w-[93vw] xxl:w-[85vw] py-[2vh] px-[1vh] sm:px-[2vh] justify-center">
-          <FlexFull className="h-fit shadowBroadLooser border-970-md bg-slate-900 bg-gradient-to-br from-violet-600/70 via-indigo-800/70 to-cyan-600/70">
+          <FlexFull
+            className={`h-fit shadowBroadLooser border-970-md ${shineyGradient}`}
+          >
             {children}
           </FlexFull>
         </FlexFull>

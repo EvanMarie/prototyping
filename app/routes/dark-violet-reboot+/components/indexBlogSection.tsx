@@ -2,10 +2,22 @@ import AnimatedComponent from "~/components/animate-on-scroll/animateOnScroll";
 import StickyLabeledSection from "./stickyLabeledSection";
 import { dummyBlogs } from "./tempBlogs";
 import ShiftingBlogPanel from "./shiftingBlogPanel";
-import { stickyLabelStyles } from "./styleVariables";
+import { staggerMenuLinkStyles, stickyLabelStyles } from "./styleVariables";
+import ShiftingComponents from "./shiftingComponents";
+import FlexFull from "~/components/buildingBlocks/flexFull";
+import Box from "~/components/buildingBlocks/box";
+import { NavLink } from "@remix-run/react";
+import { motion } from "framer-motion";
+import HStack from "~/components/buildingBlocks/hStack";
+import { PiBookOpenText } from "react-icons/pi";
+import Icon from "~/components/buildingBlocks/icon";
+import Text from "~/components/buildingBlocks/text";
+import VStackFull from "~/components/buildingBlocks/vStackFull";
 
 export default function IndexBlogSection() {
-  const tempBlog = dummyBlogs[0];
+  const blogArray = dummyBlogs.map((blog) => (
+    <ShiftingBlogPanel blog={blog as any} key={blog.id} />
+  ));
   return (
     <StickyLabeledSection
       labelText="blog"
@@ -13,28 +25,39 @@ export default function IndexBlogSection() {
       spacerHeight="h-[6vh]"
       id="blog"
     >
-      <AnimatedComponent
-        animation="zoomIn"
-        className="w-full h-screen"
-        runOnce={true}
-        triggerPercent={0.3}
-      >
-        {" "}
-        <ShiftingBlogPanel blog={tempBlog as any} />
-        {/* <ShiftingComponents
-              componentArray={[
-                <Center className="bg-violet-400 text-slate-100 h-[40vh] w-[40vh]">
-                  One
-                </Center>,
-                <Center className="bg-fuchsia-400 text-slate-100 h-[40vh] w-[40vh]">
-                  Two
-                </Center>,
-                <Center className="bg-cyan-400 text-slate-100 h-[40vh] w-[40vh]">
-                  Three
-                </Center>,
-              ]}
-            /> */}
-      </AnimatedComponent>
+      <VStackFull className="relative h-full">
+        <Box className="absolute top-[1.5vh] right-[1vh]">
+          {" "}
+          <NavLink to={`/blog`}>
+            <motion.div
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 0.4 },
+              }}
+              whileTap={{ scale: 0.9, transition: { duration: 0.4 } }}
+            >
+              <HStack
+                className={`${staggerMenuLinkStyles} h-[3.5vh] px-[2vh] hover:cursor-pointer text-[2vh]`}
+              >
+                <Icon icon={PiBookOpenText} iconClassName="text-[2.5vh]" />
+                <Text>view all posts</Text>
+              </HStack>
+            </motion.div>
+          </NavLink>
+        </Box>
+        <AnimatedComponent
+          animation="zoomIn"
+          className="w-full h-screen"
+          runOnce={true}
+          triggerPercent={0.3}
+        >
+          <ShiftingComponents
+            componentArray={blogArray}
+            transitionDuration={2}
+            delaySeconds={6}
+          />
+        </AnimatedComponent>
+      </VStackFull>
     </StickyLabeledSection>
   );
 }
