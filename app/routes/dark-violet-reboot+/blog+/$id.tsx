@@ -1,6 +1,10 @@
 import { useParams } from "@remix-run/react";
 import { BlogPost, dummyBlogs } from "./tempBlogs";
 import TransitionFull from "~/components/buildingBlocks/TransitionFull";
+import BlogItemComponent from "../components/blogItemComponent";
+import LayoutContainer from "~/components/buildingBlocks/layoutContainer";
+import FlexFull from "~/components/buildingBlocks/flexFull";
+import { shineyGradient } from "../components/styleVariables";
 
 export default function BlogId() {
   const { id } = useParams<{ id: string }>(); // Specify the type of `id` here
@@ -11,8 +15,20 @@ export default function BlogId() {
   }
 
   return (
-    <TransitionFull>
-      <h1>{blogPost.title}</h1>
-    </TransitionFull>
+    <FlexFull className="relative">
+      {" "}
+      <TransitionFull
+        className="absolute top-0 left-0"
+        style={{ height: "95svh" }}
+      >
+        <FlexFull className=" md:px-[1vh] xl:px-[5vw] items-center">
+          <FlexFull
+            className={`h-fit ${shineyGradient} shadowBroadLooser p-[0.5vh]`}
+          >
+            <BlogItemComponent />
+          </FlexFull>
+        </FlexFull>
+      </TransitionFull>
+    </FlexFull>
   );
 }

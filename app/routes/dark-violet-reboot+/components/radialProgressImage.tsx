@@ -35,7 +35,7 @@ export default function RadialProgressiveImage({
             onClick={() => setExpanded(true)}
           />
         </Box>
-        <Image src={image} alt={title} className="w-full h-full max-h-[60vh]" />
+        <Image src={image} alt={title} className="w-full h-full max-h-[50vh]" />
       </Flex>
       <Modal
         isOpen={expanded}

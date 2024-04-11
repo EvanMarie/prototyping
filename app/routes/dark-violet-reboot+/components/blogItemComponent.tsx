@@ -14,14 +14,10 @@ import useEscapeKey from "~/utils/useEscapeKey";
 import Flex from "~/components/buildingBlocks/flex";
 import VStack from "~/components/buildingBlocks/vStack";
 import { useScroll, motion } from "framer-motion";
-import CenterFull from "~/components/buildingBlocks/centerFull";
-import FlowerOfLifeOnScroll from "./flowerOfLifeOnScroll";
-import RadialScrollProgress from "./radialProgress";
-import RadialProgressiveImage from "./radialProgressImage";
 import PortfolioTextSection from "./portfolioTextSection";
 import Image from "~/components/buildingBlocks/image";
 
-export default function PortfolioItemComponent() {
+export default function BlogItemComponent() {
   const { title } = useParams();
   const project = Projects.find((project) => project.title === title);
   const navigate = useNavigate();
@@ -35,7 +31,10 @@ export default function PortfolioItemComponent() {
 
   return (
     <FlexFull className="bg-[url('https://mhejreuxaxxodkdlfcoq.supabase.co/storage/v1/render/image/public/darkVioletPublic/landing/aurora.png?quality=60')] bg-center bg-cover">
-      <VStackFull className="relative h-[95vh] bg-gradient-to-br from-violet-900/90 via-indigo-900/90 to-fuchsia-900/90 p-[0.5vh] insetShadowXl text-slate-100 pt-[7vh] md:pt-[8.5vh] border-900-md">
+      <VStackFull
+        className="relative bg-gradient-to-br from-violet-900/90 via-indigo-900/90 to-fuchsia-900/90 p-[0.5vh] insetShadowXl text-slate-100 pt-[7vh] md:pt-[8.5vh] border-900-md"
+        style={{ height: "90svh" }}
+      >
         {/* HEADER  */}
         <VStackFull className="absolute top-0 left-0 h-[7vh] md:h-[8.5vh]  bg-slate-900/60 border-b-970-md">
           <HStackFull className="justify-between px-[1vh] py-[0.5vh] items-center">
@@ -78,9 +77,6 @@ export default function PortfolioItemComponent() {
         {/* CONTENT  */}
 
         <FlexFull>
-          <CenterFull className="absolute top-0 right-0 left-0 pt-[4vh]">
-            <FlowerOfLifeOnScroll />
-          </CenterFull>
           <FlexFull
             ref={scrollYRef}
             className="hide-scrollbar max-h-[84vh] md:max-h-[82vh] overflow-y-auto flex-col z-10"
@@ -91,23 +87,7 @@ export default function PortfolioItemComponent() {
               gap="gap-[1.5vh] sm:gap-[2vh]"
             >
               {/* IMAGES */}
-              <CenterHorizontalFull className="pt-[1vh] ">
-                <Flex className="h-fit w-[93vw] max-h-[84vh] xl:w-[87vw]">
-                  <RadialScrollProgress title={project?.title}>
-                    {project?.projectImages.map((image, index) => (
-                      <Flex
-                        key={index}
-                        className="w-fit flex-shrink-0 snap-center snap-always "
-                      >
-                        <RadialProgressiveImage
-                          image={image.src}
-                          title={image.title ? image.title : ""}
-                        />
-                      </Flex>
-                    ))}
-                  </RadialScrollProgress>
-                </Flex>
-              </CenterHorizontalFull>
+
               {infoSections[0] && (
                 <PortfolioTextSection projectInfoSection={infoSections[0]} />
               )}
