@@ -15,7 +15,7 @@ interface NavContainerProps {
 export default function NavContainer({
   className,
   children,
-  bg = "bg-col-300",
+  bg,
   h = "h-nav",
   isTop = false,
   isBottom = false,
